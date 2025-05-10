@@ -1,13 +1,13 @@
 import '../css/dashboard.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
-import { reports } from '../assets/data';
+import { reports, type IReport } from '../assets/data';
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonAdmin = localStorage.getItem("admin") as string;
 const adminDetails = JSON.parse(jsonAdmin);
-let userReports = reports;
+let userReports: Array<IReport> = reports;
 const jsonReports = localStorage.getItem("local-reports") as string;
 if (jsonReports) {
   const reportArray = JSON.parse(jsonReports) as [];
