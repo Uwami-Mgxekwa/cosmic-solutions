@@ -12,10 +12,10 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         dashboard: resolve(__dirname, "./src/pages/dashboard.user.html"),
-        dashboard: resolve(__dirname, "./src/pages/dashboard.admin.html"),
+        dash: resolve(__dirname, "./src/pages/dashboard.admin.html"),
         manage: resolve(__dirname, "./src/pages/manage.admin.html"),
         report: resolve(__dirname, "./src/pages/report.user.html"),
-        status: resolve(__dirname, "./src/pages/satus.user.html"),
+        status: resolve(__dirname, "./src/pages/status.user.html"),
         tickets: resolve(__dirname, "./src/pages/tickets.user.html"),
       },
     },
