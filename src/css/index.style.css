@@ -1,0 +1,108 @@
+@import url("../reset.css");
+@import url("../color-scheme.css");
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 36px;
+  border-bottom: 2px solid var(--text);
+}
+
+.logo img {
+  width: 36px;
+  height: 36px;
+}
+
+.logo h1 {
+  font-size: 36px;
+}
+
+.container {
+  min-width: 50%;
+  color: var(--text);
+}
+
+.tab-container {
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.tab {
+  width: calc(100% / 2);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-active {
+  background: var(--secondary);
+}
+
+.content {
+  display: none;
+  padding: 24px;
+  background: var(--secondary);
+}
+
+.content-active {
+  display: block;
+}
+
+.card h2 {
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+  outline: none;
+  color: var(--text);
+}
+
+input:focus {
+  border-color: var(--accent);
+}
+
+button {
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--accent);
+}
+
+.alert {
+  margin-top: 24px;
+}
+
+.alert p {
+  font-size: 24px;
+  color: #f00;
+}

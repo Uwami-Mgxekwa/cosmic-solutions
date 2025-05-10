@@ -1,0 +1,33 @@
+@import url("../color-scheme.css");
+
+header {
+  width: 100%;
+  height: 100px;
+  padding: 24px 0;
+  border-bottom: 2px solid var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 16px;
+}
+
+header h2 {
+  font-size: 24px;
+}
+
+.bars-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.bars-icon svg {
+  fill: var(--text);
+}
+
+.bars-icon svg:hover {
+  fill: var(--accent);
+}

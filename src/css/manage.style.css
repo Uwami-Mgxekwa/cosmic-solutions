@@ -1,0 +1,104 @@
+@import url("../color-scheme.css");
+@import url("../reset.css");
+
+.wrapper {
+  width: 100%;
+  height: fit-content;
+  background: var(--background);
+  margin-top: 24px;
+}
+
+/* .panel { */
+/*   border-bottom: 2px solid var(--text); */
+/* } */
+
+.panel h1 {
+  font-size: 36px;
+}
+
+.panel-info {
+  display: flex;
+  gap: 24px;
+  font-size: 24px;
+  margin: 24px 0;
+}
+
+.action-btns {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-update {
+  width: 330px;
+  height: 60px;
+  border: none;
+  outline: none;
+  background: var(--primary);
+  color: var(--background);
+  cursor: pointer;
+}
+
+.btn-add {
+  width: 330px;
+  height: 60px;
+  border: none;
+  outline: none;
+  background: var(--secondary);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.details-container {
+  width: 100%;
+  border-top: 2px solid var(--text);
+  margin-top: 24px;
+}
+
+.details-container h2 {
+  margin-top: 24px;
+  font-size: 24px;
+}
+
+.ticket-info {
+  margin-top: 24px;
+}
+
+.ticket-info div:nth-child(odd) {
+  background-color: var(--secondary);
+  color: var(--text);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  height: 60px;
+  padding: 0 24px;
+}
+
+.info-row span {
+  width: 50%;
+}
+
+.info-value {
+  padding-left: 10px;
+}
+
+.action-btn {
+  margin-top: 48px;
+  height: 100px;
+}
+
+.btn-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 330px;
+  height: 60px;
+  border: none;
+  outline: none;
+  background: #f00;
+  color: #fff;
+  cursor: pointer;
+}

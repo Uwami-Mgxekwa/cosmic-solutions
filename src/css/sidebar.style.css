@@ -1,0 +1,131 @@
+@import url("../color-scheme.css");
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: right;
+}
+
+.sidebar:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  opacity: 0.5;
+}
+
+.sidebar-content {
+  position: relative;
+  width: 30%;
+  height: 100%;
+  background: var(--background);
+  padding: 24px;
+}
+
+.x-icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  background: var(--background);
+  cursor: pointer;
+}
+
+.x-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--text);
+}
+
+.x-icon svg:hover {
+  fill: var(--accent);
+}
+
+.meteor {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  padding-top: 8px;
+}
+
+.heading-group {
+  display: flex;
+  border-bottom: 2px solid var(--text);
+  padding-bottom: 10px;
+}
+
+.heading h2 {
+  font-size: 16px;
+}
+
+.heading-label h3 {
+  font-size: 10px;
+  cursor: pointer;
+  color: #f00;
+}
+
+.actions-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions-top {
+  width: 100%;
+  height: 80%;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.actions-top button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  border: none;
+  outline: none;
+  background: background;
+  border: 1px solid var(--text);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.actions-bottom {
+  width: 100%;
+}
+
+.actions-bottom button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  border: none;
+  outline: none;
+  background: #f00;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none;
+}
