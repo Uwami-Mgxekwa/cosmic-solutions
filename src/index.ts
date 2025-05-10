@@ -18,10 +18,10 @@ const loadIndexPage = () => {
           <h1 class="tab tab-active" id="user">User</h1>
           <h1 class="tab" id="admin">Admin</h1>
         </div>
-        <div>
+        <div class="form-wrapper">
           <div class="content content-active" id="user-login">
               <div class="card">
-                <h2> User Login</h2>
+                <h2> USER LOGIN</h2>
                 <form id="user-form">
                   <input type="text" id="user-username" name="user-username" placeholder="PC Number" required>
                   <input type="password" id="user-password" name="user-password" placeholder="Password" required>
@@ -31,7 +31,7 @@ const loadIndexPage = () => {
           </div>
           <div class="content" id="admin-login">
               <div class="card">
-                <h2>Admin Login</h2>
+                <h2>ADMIN LOGIN</h2>
                 <form id="admin-form">
                   <input type="text" id="admin-username" name="admin-username" placeholder="Email" required>
                   <input type="password" id="admin-password" name="admin-password" placeholder="Password" required>

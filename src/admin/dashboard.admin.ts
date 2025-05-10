@@ -56,6 +56,9 @@ export const loadAdminDash = () => {
             </tbody>
           </table>
         </div>
+        <div class="placeholder ph-hidden" id="ph">
+          <p>There Are No Reports At The Moment</p>
+         </div>
       </div>
     `
   )
@@ -68,8 +71,12 @@ headerActions();
 sidebarActions();
 
 const tableBody = document.getElementById("tbody") as HTMLTableElement;
-userReports.map((report) => {
-  tableBody.innerHTML += `
+const placeholder = document.getElementById("ph");
+if (userReports.length < 1) {
+  placeholder?.classList.remove("ph-hidden");
+} else {
+  userReports.map((report) => {
+    tableBody.innerHTML += `
       <tr class="ticket-row">
       <td>${report.tokenID}</td>
       <td>${report.category}</td>
@@ -77,7 +84,8 @@ userReports.map((report) => {
       <td>${report.submittedOn}</td>
       </tr>`
 
-});
+  });
+}
 const ticketRows = document.querySelectorAll(".ticket-row");
 
 ticketRows.forEach((ticketRow) => {
