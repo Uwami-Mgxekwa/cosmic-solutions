@@ -1,18 +1,18 @@
 import '../css/dashboard.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
-import { reports, type IReport } from '../assets/data';
+import { getReports } from '../lib/get-reports';
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
-const userDetails = JSON.parse(jsonUser);
-let userReports: Array<IReport> = reports;
-const jsonReports = localStorage.getItem("local-reports") as string;
-if (jsonReports) {
-  const reportArray = JSON.parse(jsonReports) as Array<IReport>;
-  userReports = [...reportArray, ...userReports];
+
+if (!jsonUser) {
+  localStorage.clear();
+  window.location.href = "/"
 }
+const userDetails = JSON.parse(jsonUser);
+let userReports: Array<any> = [];
 
 export const loadUserDash = () => {
   return (
@@ -56,21 +56,20 @@ export const loadUserDash = () => {
   )
 }
 
-dasboardPage.innerHTML += loadHeader("Support Request Portal");
-dasboardPage.innerHTML += loadSidebar()
-dasboardPage.innerHTML += loadUserDash();
-headerActions();
-sidebarActions();
+const loadReports = async () => {
+  const res = await getReports("http://localhost:8080/api/report/all");
+  if (!res?.ok) {
+    userReports = [];
+  } else {
+    userReports = res?.content
+  }
 
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-
-if (userReports.length < 1) {
-  placeholder?.classList.remove("ph-hidden");
-} else {
-  for (let i = 0; i < userReports.length; i++) {
-    let details = userReports[i];
-    tableBody.innerHTML += `
+  if (userReports.length < 1) {
+    placeholder?.classList.remove("ph-hidden");
+  } else {
+    for (let i = 0; i < userReports.length; i++) {
+      let details = userReports[i];
+      tableBody.innerHTML += `
       <tr class="ticket-row">
       <td>${details.tokenID}</td>
       <td>${details.category}</td>
@@ -78,16 +77,37 @@ if (userReports.length < 1) {
       <td>${details.submittedOn}</td>
       </tr>
   `
-    if (i == 2) {
-      break;
+      if (i == 2) {
+        break;
+      }
     }
+
+    const ticketRows = document.querySelectorAll(".ticket-row");
+    ticketRows.forEach((ticketRow, key) => {
+      ticketRow.addEventListener("click", () => {
+        const reportToken = userReports[key].tokenID;
+        const reportId = userReports[key]._id;
+        window.location.href = `../pages/status.user.html?id=${reportId}+q=${reportToken}`
+      })
+    })
+
   }
 
 }
+
+dasboardPage.innerHTML += loadHeader("Support Request Portal");
+dasboardPage.innerHTML += loadSidebar()
+dasboardPage.innerHTML += loadUserDash();
+headerActions();
+sidebarActions();
+loadReports();
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const placeholder = document.getElementById("ph");
+
 const newReportBtn = document.getElementById("btn-new");
 const viewTicketsBtn = document.getElementById("btn-view");
 const trackBtn = document.getElementById("btn-track");
-const ticketRows = document.querySelectorAll(".ticket-row");
 
 newReportBtn?.addEventListener("click", () => {
   window.location.href = "../pages/report.user.html"
@@ -98,14 +118,7 @@ viewTicketsBtn?.addEventListener("click", () => {
 });
 
 trackBtn?.addEventListener("click", () => {
-  window.location.href = "../pages/status.user.html"
+  window.location.href = "../pages/status.user.html?id=+q=track"
 });
-
-
-ticketRows.forEach((ticketRow) => {
-  ticketRow.addEventListener("click", () => {
-    window.location.href = "../pages/status.user.html"
-  })
-})
 
 

@@ -1,5 +1,4 @@
 @import url("../color-scheme.css");
-@import url("../reset.css");
 
 .wrapper {
   width: 100%;
@@ -51,8 +50,10 @@
 
 .table-container {
   width: 100%;
+  height: fit-content;
   border-top: 2px solid var(--text);
   margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .table {
@@ -108,6 +109,11 @@
 
 /* admin dash styles only */
 
+.form-wrapper {
+  margin-top: 24px;
+  border-top: 2px solid var(--text);
+}
+
 .search-form {
   margin-top: 24px;
   display: flex;
@@ -115,7 +121,7 @@
 }
 
 .search-form input {
-  width: 60%;
+  width: 70%;
   height: 60px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -138,40 +144,26 @@
   cursor: pointer;
 }
 
+#reset-btn {
+  background: var(--secondary);
+  border: 1px solid #ddd;
+  color: var(--text);
+}
+
 .search-form input:focus {
   border-color: var(--accent);
 }
 
-.filter {
-  position: relative;
-  width: 20%;
-  height: 60px;
-}
-
-.filter select {
-  width: 100%;
-  height: 60px;
-  padding: 10px;
-  outline: none;
-  background: var(--background);
-  border: 1px solid #ddd;
-  appearance: none;
-}
-
-.filter svg {
-  position: absolute;
-  top: 30%;
-  right: 5%;
-  width: 24px;
-  height: 24px;
-  fill: var(--text);
-  pointer-events: none;
+.admin-table {
+  border-top: none;
 }
 
 .placeholder {
   width: 100%;
   height: 60px;
   margin-top: 24px;
+  background: var(--secondary);
+  padding-top: 10px;
 }
 
 .placeholder p {

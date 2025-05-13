@@ -1,7 +1,6 @@
 import './css/index.style.css'
-import meteor from './assets/meteor.svg'
-import { admin, user } from './assets/data';
 import { storeData } from './lib/local-storage';
+import { login } from './lib/login';
 
 const main = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
@@ -10,7 +9,7 @@ const loadIndexPage = () => {
     container.innerHTML = `
       <div class="wrapper">
         <div class="logo">
-          <img src=${meteor} />
+          <img src="/meteor.svg" />
           <h1>cosmic solutions</h1>
         </div>
       <div class="container">
@@ -84,55 +83,54 @@ const adminEmail = document.getElementById("admin-username") as HTMLInputElement
 const adminpass = document.getElementById("admin-password") as HTMLInputElement;
 const alertMessage = document.getElementById("alert-message") as HTMLParagraphElement;
 
-userSubmitBtn?.addEventListener("click", (e) => {
+userSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   const form = document.getElementById("user-form") as HTMLFormElement;
   if (checkFormValidity(form)) {
-    const registeredUser = user;
-    const pcNumberValue = pcNumber.value;
-    const userPassValue = userpass.value;
-    if (pcNumberValue !== registeredUser.pc && userPassValue !== registeredUser.password) {
-      alertMessage.innerText = "Incorrect Credentials"
+    const data = {
+      pc: pcNumber.value,
+      password: userpass.value
+    }
+    const res = await login("http://localhost:8080/api/user/login", data)
+    if (!res?.ok) {
+      alertMessage.innerText = res?.content.message
       const timout = setTimeout(() => {
         alertMessage.innerText = ""
-        pcNumber.value = "";
-        userpass.value = "";
         clearTimeout(timout)
       }, 2000)
       return
     }
-
-    const data = {
-      pc: pcNumberValue,
-      room: registeredUser.room
+    const resData = {
+      pc: res.content.user.pc,
+      room: res.content.user.room
     }
 
-    storeData("user", data)
+    storeData("user", resData)
     window.location.href = "./src/pages/dashboard.user.html"
   }
 })
 
-adminSubmitBtn?.addEventListener("click", (e) => {
+adminSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   const form = document.getElementById("admin-form") as HTMLFormElement;
   if (checkFormValidity(form)) {
-    const registeredAdmin = admin;
-    const adminEmailValue = adminEmail.value;
-    const adminpassValue = adminpass.value;
-    if (adminEmailValue !== registeredAdmin.email && adminpassValue !== registeredAdmin.password) {
-      alertMessage.innerText = "Incorrect Credentials"
+    const data = {
+      email: adminEmail.value,
+      password: adminpass.value
+    }
+    const res = await login("http://localhost:8080/api/admin/login", data)
+    if (!res?.ok) {
+      alertMessage.innerText = res?.content.message
       const timout = setTimeout(() => {
         alertMessage.innerText = ""
-        adminEmail.value = "";
-        adminpass.value = "";
         clearTimeout(timout)
       }, 2000)
       return
     }
-    const data = {
-      email: adminEmailValue,
+    const resData = {
+      email: res.content.user.email
     }
-    storeData("admin", data);
+    storeData("admin", resData);
     window.location.href = "./src/pages/dashboard.admin.html"
   }
 })
@@ -148,3 +146,4 @@ const checkFormValidity = (form: HTMLFormElement) => {
     return true;
   }
 };
+

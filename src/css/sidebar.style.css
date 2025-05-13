@@ -129,3 +129,12 @@ button:disabled {
 .hidden {
   display: none;
 }
+
+.watermark {
+  margin-top: 12px;
+  opacity: 0.5;
+}
+
+.watermark a {
+  color: var(--text);
+}

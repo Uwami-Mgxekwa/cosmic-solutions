@@ -1,19 +1,19 @@
-import { reports, type IReport } from '../assets/data';
+import '../css/tickets.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
-import '../css/tickets.style.css'
+import { getReports } from '../lib/get-reports';
 
 const ticketsPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
+const jsonUser = localStorage.getItem("user") as string;
 
-const json = localStorage.getItem("user") as string;
-const userDetails = JSON.parse(json);
-let userReports: Array<IReport> = reports;
-const jsonReports = localStorage.getItem("local-reports") as string;
-if (jsonReports) {
-  const reportArray = JSON.parse(jsonReports) as [];
-  userReports = [...reportArray, ...userReports];
+if (!jsonUser) {
+  localStorage.clear();
+  window.location.href = "/"
 }
+
+const userDetails = JSON.parse(jsonUser);
+let userReports: Array<any> = [];
 
 export const loadTicketsPage = () => {
   return (
@@ -52,19 +52,18 @@ export const loadTicketsPage = () => {
   )
 }
 
-ticketsPage.innerHTML += loadHeader("Support Request Portal");
-ticketsPage.innerHTML += loadSidebar();
-ticketsPage.innerHTML += loadTicketsPage();
-headerActions();
-sidebarActions();
-
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-if (userReports.length < 1) {
-  placeholder?.classList.remove("ph-hidden");
-} else {
-  userReports.map((report) => {
-    tableBody.innerHTML += `
+const loadReports = async () => {
+  const res = await getReports("http://localhost:8080/api/report/all");
+  if (!res?.ok) {
+    userReports = [];
+  } else {
+    userReports = res?.content
+  }
+  if (userReports.length < 1) {
+    placeholder?.classList.remove("ph-hidden");
+  } else {
+    userReports.map((report) => {
+      tableBody.innerHTML += `
       <tr class="ticket-row">
       <td>${report.tokenID}</td>
       <td>${report.category}</td>
@@ -72,16 +71,30 @@ if (userReports.length < 1) {
       <td>${report.submittedOn}</td>
       </tr>`
 
-  });
-}
-const closeBtn = document.getElementById("btn-close");
-const ticketRows = document.querySelectorAll(".ticket-row");
+    });
+    const ticketRows = document.querySelectorAll(".ticket-row");
 
-ticketRows.forEach((ticketRow) => {
-  ticketRow.addEventListener("click", () => {
-    window.location.href = "../pages/status.user.html"
-  })
-})
+    ticketRows.forEach((ticketRow, key) => {
+      ticketRow.addEventListener("click", () => {
+        const reportToken = userReports[key].tokenID;
+        const reportId = userReports[key]._id;
+        window.location.href = `../pages/status.user.html?id=${reportId}+q=${reportToken}`
+      })
+    })
+  }
+
+}
+ticketsPage.innerHTML += loadHeader("Support Request Portal");
+ticketsPage.innerHTML += loadSidebar();
+ticketsPage.innerHTML += loadTicketsPage();
+headerActions();
+sidebarActions();
+loadReports();
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const placeholder = document.getElementById("ph");
+const closeBtn = document.getElementById("btn-close");
+
 closeBtn?.addEventListener("click", () => {
   window.location.href = "../pages/dashboard.user.html"
 })

@@ -1,5 +1,4 @@
 import '../css/sidebar.style.css'
-
 const container = document.createElement("div");
 
 export const loadSidebar = () => {
@@ -13,7 +12,7 @@ export const loadSidebar = () => {
   <div class="sidebar-content">
     <div class="heading-group">
       <div class="meteor">
-        <img src="../assets/meteor.svg"/>
+        <img src="/meteor.svg"/>
       </div>
       <div class="heading">
         <h2>cosmic</h2>
@@ -31,6 +30,9 @@ export const loadSidebar = () => {
       </div>
       <div class="actions-bottom">
         <button id="logout">Log Out</button>
+      </div>
+      <div class="watermark">
+        <a href="https://misterhportfolio.vercel.app/" target="_blank">developed by: thehandsomedev</a>
       </div>
     </div>
   </div>

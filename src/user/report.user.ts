@@ -1,11 +1,18 @@
-import { headerActions, loadHeader } from '../components/header';
-import { loadSidebar, sidebarActions } from '../components/sidebar';
 import '../css/report.style.css'
+import { headerActions, loadHeader } from '../components/header';
+import { popUp, popupActions } from '../components/popup';
+import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { storeData } from '../lib/local-storage';
 
 const reportPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
+
+if (!jsonUser) {
+  localStorage.clear();
+  window.location.href = "/"
+}
+
 const userDetails = JSON.parse(jsonUser);
 
 export const loadUserReport = () => {
@@ -22,7 +29,7 @@ export const loadUserReport = () => {
         <div class="form-container">
           <form>
             <div>
-                <h2 class="label">Issue Category</h2>
+                <h2 class="label">Choose Issue Category</h2>
                 <div class="radio-group">
                   <div>
                     <input type="radio" id="network" name="category" value="network">
@@ -48,7 +55,7 @@ export const loadUserReport = () => {
             </div>
           </form>
         </div>
-        <div class="alert">
+        <div class="arlet">
           <p id="message"></p>
         </div>
       </div>
@@ -98,8 +105,8 @@ submitBtn?.addEventListener("click", (e) => {
     status: "open",
     submittedOn: new Date().toLocaleString("en-ZA", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).toLowerCase(),
     notes: "",
-    pc: "001",
-    room: "1"
+    pc: userDetails.pc,
+    room: userDetails.room
   }
   let dataArray = [];
   const jsonArray = localStorage.getItem("local-reports");
@@ -111,12 +118,8 @@ submitBtn?.addEventListener("click", (e) => {
     dataArray.unshift(data)
     storeData("local-reports", dataArray);
   }
-  message.innerText = "Your Report Has Been Submitted"
-  const timout = setTimeout(() => {
-    message.innerText = ""
-    description.value = ""
-    clearTimeout(timout)
-  }, 2000)
+  popUp("Success", `<p>TokenID: cs-${tokenNumber}</p><br><p>Categoty: ${category}</p><br><p>Description: ${description.value}</p><br><p>Submitted On: ${new Date().toLocaleString("en-ZA", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).toLowerCase()}</p><br>`)
+  popupActions();
 });
 
 cancleBtn?.addEventListener("click", (e) => {
