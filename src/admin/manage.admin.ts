@@ -187,6 +187,7 @@ const updateStatus = () => {
       console.log(res?.content)
     }
     spinnerActionsRemove();
+    window.location.reload();
   })
 
   cancelBtn?.addEventListener("click", (e) => {
@@ -237,6 +238,7 @@ const addNotes = () => {
       console.log(res?.content)
     }
     spinnerActionsRemove()
+    window.location.reload();
   })
 
   cancelBtn?.addEventListener("click", (e) => {
@@ -285,6 +287,7 @@ const deleteReport = () => {
       console.log(res?.content)
     }
     spinnerActionsRemove()
+    window.location.reload();
   })
 
   cancelBtn?.addEventListener("click", (e) => {
