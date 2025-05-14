@@ -1,8 +1,10 @@
 import '../css/dashboard.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
-import { getReports } from '../lib/get-reports';
+import { getUserReports } from '../lib/get-reports';
+import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
+const userReportsUrl = "http://localhost:8080/api/report/all/user"
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -21,8 +23,8 @@ export const loadUserDash = () => {
   <div class="panel">
     <h1>Welcome,</h1>
     <div class="panel-info">
-      <h2>[ Computer No.: PC-${userDetails.pc} ]</h2>
-      <h2>[ Room No.: R-${userDetails.room} ]</h2>
+      <h2>[ Computer No.:${userDetails.pc} ]</h2>
+      <h2>[ Room No.:${userDetails.room} ]</h2>
     </div>
 
   </div>
@@ -57,7 +59,12 @@ export const loadUserDash = () => {
 }
 
 const loadReports = async () => {
-  const res = await getReports("http://localhost:8080/api/report/all");
+  spinnerActionsAdd()
+  let userData = {
+    pc: userDetails.pc,
+    room: userDetails.room,
+  }
+  const res = await getUserReports(userReportsUrl, userData);
   if (!res?.ok) {
     userReports = [];
   } else {
@@ -92,12 +99,14 @@ const loadReports = async () => {
     })
 
   }
+  spinnerActionsRemove()
 
 }
 
 dasboardPage.innerHTML += loadHeader("Support Request Portal");
 dasboardPage.innerHTML += loadSidebar()
 dasboardPage.innerHTML += loadUserDash();
+dasboardPage.innerHTML += loadSpinner()
 headerActions();
 sidebarActions();
 loadReports();

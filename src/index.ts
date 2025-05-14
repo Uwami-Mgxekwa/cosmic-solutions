@@ -1,7 +1,10 @@
+import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from './components/spinner';
 import './css/index.style.css'
 import { storeData } from './lib/local-storage';
 import { login } from './lib/login';
 
+const userLoginUrl = "http://localhost:8080/api/user/login"
+const adminLoginUrl = "http://localhost:8080/api/admin/login"
 const main = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const loadIndexPage = () => {
@@ -49,6 +52,7 @@ const loadIndexPage = () => {
 }
 
 main.innerHTML += loadIndexPage();
+main.innerHTML += loadSpinner()
 
 const tabs = document.querySelectorAll(".tab");
 const userLoginContent = document.getElementById("user-login");
@@ -85,13 +89,14 @@ const alertMessage = document.getElementById("alert-message") as HTMLParagraphEl
 
 userSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
+  spinnerActionsAdd()
   const form = document.getElementById("user-form") as HTMLFormElement;
   if (checkFormValidity(form)) {
     const data = {
       pc: pcNumber.value,
       password: userpass.value
     }
-    const res = await login("http://localhost:8080/api/user/login", data)
+    const res = await login(userLoginUrl, data)
     if (!res?.ok) {
       alertMessage.innerText = res?.content.message
       const timout = setTimeout(() => {
@@ -104,7 +109,7 @@ userSubmitBtn?.addEventListener("click", async (e) => {
       pc: res.content.user.pc,
       room: res.content.user.room
     }
-
+    spinnerActionsRemove()
     storeData("user", resData)
     window.location.href = "./src/pages/dashboard.user.html"
   }
@@ -112,13 +117,14 @@ userSubmitBtn?.addEventListener("click", async (e) => {
 
 adminSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
+  spinnerActionsAdd()
   const form = document.getElementById("admin-form") as HTMLFormElement;
   if (checkFormValidity(form)) {
     const data = {
       email: adminEmail.value,
       password: adminpass.value
     }
-    const res = await login("http://localhost:8080/api/admin/login", data)
+    const res = await login(adminLoginUrl, data)
     if (!res?.ok) {
       alertMessage.innerText = res?.content.message
       const timout = setTimeout(() => {
@@ -130,6 +136,7 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
     const resData = {
       email: res.content.user.email
     }
+    spinnerActionsRemove()
     storeData("admin", resData);
     window.location.href = "./src/pages/dashboard.admin.html"
   }

@@ -2,6 +2,8 @@ import '../css/manage.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getReportByID } from '../lib/get-reports';
+import { delReport, updateReport } from '../lib/update-report';
+import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
 const managePage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
@@ -15,10 +17,8 @@ if (!jsonAdmin) {
 const adminDetails = JSON.parse(jsonAdmin);
 const urlSearch = window.location.search.split("+")
 const id = urlSearch[0].split("=")[1];
-let query = urlSearch[1].split("=")[1]
-let userReports: Array<any> = [];
+let tokenID = "";
 
-let report = userReports.find((rep) => rep.tokenID == query);
 export const loadManagePage = () => {
   return (
     container.innerHTML = `
@@ -38,7 +38,8 @@ export const loadManagePage = () => {
 
         <div class="details-container">
           <h2>Report Details:</h2>
-          <div class="ticket-info"></div>
+          <div class="ticket-info">
+          </div>
         </div>
         <div class="action-btn">
           <button class="btn-close" id="btn-close">Close</button>
@@ -53,7 +54,10 @@ const loadDetails = async (detailsID: string) => {
   if (!res?.ok) {
     return
   }
+
+
   const report = res?.content.report
+  tokenID = report?.tokenID;
   ticketInfoContainer.innerHTML = ` 
             <div class="info-row">
               <span class="info-key">Token ID</span>|<span class="info-value">${report?.tokenID}</span>
@@ -85,6 +89,7 @@ const loadDetails = async (detailsID: string) => {
 managePage.innerHTML += loadHeader("Admin Dashboard");
 managePage.innerHTML += loadSidebar();
 managePage.innerHTML += loadManagePage();
+managePage.innerHTML += loadSpinner()
 headerActions()
 sidebarActions()
 loadDetails(id);
@@ -122,7 +127,7 @@ const updateStatus = () => {
     <div>
       <div class="header">
         <h1>Update Report Status</h1>
-        <h2>TokenID: ${report?.tokenID}</h2>
+        <h2>TokenID: ${tokenID}</h2>
       </div>
       <form>
         <div>
@@ -160,7 +165,7 @@ const updateStatus = () => {
   const updateBtn = document.getElementById("btn-status");
   const cancelBtn = document.getElementById("btn-cancel");
   const statuses = document.getElementsByName("status");
-  let statusValue = "";
+  let statusValue = "open";
 
   statuses.forEach((status: any) => {
     status.addEventListener("click", () => {
@@ -168,9 +173,16 @@ const updateStatus = () => {
     })
   })
 
-  updateBtn?.addEventListener("click", (e) => {
+  updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    console.log(statusValue)
+    spinnerActionsAdd()
+    const res = await updateReport(`http://localhost:8080/api/report/status/${id}`, { status: statusValue })
+    if (!res?.ok) {
+      console.log(res?.content)
+    } else {
+      console.log(res?.content)
+    }
+    spinnerActionsRemove();
   })
 
   cancelBtn?.addEventListener("click", (e) => {
@@ -181,7 +193,6 @@ const updateStatus = () => {
 
 }
 
-
 const addNotes = () => {
   const updateModal = document.createElement("div");
   updateModal.classList.add("update_modal")
@@ -189,7 +200,7 @@ const addNotes = () => {
     <div>
       <div class="header">
         <h1>Update Report Notes</h1>
-        <h2>TokenID: ${report?.tokenID}</h2>
+        <h2>TokenID: ${tokenID}</h2>
       </div>
       <form>
         <div>
@@ -210,9 +221,16 @@ const addNotes = () => {
   const cancelBtn = document.getElementById("btn-cancel");
   const notes = document.getElementById("notes") as HTMLTextAreaElement;
 
-  updateBtn?.addEventListener("click", (e) => {
+  updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    console.log(notes.value)
+    spinnerActionsAdd()
+    const res = await updateReport(`http://localhost:8080/api/report/notes/${id}`, { notes: notes.value })
+    if (!res?.ok) {
+      console.log(res?.content)
+    } else {
+      console.log(res?.content)
+    }
+    spinnerActionsRemove()
   })
 
   cancelBtn?.addEventListener("click", (e) => {
@@ -229,7 +247,7 @@ const deleteReport = () => {
     <div>
       <div class="header">
         <h1>Delete Report</h1>
-        <h2>TokenID: ${report?.tokenID}</h2>
+        <h2>TokenID: ${tokenID}</h2>
       </div>
       <form>
         <div class="warning">
@@ -247,9 +265,18 @@ const deleteReport = () => {
   const updateBtn = document.getElementById("btn-status");
   const cancelBtn = document.getElementById("btn-cancel");
 
-  updateBtn?.addEventListener("click", (e) => {
+  updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    console.log("deleted")
+    spinnerActionsAdd()
+    const res = await delReport(`http://localhost:8080/api/report/delete/${id}`)
+
+    if (!res?.ok) {
+      console.log(res?.content)
+    } else {
+      window.location.href = "../pages/dashboard.admin.html"
+      console.log(res?.content)
+    }
+    spinnerActionsRemove()
   })
 
   cancelBtn?.addEventListener("click", (e) => {

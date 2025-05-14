@@ -2,7 +2,9 @@ import '../css/dashboard.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getReports } from '../lib/get-reports';
+import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
+const reportsUrl = "http://localhost:8080/api/report/all"
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 
@@ -33,7 +35,7 @@ export const loadAdminDash = () => {
         </div>
         <div class="table-container admin-table">
           <table class="table">
-            <caption>Select Ticket To Manage</caption>
+            <caption id="caption">Select Ticket To Manage</caption>
             <thead class="table-head">
               <tr>
                 <th>Token ID</th>
@@ -55,12 +57,14 @@ export const loadAdminDash = () => {
 }
 
 const loadReports = async () => {
-  const res = await getReports("http://localhost:8080/api/report/all");
+  spinnerActionsAdd();
+  const res = await getReports(reportsUrl);
   if (!res?.ok) {
     userReports = [];
   } else {
     userReports = res?.content
   }
+
   if (userReports.length < 1) {
     placeholder?.classList.remove("ph-hidden");
   } else {
@@ -84,7 +88,7 @@ const loadReports = async () => {
       })
     })
   }
-
+  spinnerActionsRemove()
 }
 
 const loadSearchedReports = (sr: any) => {
@@ -114,31 +118,14 @@ const loadSearchedReports = (sr: any) => {
 
 }
 
-dasboardPage.innerHTML += loadHeader("Admin Dashboard");
-dasboardPage.innerHTML += loadSidebar()
-dasboardPage.innerHTML += loadAdminDash();
-headerActions();
-sidebarActions();
-
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-loadReports();
-
-const regBtn = document.getElementById("btn-reg");
-const searchBtn = document.getElementById("search-btn");
-
-searchBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
-  search();
-})
-
 const search = async () => {
+  spinnerActionsAdd()
   const searchField = document.getElementById("search") as HTMLInputElement;
   const searchKey = searchField.value;
   if (searchKey == " ") {
     return
   }
-  const res = await getReports("http://localhost:8080/api/report/all");
+  const res = await getReports(reportsUrl);
   let userReports = []
   if (!res?.ok) {
     userReports = [];
@@ -153,7 +140,26 @@ const search = async () => {
   let searchedReports = [report];
   tableBody.innerHTML = " "
   loadSearchedReports(searchedReports);
+  spinnerActionsRemove();
 }
+
+dasboardPage.innerHTML += loadHeader("Admin Dashboard");
+dasboardPage.innerHTML += loadSidebar()
+dasboardPage.innerHTML += loadAdminDash();
+dasboardPage.innerHTML += loadSpinner();
+headerActions();
+sidebarActions();
+loadReports();
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const placeholder = document.getElementById("ph");
+const regBtn = document.getElementById("btn-reg");
+const searchBtn = document.getElementById("search-btn");
+
+searchBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  search();
+})
 
 regBtn?.addEventListener("click", () => {
   window.location.href = "../pages/register.admin.html"

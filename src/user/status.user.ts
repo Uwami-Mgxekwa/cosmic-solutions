@@ -1,8 +1,10 @@
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
+import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 import '../css/status.style.css'
-import { getReportByID, getReports } from '../lib/get-reports';
+import { getReportByID, getUserReports } from '../lib/get-reports';
 
+const userReportsUrl = "http://localhost:8080/api/report/all/user"
 const statusPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -24,8 +26,8 @@ export const loadStatusPage = () => {
         <div class="panel">
           <h1>Report Status</h1>
           <div class="panel-info">
-            <h2>[ Computer No.: PC-${userDetails.pc} ]</h2>
-            <h2>[ Room No.: R-${userDetails.room} ]</h2>
+            <h2>[ Computer No.:${userDetails.pc} ]</h2>
+            <h2>[ Room No.:${userDetails.room} ]</h2>
           </div>
         </div>
         <div>
@@ -49,7 +51,9 @@ export const loadStatusPage = () => {
 
 
 const loadDetails = async (detailsID: string) => {
+  spinnerActionsAdd()
   if (query == "track") {
+    spinnerActionsRemove()
     return
   } else {
     const res = await getReportByID(`http://localhost:8080/api/report/id/${detailsID}`);
@@ -84,11 +88,13 @@ const loadDetails = async (detailsID: string) => {
             </div>
   `
   }
+  spinnerActionsRemove()
 }
 
 statusPage.innerHTML += loadHeader("Support Request Portal");
 statusPage.innerHTML += loadSidebar();
 statusPage.innerHTML += loadStatusPage();
+statusPage.innerHTML += loadSpinner()
 headerActions();
 sidebarActions();
 loadDetails(id);
@@ -107,12 +113,17 @@ searchBtn?.addEventListener("click", (e) => {
 })
 
 const search = async () => {
+  spinnerActionsAdd()
+  let userData = {
+    pc: userDetails.pc,
+    room: userDetails.room,
+  }
   const searchField = document.getElementById("search") as HTMLInputElement;
   const searchKey = searchField.value;
   if (searchKey == " ") {
     return
   }
-  const res = await getReports("http://localhost:8080/api/report/all");
+  const res = await getUserReports(userReportsUrl, userData);
   let userReports = []
   if (!res?.ok) {
     userReports = [];
@@ -129,5 +140,6 @@ const search = async () => {
   history.pushState({}, "", newUrl)
   ticketInfoContainer.innerHTML = ""
   loadDetails(report._id);
+  spinnerActionsRemove()
 }
 

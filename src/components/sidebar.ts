@@ -1,5 +1,9 @@
 import '../css/sidebar.style.css'
+import { logout } from '../lib/logout';
+
 const container = document.createElement("div");
+const userLogoutUrl = "http://localhost:8080/api/user/logout"
+const adminLogoutUrl = "http://localhost:8080/api/admin/logout"
 
 export const loadSidebar = () => {
   return (
@@ -52,9 +56,56 @@ export const sidebarActions = () => {
     sidebar?.classList.add("hidden")
   });
 
-  logOutBtn?.addEventListener("click", () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("admin");
-    window.location.href = "/"
+  logOutBtn?.addEventListener("click", async (e) => {
+    e.preventDefault()
+    let option = "";
+    const jsonUser = localStorage.getItem("user") as string;
+    const jsonAdmin = localStorage.getItem("admin") as string;
+    if (jsonUser) {
+      option = "user"
+    }
+
+    if (jsonAdmin) {
+      option = "admin"
+    }
+
+    console.log(option)
+    let res;
+    switch (option) {
+      case "user":
+        const userDetails = JSON.parse(jsonUser);
+        const userData = {
+          pc: userDetails.pc,
+          room: userDetails.room
+        }
+        res = await logout(userLogoutUrl, userData)
+
+        if (!res?.ok) {
+          return
+        } else {
+          localStorage.removeItem("user");
+          localStorage.removeItem("admin");
+          window.location.href = "/"
+
+        }
+        break;
+      case "admin":
+        const adminDetails = JSON.parse(jsonAdmin);
+        const adminData = {
+          email: adminDetails.email
+        }
+        res = await logout(adminLogoutUrl, adminData)
+
+        if (!res?.ok) {
+          return
+        } else {
+          console.log(res)
+          localStorage.removeItem("user");
+          localStorage.removeItem("admin");
+          window.location.href = "/"
+
+        }
+        break;
+    }
   })
 }

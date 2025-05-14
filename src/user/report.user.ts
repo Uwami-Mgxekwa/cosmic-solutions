@@ -2,8 +2,10 @@ import '../css/report.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { popUp, popupActions } from '../components/popup';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
-import { storeData } from '../lib/local-storage';
+import { createReport } from '../lib/get-reports';
+import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
+const createReportUrl = "http://localhost:8080/api/report/new"
 const reportPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -22,8 +24,8 @@ export const loadUserReport = () => {
         <div class="panel">
           <h1>Report A New Issue</h1>
           <div class="panel-info">
-            <h2>[ Computer No.: PC-${userDetails.pc} ]</h2>
-            <h2>[ Room No.: R-${userDetails.room} ]</h2>
+            <h2>[ Computer No.:${userDetails.pc} ]</h2>
+            <h2>[ Room No.:${userDetails.room} ]</h2>
           </div>
         </div>
         <div class="form-container">
@@ -66,6 +68,7 @@ export const loadUserReport = () => {
 reportPage.innerHTML += loadHeader("Support Request Portal");
 reportPage.innerHTML += loadSidebar();
 reportPage.innerHTML += loadUserReport();
+reportPage.innerHTML += loadSpinner()
 headerActions();
 sidebarActions();
 
@@ -76,13 +79,15 @@ const description = document.getElementById("description") as HTMLTextAreaElemen
 let category = "";
 let message = document.getElementById("message") as HTMLParagraphElement;
 
-submitBtn?.addEventListener("click", (e) => {
+submitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
+  spinnerActionsAdd()
   for (let i = 0; i < cats.length; i++) {
     if (cats[i].checked) {
       category = cats[i].value
     }
   }
+
   if (category == "" && description.value == "" || category == "" || description.value == "") {
     message.innerText = "Make sure to complete your report!"
     const timout = setTimeout(() => {
@@ -97,9 +102,11 @@ submitBtn?.addEventListener("click", (e) => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+
   let tokenNumber = getRandomIntInclusive(10, 99).toString() + getRandomIntInclusive(10, 99).toString()
+
   const data = {
-    tokenID: "cs-" + tokenNumber,
+    tokenID: tokenNumber,
     category: category,
     description: description.value,
     status: "open",
@@ -108,18 +115,16 @@ submitBtn?.addEventListener("click", (e) => {
     pc: userDetails.pc,
     room: userDetails.room
   }
-  let dataArray = [];
-  const jsonArray = localStorage.getItem("local-reports");
-  if (jsonArray) {
-    dataArray = JSON.parse(jsonArray);
-    dataArray.unshift(data);
-    storeData("local-reports", dataArray);
+
+  const res = await createReport(createReportUrl, data);
+  if (!res?.ok) {
+    return
   } else {
-    dataArray.unshift(data)
-    storeData("local-reports", dataArray);
+    popUp("Success", `<p>TokenID: ${tokenNumber}</p><br><p>Categoty: ${category}</p><br><p>Description: ${description.value}</p><br><p>Submitted On: ${new Date().toLocaleString("en-ZA", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).toLowerCase()}</p><br>`)
+    popupActions();
+
   }
-  popUp("Success", `<p>TokenID: cs-${tokenNumber}</p><br><p>Categoty: ${category}</p><br><p>Description: ${description.value}</p><br><p>Submitted On: ${new Date().toLocaleString("en-ZA", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).toLowerCase()}</p><br>`)
-  popupActions();
+  spinnerActionsRemove()
 });
 
 cancleBtn?.addEventListener("click", (e) => {
