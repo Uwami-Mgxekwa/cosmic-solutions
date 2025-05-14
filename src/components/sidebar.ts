@@ -2,8 +2,10 @@ import '../css/sidebar.style.css'
 import { logout } from '../lib/logout';
 
 const container = document.createElement("div");
-const userLogoutUrl = "http://localhost:8080/api/user/logout"
-const adminLogoutUrl = "http://localhost:8080/api/admin/logout"
+const userLogoutUrl = "https://nodeserver-v2.onrender.com/api/user/logout"
+const adminLogoutUrl = "https://nodeserver-v2.onrender.com/api/admin/logout"
+// const userLogoutUrl = "http://localhost:8080/api/user/logout"
+// const adminLogoutUrl = "http://localhost:8080/api/admin/logout"
 
 export const loadSidebar = () => {
   return (

@@ -3,8 +3,10 @@ import './css/index.style.css'
 import { storeData } from './lib/local-storage';
 import { login } from './lib/login';
 
-const userLoginUrl = "http://localhost:8080/api/user/login"
-const adminLoginUrl = "http://localhost:8080/api/admin/login"
+const userLoginUrl = "https://nodeserver-v2.onrender.com/api/user/login"
+const adminLoginUrl = "https://nodeserver-v2.onrender.com/api/admin/login"
+// const userLoginUrl = "http://localhost:8080/api/user/login"
+// const adminLoginUrl = "http://localhost:8080/api/admin/login"
 const main = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const loadIndexPage = () => {
