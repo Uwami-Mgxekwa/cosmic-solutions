@@ -4,7 +4,8 @@ import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getUserReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
-const userReportsUrl = "http://localhost:8080/api/report/all/user"
+// const userReportsUrl = "http://localhost:8080/api/report/all/user"
+const userReportsUrl = "https://nodeserver-v2.onrender.com/api/report/all/user"
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;

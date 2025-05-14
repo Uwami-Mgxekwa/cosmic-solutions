@@ -4,7 +4,8 @@ import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
-const reportsUrl = "http://localhost:8080/api/report/all"
+// const reportsUrl = "http://localhost:8080/api/report/all"
+const reportsUrl = "https://nodeserver-v2.onrender.comtt/api/report/all"
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 

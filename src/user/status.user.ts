@@ -1,10 +1,11 @@
+import '../css/status.style.css'
 import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
-import '../css/status.style.css'
 import { getReportByID, getUserReports } from '../lib/get-reports';
 
-const userReportsUrl = "http://localhost:8080/api/report/all/user"
+// const userReportsUrl = "http://localhost:8080/api/report/all/user"
+const userReportsUrl = "https://nodeserver-v2.onrender.com/api/report/all/user"
 const statusPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -56,7 +57,9 @@ const loadDetails = async (detailsID: string) => {
     spinnerActionsRemove()
     return
   } else {
-    const res = await getReportByID(`http://localhost:8080/api/report/id/${detailsID}`);
+    // const reportIdUrl = `http://localhost:8080/api/report/id/${detailsID}`
+    const reportIdUrl = `https://nodeserver-v2.onrender.com/api/report/id/${detailsID}`
+    const res = await getReportByID(reportIdUrl);
     if (!res?.ok) {
       return
     }

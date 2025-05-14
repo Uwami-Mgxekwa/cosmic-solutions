@@ -5,7 +5,8 @@ import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { register } from '../lib/register';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 
-const registerUrl = "http://localhost:8080/api/user/register"
+// const registerUrl = "http://localhost:8080/api/user/register"
+const registerUrl = "https://nodeserver-v2.onrender.com/api/admin/register"
 const registerPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonAdmin = localStorage.getItem("admin") as string;

@@ -50,7 +50,9 @@ export const loadManagePage = () => {
 }
 
 const loadDetails = async (detailsID: string) => {
-  const res = await getReportByID(`http://localhost:8080/api/report/id/${detailsID}`);
+  const reportIdUrl = `https://nodeserver-v2.onrender.com/api/report/id/${detailsID}`
+  // const reportIdUrl = `http://localhost:8080/api/report/id/${detailsID}`
+  const res = await getReportByID(reportIdUrl);
   if (!res?.ok) {
     return
   }
@@ -176,7 +178,9 @@ const updateStatus = () => {
   updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     spinnerActionsAdd()
-    const res = await updateReport(`http://localhost:8080/api/report/status/${id}`, { status: statusValue })
+    const updateReportUrl = `https://nodeserver-v2.onrender.com/api/report/status/${id}`
+    // const updateReportUrl = `http://localhost:8080/api/report/status/${id}`
+    const res = await updateReport(updateReportUrl, { status: statusValue })
     if (!res?.ok) {
       console.log(res?.content)
     } else {
@@ -224,7 +228,9 @@ const addNotes = () => {
   updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     spinnerActionsAdd()
-    const res = await updateReport(`http://localhost:8080/api/report/notes/${id}`, { notes: notes.value })
+    const updateReportUrl = `https://nodeserver-v2.onrender.com/api/report/notes/${id}`
+    // const updateReportUrl = `http://localhost:8080/api/report/notes/${id}`
+    const res = await updateReport(updateReportUrl, { notes: notes.value })
     if (!res?.ok) {
       console.log(res?.content)
     } else {
@@ -268,7 +274,9 @@ const deleteReport = () => {
   updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     spinnerActionsAdd()
-    const res = await delReport(`http://localhost:8080/api/report/delete/${id}`)
+    const updateReportUrl = `https://nodeserver-v2.onrender.com/api/report/delete/${id}`
+    // const updateReportUrl = `http://localhost:8080/api/report/notes/${id}`
+    const res = await delReport(updateReportUrl)
 
     if (!res?.ok) {
       console.log(res?.content)
