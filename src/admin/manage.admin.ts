@@ -283,11 +283,10 @@ const deleteReport = () => {
     if (!res?.ok) {
       console.log(res?.content)
     } else {
-      window.location.href = "../pages/dashboard.admin.html"
       console.log(res?.content)
     }
     spinnerActionsRemove()
-    window.location.reload();
+    window.location.href = "../pages/dashboard.admin.html"
   })
 
   cancelBtn?.addEventListener("click", (e) => {
