@@ -64,33 +64,33 @@ if (environment == "DEV") {
 
 } else {
   Endpoints = {
-    userLoginUrl: "https://nodeserver-v2.onrender.com/api/user/login",
-    userLogoutUrl: "https://nodeserver-v2.onrender.com/api/user/logout",
-    adminLoginUrl: "https://nodeserver-v2.onrender.com/api/admin/login",
-    adminLogoutUrl: "https://nodeserver-v2.onrender.com/api/admin/logout",
-    technicianLoginUrl: "https://nodeserver-v2.onrender.com/api/technician/login",
-    technicianLogoutUrl: "https://nodeserver-v2.onrender.com/api/technician/logout",
-    techniciansUrl: "https://nodeserver-v2.onrender.com/api/technician/all",
-    userReportsUrl: "https://nodeserver-v2.onrender.com/api/report/all/user",
-    reportsUrl: "https://nodeserver-v2.onrender.com/api/report/all/user",
-    createReportUrl: "https://nodeserver-v2.onrender.com/api/report/new",
-    registerUrl: "https://nodeserver-v2.onrender.com/api/user/register",
+    userLoginUrl: "https://api.devnil.site/api/user/login",
+    userLogoutUrl: "https://api.devnil.site/api/user/logout",
+    adminLoginUrl: "https://api.devnil.site/api/admin/login",
+    adminLogoutUrl: "https://api.devnil.site/api/admin/logout",
+    technicianLoginUrl: "https://api.devnil.site/api/technician/login",
+    technicianLogoutUrl: "https://api.devnil.site/api/technician/logout",
+    techniciansUrl: "https://api.devnil.site/api/technician/all",
+    userReportsUrl: "https://api.devnil.site/api/report/all/user",
+    reportsUrl: "https://api.devnil.site/api/report/all/user",
+    createReportUrl: "https://api.devnil.site/api/report/new",
+    registerUrl: "https://api.devnil.site/api/user/register",
 
     reportIdUrl: (id: any) => {
-      return `https://nodeserver-v2.onrender.com/api/report/id/${id}`
+      return `https://api.devnil.site/api/report/id/${id}`
 
     },
     updateReportStatusUrl: (id: any) => {
-      return `https://nodeserver-v2.onrender.com/api/report/status/${id}`
+      return `https://api.devnil.site/api/report/status/${id}`
     },
     updateReportNotesUrl: (id: any) => {
-      return `https://nodeserver-v2.onrender.com/api/report/notes/${id}`
+      return `https://api.devnil.site/api/report/notes/${id}`
     },
     assignReportUrl: (id: any) => {
-      return `https://nodeserver-v2.onrender.com/api/report/assign/${id}`
+      return `https://api.devnil.site/api/report/assign/${id}`
     },
     updateReportDeleteUrl: (id: any) => {
-      return `https://nodeserver-v2.onrender.com/api/report/delete/${id}`
+      return `https://api.devnil.site/api/report/delete/${id}`
     }
   }
 
