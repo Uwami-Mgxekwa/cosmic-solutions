@@ -12,6 +12,7 @@ export default defineConfig({
         dash: resolve(__dirname, "./src/pages/dashboard.admin.html"),
         manage: resolve(__dirname, "./src/pages/manage.admin.html"),
         register: resolve(__dirname, "./src/pages/register.admin.html"),
+        signUp: resolve(__dirname, "./src/pages/sign-up.user.html"),
         dashboard: resolve(__dirname, "./src/pages/dashboard.user.html"),
         report: resolve(__dirname, "./src/pages/report.user.html"),
         status: resolve(__dirname, "./src/pages/status.user.html"),

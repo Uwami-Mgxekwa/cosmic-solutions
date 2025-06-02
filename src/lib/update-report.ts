@@ -22,7 +22,7 @@ export const updateReport = async (url: string, data: any) => {
 
 }
 
-export const delReport = async (url: string) => {
+export const delReport = async (url: string, data: any) => {
   try {
     const response = await fetch(url, {
       method: "delete",
@@ -31,6 +31,7 @@ export const delReport = async (url: string) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      body: JSON.stringify(data)
     });
 
     const content = await response.json();

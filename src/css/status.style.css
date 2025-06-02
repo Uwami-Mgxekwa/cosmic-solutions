@@ -81,14 +81,17 @@
   display: flex;
   align-items: center;
   font-size: 24px;
-  height: 60px;
+  width: 100%;
+  min-height: 60px;
   padding: 0 24px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .info-row span {
+  display: inline-block;
   width: 50%;
+  height: fit-content;
+  overflow-wrap: break-word;
+  line-height: 40px;
 }
 
 .info-value {

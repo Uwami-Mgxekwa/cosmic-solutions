@@ -4,9 +4,8 @@ import { popUp, popupActions } from '../components/popup';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { createReport } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
+import Endpoints from '../lib/endpoint';
 
-const createReportUrl = "https://nodeserver-v2.onrender.com/api/report/new"
-// const createReportUrl = "http://localhost:8080/api/report/new"
 const reportPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -117,7 +116,7 @@ submitBtn?.addEventListener("click", async (e) => {
     room: userDetails.room
   }
 
-  const res = await createReport(createReportUrl, data);
+  const res = await createReport(Endpoints.createReportUrl, data);
   if (!res?.ok) {
     return
   } else {

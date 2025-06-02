@@ -1,41 +1,37 @@
+import { popUp, popupActions } from './components/popup';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from './components/spinner';
 import './css/index.style.css'
+import Endpoints from './lib/endpoint';
 import { storeData } from './lib/local-storage';
 import { login } from './lib/login';
 
-const userLoginUrl = "https://nodeserver-v2.onrender.com/api/user/login"
-const adminLoginUrl = "https://nodeserver-v2.onrender.com/api/admin/login"
-// const userLoginUrl = "http://localhost:8080/api/user/login"
-// const adminLoginUrl = "http://localhost:8080/api/admin/login"
 const main = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const loadIndexPage = () => {
   return (
     container.innerHTML = `
       <div class="wrapper">
-        <div class="logo">
-          <img src="/meteor.svg" />
-          <h1>cosmic solutions</h1>
-        </div>
       <div class="container">
-        <div class="tab-container">
-          <h1 class="tab tab-active" id="user">User</h1>
-          <h1 class="tab" id="admin">Admin</h1>
-        </div>
         <div class="form-wrapper">
-          <div class="content content-active" id="user-login">
+          <div class="content left" id="user-login">
               <div class="card">
                 <h2> USER LOGIN</h2>
+                <p class="title-left">Be part of the Cosmos</p>
                 <form id="user-form">
-                  <input type="text" id="user-username" name="user-username" placeholder="PC Number" required>
+                  <input type="text" id="user-username" name="user-username" placeholder="Username" required>
                   <input type="password" id="user-password" name="user-password" placeholder="Password" required>
                   <button type="submit" id="user-submit">Login</button>
                 </form>
+                <div>
+                  <p class="signuptext">Dont have an Account?</p>
+                  <p class="signuptext"><a href="/src/pages/sign-up.user.html">Sign Up Now</a> and Report your computer problem</p>
+                </div>
               </div>
           </div>
-          <div class="content" id="admin-login">
+          <div class="content right" id="admin-login">
               <div class="card">
                 <h2>ADMIN LOGIN</h2>
+                <p class="title-right">Manage a Cosmos</p>
                 <form id="admin-form">
                   <input type="text" id="admin-username" name="admin-username" placeholder="Email" required>
                   <input type="password" id="admin-password" name="admin-password" placeholder="Password" required>
@@ -45,9 +41,6 @@ const loadIndexPage = () => {
           </div>
         </div>
       </div>
-        <div class="alert">
-          <p id="alert-message"></p>
-        </div>
       </div>
     `
   )
@@ -87,24 +80,21 @@ const pcNumber = document.getElementById("user-username") as HTMLInputElement;
 const userpass = document.getElementById("user-password") as HTMLInputElement;
 const adminEmail = document.getElementById("admin-username") as HTMLInputElement;
 const adminpass = document.getElementById("admin-password") as HTMLInputElement;
-const alertMessage = document.getElementById("alert-message") as HTMLParagraphElement;
 
 userSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
-  spinnerActionsAdd()
   const form = document.getElementById("user-form") as HTMLFormElement;
   if (checkFormValidity(form)) {
+    spinnerActionsAdd()
     const data = {
       pc: pcNumber.value,
       password: userpass.value
     }
-    const res = await login(userLoginUrl, data)
+    const res = await login(Endpoints.userLoginUrl, data)
     if (!res?.ok) {
-      alertMessage.innerText = res?.content.message
-      const timout = setTimeout(() => {
-        alertMessage.innerText = ""
-        clearTimeout(timout)
-      }, 2000)
+      popUp("Login Error", res?.content.message)
+      popupActions();
+      spinnerActionsRemove()
       return
     }
     const resData = {
@@ -119,24 +109,30 @@ userSubmitBtn?.addEventListener("click", async (e) => {
 
 adminSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
-  spinnerActionsAdd()
   const form = document.getElementById("admin-form") as HTMLFormElement;
   if (checkFormValidity(form)) {
+    spinnerActionsAdd()
     const data = {
       email: adminEmail.value,
       password: adminpass.value
     }
-    const res = await login(adminLoginUrl, data)
+    let ep = "";
+    if (data.email.includes("tech")) {
+      ep = Endpoints.technicianLoginUrl;
+    } else {
+      ep = Endpoints.adminLoginUrl;
+    }
+    const res = await login(ep, data)
     if (!res?.ok) {
-      alertMessage.innerText = res?.content.message
-      const timout = setTimeout(() => {
-        alertMessage.innerText = ""
-        clearTimeout(timout)
-      }, 2000)
+      popUp("Login Error", res?.content.message)
+      popupActions();
+      spinnerActionsRemove()
       return
     }
     const resData = {
-      email: res.content.user.email
+      email: res.content.user.email,
+      role: res.content.user.role,
+      clearance_level: res.content.user.clearance_level
     }
     spinnerActionsRemove()
     storeData("admin", resData);

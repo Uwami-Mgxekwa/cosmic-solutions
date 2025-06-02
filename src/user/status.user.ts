@@ -3,9 +3,8 @@ import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 import { getReportByID, getUserReports } from '../lib/get-reports';
+import Endpoints from '../lib/endpoint';
 
-// const userReportsUrl = "http://localhost:8080/api/report/all/user"
-const userReportsUrl = "https://nodeserver-v2.onrender.com/api/report/all/user"
 const statusPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -57,8 +56,7 @@ const loadDetails = async (detailsID: string) => {
     spinnerActionsRemove()
     return
   } else {
-    // const reportIdUrl = `http://localhost:8080/api/report/id/${detailsID}`
-    const reportIdUrl = `https://nodeserver-v2.onrender.com/api/report/id/${detailsID}`
+    const reportIdUrl = Endpoints.reportIdUrl(detailsID);
     const res = await getReportByID(reportIdUrl);
     if (!res?.ok) {
       return
@@ -85,6 +83,9 @@ const loadDetails = async (detailsID: string) => {
             </div>
             <div class="info-row">
               <span class="info-key">Room Number</span>|<span class="info-value">${report?.room}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Technician</span>|<span class="info-value">${report?.technician}</span>
             </div>
             <div class="info-row">
               <span class="info-key">Submitted On</span>|<span class="info-value">${report?.submittedOn}</span>
@@ -126,7 +127,7 @@ const search = async () => {
   if (searchKey == " ") {
     return
   }
-  const res = await getUserReports(userReportsUrl, userData);
+  const res = await getUserReports(Endpoints.userReportsUrl, userData);
   let userReports = []
   if (!res?.ok) {
     userReports = [];

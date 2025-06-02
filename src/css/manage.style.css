@@ -29,7 +29,7 @@
 }
 
 .action-btns button {
-  width: calc(100% / 4);
+  width: calc(100% / 5);
   height: 60px;
   border: none;
   outline: none;
@@ -45,6 +45,12 @@
 .btn-add {
   background: var(--secondary);
   color: var(--text);
+  cursor: pointer;
+}
+
+.btn-assign {
+  background: var(--accent);
+  color: var(--background);
   cursor: pointer;
 }
 
@@ -78,12 +84,17 @@
   display: flex;
   align-items: center;
   font-size: 24px;
-  height: 60px;
+  width: 100%;
+  min-height: 60px;
   padding: 0 24px;
 }
 
 .info-row span {
+  display: inline-block;
   width: 50%;
+  height: fit-content;
+  overflow-wrap: break-word;
+  line-height: 40px;
 }
 
 .info-value {
@@ -216,6 +227,50 @@
   padding: 12px;
   resize: none;
   background: var(--background);
+}
+
+.assign {
+  width: 100%;
+  position: relative;
+}
+
+.assign input {
+  height: 60px;
+  width: 100%;
+  margin-top: 24px;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+  outline: none;
+  color: var(--text);
+}
+
+.assign input:focus {
+  border-color: var(--accent);
+}
+
+.assign ul {
+  position: absolute;
+  background: var(--background);
+  width: 100%;
+  height: fit-content;
+  max-height: 200px;
+  left: 0;
+  top: 100%;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  list-style: none;
+}
+
+.assign ul li {
+  padding: 2px;
+}
+
+.assign ul li:hover {
+  background: var(--secondary);
 }
 
 .warning p {

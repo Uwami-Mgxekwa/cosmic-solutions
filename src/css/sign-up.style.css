@@ -41,36 +41,23 @@ body {
   padding: 0 48px;
 }
 
-.signuptext {
-  width: 100%;
-  height: fit-content;
-  margin-top: 20px;
-  padding-left: 48px;
-}
-
-.signuptext a {
-  color: var(--primary);
-  cursor: pointer;
-}
-
 .right {
   width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--dark-accent);
 }
 
-.right > .card h2 {
-  font-size: 24px;
-  color: #fff;
-  width: 100%;
-  padding: 0 48px;
+.right img {
+  width: 50%;
+  height: 50%;
 }
 
-.title-right {
+.title {
   font-size: 16px;
   margin-bottom: 24px;
   position: relative;
-  padding: 0 48px;
-  color: #fff;
 }
 
 form {
@@ -84,6 +71,7 @@ form {
 
 input {
   height: 60px;
+  width: 100%;
   padding: 10px;
   margin-bottom: 12px;
   border: 1px solid #ddd;
@@ -91,6 +79,33 @@ input {
   transition: border-color 0.3s ease-in-out;
   outline: none;
   color: var(--text);
+}
+
+.country-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.country-wrapper ul {
+  position: absolute;
+  background: var(--background);
+  width: 100%;
+  height: fit-content;
+  max-height: 200px;
+  left: 0;
+  top: 100%;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  list-style: none;
+}
+
+.country-wrapper ul li {
+  padding: 2px;
+}
+
+.country-wrapper ul li:hover {
+  background: var(--secondary);
 }
 
 input:focus {
@@ -119,4 +134,16 @@ button:hover {
 .alert p {
   font-size: 24px;
   color: #f00;
+}
+
+.signuptext {
+  width: 100%;
+  height: fit-content;
+  margin-top: 20px;
+  padding-left: 48px;
+}
+
+.signuptext a {
+  color: var(--primary);
+  cursor: pointer;
 }

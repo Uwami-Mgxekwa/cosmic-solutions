@@ -6,6 +6,7 @@
   --primary: #2f27ce;
   --secondary: #dddbff;
   --accent: #443dff;
+  --dark-accent: #1f2937;
 }
 
 :root[data-theme="dark"] {
@@ -14,4 +15,5 @@
   --primary: #3a31d8;
   --secondary: #020024;
   --accent: #0600c2;
+  --dark-accent: #1f2937;
 }

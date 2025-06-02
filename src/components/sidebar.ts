@@ -1,11 +1,8 @@
 import '../css/sidebar.style.css'
+import Endpoints from '../lib/endpoint';
 import { logout } from '../lib/logout';
 
 const container = document.createElement("div");
-const userLogoutUrl = "https://nodeserver-v2.onrender.com/api/user/logout"
-const adminLogoutUrl = "https://nodeserver-v2.onrender.com/api/admin/logout"
-// const userLogoutUrl = "http://localhost:8080/api/user/logout"
-// const adminLogoutUrl = "http://localhost:8080/api/admin/logout"
 
 export const loadSidebar = () => {
   return (
@@ -80,7 +77,7 @@ export const sidebarActions = () => {
           pc: userDetails.pc,
           room: userDetails.room
         }
-        res = await logout(userLogoutUrl, userData)
+        res = await logout(Endpoints.userLogoutUrl, userData)
 
         if (!res?.ok) {
           return
@@ -96,7 +93,13 @@ export const sidebarActions = () => {
         const adminData = {
           email: adminDetails.email
         }
-        res = await logout(adminLogoutUrl, adminData)
+        let ep = "";
+        if (adminData.email.includes("tech")) {
+          ep = Endpoints.technicianLogoutUrl;
+        } else {
+          ep = Endpoints.adminLogoutUrl;
+        }
+        res = await logout(ep, adminData)
 
         if (!res?.ok) {
           return

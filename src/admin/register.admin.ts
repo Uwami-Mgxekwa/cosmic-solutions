@@ -4,9 +4,8 @@ import { popUp, popupActions } from '../components/popup';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { register } from '../lib/register';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
+import Endpoints from '../lib/endpoint';
 
-// const registerUrl = "http://localhost:8080/api/user/register"
-const registerUrl = "https://nodeserver-v2.onrender.com/api/user/register"
 const registerPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonAdmin = localStorage.getItem("admin") as string;
@@ -80,7 +79,7 @@ submitBtn?.addEventListener("click", async (e) => {
     room: roomNumber.value,
     password: computerNumber.value + roomNumber.value
   }
-  const res = await register(registerUrl, data)
+  const res = await register(Endpoints.registerUrl, data)
   if (!res?.ok) {
     return;
   } else {

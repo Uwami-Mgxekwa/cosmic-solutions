@@ -3,9 +3,8 @@ import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getUserReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
+import Endpoints from '../lib/endpoint';
 
-// const userReportsUrl = "http://localhost:8080/api/report/all/user"
-const userReportsUrl = "https://nodeserver-v2.onrender.com/api/report/all/user"
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
@@ -65,7 +64,7 @@ const loadReports = async () => {
     pc: userDetails.pc,
     room: userDetails.room,
   }
-  const res = await getUserReports(userReportsUrl, userData);
+  const res = await getUserReports(Endpoints.userReportsUrl, userData);
   if (!res?.ok) {
     userReports = [];
   } else {
