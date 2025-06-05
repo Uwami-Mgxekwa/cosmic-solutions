@@ -72,7 +72,7 @@ if (environment == "DEV") {
     technicianLogoutUrl: "https://api.devnil.site/api/technician/logout",
     techniciansUrl: "https://api.devnil.site/api/technician/all",
     userReportsUrl: "https://api.devnil.site/api/report/all/user",
-    reportsUrl: "https://api.devnil.site/api/report/all/user",
+    reportsUrl: "https://api.devnil.site/api/report/all",
     createReportUrl: "https://api.devnil.site/api/report/new",
     registerUrl: "https://api.devnil.site/api/user/register",
 
