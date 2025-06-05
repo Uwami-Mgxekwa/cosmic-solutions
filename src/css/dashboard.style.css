@@ -71,6 +71,7 @@
 
 .table tr {
   text-align: center;
+  text-transform: uppercase;
 }
 
 .table tr:nth-child(odd) td {
@@ -87,6 +88,18 @@
   width: calc(100% / 4);
   height: 60px;
   cursor: pointer;
+}
+
+#open {
+  border-bottom: 2px solid #f00;
+}
+
+#inprogress {
+  border-bottom: 2px solid #00f;
+}
+
+#resolved {
+  border-bottom: 2px solid #0f0;
 }
 
 .action-btn {

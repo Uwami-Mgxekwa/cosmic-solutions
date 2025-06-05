@@ -26,6 +26,7 @@ export const loadTicketsPage = () => {
     <div class="panel-info">
       <h2>[ Computer No.:${userDetails.pc} ]</h2>
       <h2>[ Room No.:${userDetails.room} ]</h2>
+      <h2>[ Cosmos.:none ]</h2>
     </div>
   </div>
   <div class="table-container">
@@ -74,7 +75,7 @@ const loadReports = async () => {
       <tr class="ticket-row">
       <td>${report.tokenID}</td>
       <td>${report.category}</td>
-      <td>${report.status}</td>
+      <td  id=${report.status}>${report.status}</td>
       <td>${report.submittedOn}</td>
       </tr>`
 

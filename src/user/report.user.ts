@@ -26,6 +26,7 @@ export const loadUserReport = () => {
           <div class="panel-info">
             <h2>[ Computer No.:${userDetails.pc} ]</h2>
             <h2>[ Room No.:${userDetails.room} ]</h2>
+            <h2>[ Cosmos.:none ]</h2>
           </div>
         </div>
         <div class="form-container">

@@ -3,6 +3,7 @@ import { ENV, type TEnv } from "../env";
 const environment: TEnv = ENV;
 
 let Endpoints = {
+  userSignupUrl: "",
   userLoginUrl: "",
   userLogoutUrl: "",
   adminLoginUrl: "",
@@ -26,6 +27,9 @@ let Endpoints = {
   assignReportUrl: (id: any) => {
     return "" + id
   },
+  assignedTechniciansReportsUrl: (email: any) => {
+    return "" + email
+  },
   updateReportDeleteUrl: (id: any) => {
     return "" + id
   }
@@ -34,6 +38,7 @@ let Endpoints = {
 if (environment == "DEV") {
   //local endpoints only
   Endpoints = {
+    userSignupUrl: "http://localhost:6969/api/user/signup",
     userLoginUrl: "http://localhost:6969/api/user/login",
     userLogoutUrl: "http://localhost:6969/api/user/logout",
     adminLoginUrl: "http://localhost:6969/api/admin/login",
@@ -57,6 +62,10 @@ if (environment == "DEV") {
     assignReportUrl: (id: any) => {
       return `http://localhost:6969/api/report/assign/${id}`
     },
+    assignedTechniciansReportsUrl: (email: any) => {
+      return `http://localhost:6969/api/report/email/${email}`
+
+    },
     updateReportDeleteUrl: (id: any) => {
       return `http://localhost:6969/api/report/delete/${id}`
     }
@@ -64,6 +73,7 @@ if (environment == "DEV") {
 
 } else {
   Endpoints = {
+    userSignupUrl: "https://api.devnil.site/api/user/signup",
     userLoginUrl: "https://api.devnil.site/api/user/login",
     userLogoutUrl: "https://api.devnil.site/api/user/logout",
     adminLoginUrl: "https://api.devnil.site/api/admin/login",
@@ -88,6 +98,10 @@ if (environment == "DEV") {
     },
     assignReportUrl: (id: any) => {
       return `https://api.devnil.site/api/report/assign/${id}`
+    },
+    assignedTechniciansReportsUrl: (email: any) => {
+      return `https://api.devnil.site/api/report/email/${email}`
+
     },
     updateReportDeleteUrl: (id: any) => {
       return `https://api.devnil.site/api/report/delete/${id}`

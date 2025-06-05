@@ -4,15 +4,19 @@ import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getUserReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 import Endpoints from '../lib/endpoint';
+import { popUp, popupActions } from '../components/popup';
+import { removeData } from '../lib/local-storage';
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
+const jsonInitSignup = localStorage.getItem("signup") as string;
 
 if (!jsonUser) {
   localStorage.clear();
   window.location.href = "/"
 }
+
 const userDetails = JSON.parse(jsonUser);
 let userReports: Array<any> = [];
 
@@ -25,6 +29,7 @@ export const loadUserDash = () => {
     <div class="panel-info">
       <h2>[ Computer No.:${userDetails.pc} ]</h2>
       <h2>[ Room No.:${userDetails.room} ]</h2>
+      <h2>[ Cosmos.:none ]</h2>
     </div>
 
   </div>
@@ -80,7 +85,7 @@ const loadReports = async () => {
       <tr class="ticket-row">
       <td>${details.tokenID}</td>
       <td>${details.category}</td>
-      <td>${details.status}</td>
+      <td  id=${details.status}>${details.status}</td>
       <td>${details.submittedOn}</td>
       </tr>
   `
@@ -97,7 +102,6 @@ const loadReports = async () => {
         window.location.href = `../pages/status.user.html?id=${reportId}+q=${reportToken}`
       })
     })
-
   }
   spinnerActionsRemove()
 
@@ -110,6 +114,15 @@ dasboardPage.innerHTML += loadSpinner()
 headerActions();
 sidebarActions();
 loadReports();
+if (jsonInitSignup) {
+  popUp("Note.", `Remember your pc number, For the next time you log in:
+
+    <h1> ${userDetails.pc}</h1>`)
+
+  popupActions()
+}
+
+removeData("signup");
 
 const tableBody = document.getElementById("tbody") as HTMLTableElement;
 const placeholder = document.getElementById("ph");

@@ -58,7 +58,13 @@ export const loadAdminDash = () => {
 
 const loadReports = async () => {
   spinnerActionsAdd();
-  const res = await getReports(Endpoints.reportsUrl);
+  let reportsEndpoint = "";
+  if (adminDetails.email.includes("tech")) {
+    reportsEndpoint = Endpoints.assignedTechniciansReportsUrl(adminDetails.email);
+  } else {
+    reportsEndpoint = Endpoints.reportsUrl;
+  }
+  const res = await getReports(reportsEndpoint);
   if (!res?.ok) {
     userReports = [];
   } else {
@@ -73,7 +79,7 @@ const loadReports = async () => {
       <tr class="ticket-row">
       <td>${report.tokenID}</td>
       <td>${report.category}</td>
-      <td>${report.status}</td>
+      <td id=${report.status}>${report.status}</td>
       <td>${report.submittedOn}</td>
       </tr>`
 
@@ -100,7 +106,7 @@ const loadSearchedReports = (sr: any) => {
       <tr class="ticket-row">
       <td>${report.tokenID}</td>
       <td>${report.category}</td>
-      <td>${report.status}</td>
+      <td  id=${report.status}>${report.status}</td>
       <td>${report.submittedOn}</td>
       </tr>`
 
@@ -125,7 +131,13 @@ const search = async () => {
   if (searchKey == " ") {
     return
   }
-  const res = await getReports(Endpoints.reportsUrl);
+  let reportsEndpoint = ""
+  if (adminDetails.email.includes("tech")) {
+    reportsEndpoint = Endpoints.assignedTechniciansReportsUrl(adminDetails.email);
+  } else {
+    reportsEndpoint = Endpoints.reportsUrl;
+  }
+  const res = await getReports(reportsEndpoint);
   let userReports = []
   if (!res?.ok) {
     userReports = [];
