@@ -1,4 +1,4 @@
-# Cosmic-Solutions Remote Support System - Technical README
+# Cosmic-Solutions Remote Support System
 
 ## Project Structure & Team Roles
 
