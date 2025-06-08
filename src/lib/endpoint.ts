@@ -3,6 +3,7 @@ import { ENV, type TEnv } from "../env";
 const environment: TEnv = ENV;
 
 let Endpoints = {
+  "socketUrl": "",
   userSignupUrl: "",
   userLoginUrl: "",
   userLogoutUrl: "",
@@ -39,6 +40,7 @@ let Endpoints = {
 if (environment == "DEV") {
   //local endpoints only
   Endpoints = {
+    socketUrl: "http://localhost:6969",
     userSignupUrl: "http://localhost:6969/api/user/signup",
     userLoginUrl: "http://localhost:6969/api/user/login",
     userLogoutUrl: "http://localhost:6969/api/user/logout",
@@ -75,6 +77,7 @@ if (environment == "DEV") {
 
 } else {
   Endpoints = {
+    socketUrl: "https://api.devnil.site",
     userSignupUrl: "https://api.devnil.site/api/user/signup",
     userLoginUrl: "https://api.devnil.site/api/user/login",
     userLogoutUrl: "https://api.devnil.site/api/user/logout",

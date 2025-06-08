@@ -3,10 +3,10 @@ import { headerActions, loadHeader } from '../components/header';
 import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
+import { getUsers } from '../lib/get-users';
 import Endpoints from '../lib/endpoint';
 import { io } from "socket.io-client";
-import { getUsers } from '../lib/get-users';
-const socket = io("http://localhost:6969");
+const socket = io(Endpoints.socketUrl);
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
@@ -229,5 +229,6 @@ socket.on("updateReports", () => {
 });
 
 socket.on("updateStats", () => {
+  console.log("logged outj")
   loadStats();
 })
