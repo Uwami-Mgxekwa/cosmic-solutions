@@ -4,14 +4,20 @@ import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 import Endpoints from '../lib/endpoint';
+import { io } from "socket.io-client";
+const socket = io("http://localhost:6969");
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
-
 const jsonAdmin = localStorage.getItem("admin") as string;
-const adminDetails = JSON.parse(jsonAdmin);
-
 let userReports: Array<any> = [];
+let adminDetails = {};
+if (!jsonAdmin) {
+  localStorage.clear();
+  window.location.href = "/"
+}
+adminDetails = JSON.parse(jsonAdmin);
+
 
 export const loadAdminDash = () => {
   return (
@@ -48,15 +54,14 @@ export const loadAdminDash = () => {
             </tbody>
           </table>
         </div>
-        <div class="placeholder ph-hidden" id="ph">
-          <p>There Are No Reports At The Moment</p>
-         </div>
       </div>
     `
   )
 }
 
+
 const loadReports = async () => {
+  tableBody?.replaceChildren("")
   spinnerActionsAdd();
   let reportsEndpoint = "";
   if (adminDetails.email.includes("tech")) {
@@ -72,7 +77,9 @@ const loadReports = async () => {
   }
 
   if (userReports.length < 1) {
-    placeholder?.classList.remove("ph-hidden");
+    spinnerActionsRemove()
+    return;
+
   } else {
     userReports.map((report) => {
       tableBody.innerHTML += `
@@ -99,7 +106,7 @@ const loadReports = async () => {
 
 const loadSearchedReports = (sr: any) => {
   if (sr.length < 1) {
-    placeholder?.classList.remove("ph-hidden");
+    return;
   } else {
     sr.map((report: any) => {
       tableBody.innerHTML += `
@@ -159,14 +166,18 @@ dasboardPage.innerHTML += loadHeader("Admin Dashboard");
 dasboardPage.innerHTML += loadSidebar()
 dasboardPage.innerHTML += loadAdminDash();
 dasboardPage.innerHTML += loadSpinner();
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const regBtn = document.getElementById("btn-reg");
+const searchBtn = document.getElementById("search-btn");
+
 headerActions();
 sidebarActions();
 loadReports();
 
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-const regBtn = document.getElementById("btn-reg");
-const searchBtn = document.getElementById("search-btn");
+socket.on("updateReports", () => {
+  loadReports();
+});
 
 searchBtn?.addEventListener("click", (e) => {
   e.preventDefault();

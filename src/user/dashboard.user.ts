@@ -6,19 +6,21 @@ import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../compone
 import Endpoints from '../lib/endpoint';
 import { popUp, popupActions } from '../components/popup';
 import { removeData } from '../lib/local-storage';
+import { io } from "socket.io-client";
 
+const socket = io("http://localhost:6969");
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
 const jsonInitSignup = localStorage.getItem("signup") as string;
+let userReports: Array<any> = [];
+let userDetails = {}
 
 if (!jsonUser) {
   localStorage.clear();
   window.location.href = "/"
 }
-
-const userDetails = JSON.parse(jsonUser);
-let userReports: Array<any> = [];
+userDetails = JSON.parse(jsonUser);
 
 export const loadUserDash = () => {
   return (
@@ -52,9 +54,6 @@ export const loadUserDash = () => {
       </tbody>
     </table>
   </div>
-  <div class="placeholder ph-hidden" id="ph">
-    <p>You Have No Reports at the moment</p>
-  </div>
   <div class="action-btn">
     <buttons class="btn-track" id="btn-track">Track Another Report</button>
   </div>
@@ -63,7 +62,9 @@ export const loadUserDash = () => {
   )
 }
 
+
 const loadReports = async () => {
+  tableBody?.replaceChildren("")
   spinnerActionsAdd()
   let userData = {
     pc: userDetails.pc,
@@ -77,7 +78,8 @@ const loadReports = async () => {
   }
 
   if (userReports.length < 1) {
-    placeholder?.classList.remove("ph-hidden");
+    spinnerActionsRemove()
+    return;
   } else {
     for (let i = 0; i < userReports.length; i++) {
       let details = userReports[i];
@@ -111,9 +113,20 @@ dasboardPage.innerHTML += loadHeader("Support Request Portal");
 dasboardPage.innerHTML += loadSidebar()
 dasboardPage.innerHTML += loadUserDash();
 dasboardPage.innerHTML += loadSpinner()
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const newReportBtn = document.getElementById("btn-new");
+const viewTicketsBtn = document.getElementById("btn-view");
+const trackBtn = document.getElementById("btn-track");
+
 headerActions();
 sidebarActions();
 loadReports();
+
+socket.on("updateReports", () => {
+  loadReports()
+})
+
 if (jsonInitSignup) {
   popUp("Note.", `Remember your pc number, For the next time you log in:
 
@@ -123,13 +136,6 @@ if (jsonInitSignup) {
 }
 
 removeData("signup");
-
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-
-const newReportBtn = document.getElementById("btn-new");
-const viewTicketsBtn = document.getElementById("btn-view");
-const trackBtn = document.getElementById("btn-track");
 
 newReportBtn?.addEventListener("click", () => {
   window.location.href = "../pages/report.user.html"
@@ -142,5 +148,4 @@ viewTicketsBtn?.addEventListener("click", () => {
 trackBtn?.addEventListener("click", () => {
   window.location.href = "../pages/status.user.html?id=+q=track"
 });
-
 

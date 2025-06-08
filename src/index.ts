@@ -19,7 +19,11 @@ const loadIndexPage = () => {
                 <p class="title-left">Be part of the Cosmos</p>
                 <form id="user-form">
                   <input type="text" id="user-username" name="user-username" placeholder="Username" required>
+                  <div class="pass-container">
                   <input type="password" id="user-password" name="user-password" placeholder="Password" required>
+
+                    <img src="/eye-password-show.svg" id="user-password-eye"/>
+                    </div>
                   <button type="submit" id="user-submit">Login</button>
                 </form>
                 <div>
@@ -34,7 +38,10 @@ const loadIndexPage = () => {
                 <p class="title-right">Manage a Cosmos</p>
                 <form id="admin-form">
                   <input type="text" id="admin-username" name="admin-username" placeholder="Email" required>
-                  <input type="password" id="admin-password" name="admin-password" placeholder="Password" required>
+                  <div class="pass-container">
+                    <input type="password" id="admin-password" name="admin-password" placeholder="Password" required>
+                    <img src="/eye-password-show.svg" id="admin-password-eye"/>
+                  </div>
                   <button type="submit" id="admin-submit">Login</button>
                 </form>
               </div>
@@ -56,6 +63,13 @@ const userTab = document.getElementById("user");
 const adminTab = document.getElementById("admin");
 const userSubmitBtn = document.getElementById("user-submit");
 const adminSubmitBtn = document.getElementById("admin-submit");
+const adminPasswordEye = document.getElementById("admin-password-eye") as HTMLImageElement;
+const userPasswordEye = document.getElementById("user-password-eye") as HTMLImageElement;
+
+const pcNumber = document.getElementById("user-username") as HTMLInputElement;
+const userpass = document.getElementById("user-password") as HTMLInputElement;
+const adminEmail = document.getElementById("admin-username") as HTMLInputElement;
+const adminpass = document.getElementById("admin-password") as HTMLInputElement;
 
 tabs.forEach((tab) => {
   tab.addEventListener("click", () => {
@@ -76,11 +90,25 @@ tabs.forEach((tab) => {
 
 })
 
-const pcNumber = document.getElementById("user-username") as HTMLInputElement;
-const userpass = document.getElementById("user-password") as HTMLInputElement;
-const adminEmail = document.getElementById("admin-username") as HTMLInputElement;
-const adminpass = document.getElementById("admin-password") as HTMLInputElement;
+adminPasswordEye.addEventListener("click", () => {
+  if (adminPasswordEye.getAttribute("src") == "/eye-password-show.svg") {
+    adminPasswordEye.setAttribute("src", "/eye-password-hide.svg")
+    adminpass.setAttribute("type", "text");
+  } else {
+    adminPasswordEye.setAttribute("src", "/eye-password-show.svg")
+    adminpass.setAttribute("type", "password");
+  }
+})
 
+userPasswordEye.addEventListener("click", () => {
+  if (userPasswordEye.getAttribute("src") == "/eye-password-show.svg") {
+    userPasswordEye.setAttribute("src", "/eye-password-hide.svg")
+    userpass.setAttribute("type", "text");
+  } else {
+    userPasswordEye.setAttribute("src", "/eye-password-show.svg")
+    userpass.setAttribute("type", "password");
+  }
+})
 userSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   const form = document.getElementById("user-form") as HTMLFormElement;
