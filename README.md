@@ -218,7 +218,3 @@ cosmic-solutions/
 2. AI-assisted troubleshooting
 3. Multi-language support
 4. Plugin system for extensions
-
-For any collaboration issues, contact:
-- Uwami Mgxekwa: uwami@cosmic-solutions.tech (Frontend)
-- Handsome Nyathi: handsome@cosmic-solutions.tech (Backend)
