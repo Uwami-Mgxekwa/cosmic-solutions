@@ -9,9 +9,6 @@ import { checkDelClearance } from '../lib/check-del-clearance';
 import { popUp, popupActions } from '../components/popup';
 import { getTechnicians } from '../lib/get-technicians';
 
-import { io } from "socket.io-client";
-const socket = io("http://localhost:6969");
-
 const managePage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonAdmin = localStorage.getItem("admin") as string;
@@ -396,7 +393,6 @@ const deleteReport = () => {
     } else {
       console.log(res?.content)
     }
-    socket.emit("adminDeleteReport")
     spinnerActionsRemove()
     window.location.href = "../pages/dashboard.admin.html"
   })

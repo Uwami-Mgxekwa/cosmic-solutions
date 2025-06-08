@@ -8,7 +8,7 @@ import { popUp, popupActions } from '../components/popup';
 import { removeData } from '../lib/local-storage';
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:6969");
+const socket = io(Endpoints.socketUrl);
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
