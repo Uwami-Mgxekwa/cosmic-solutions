@@ -11,7 +11,7 @@ const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const jsonAdmin = localStorage.getItem("admin") as string;
 let userReports: Array<any> = [];
-let adminDetails = {};
+let adminDetails: any = {};
 if (!jsonAdmin) {
   localStorage.clear();
   window.location.href = "/"

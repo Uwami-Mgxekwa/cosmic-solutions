@@ -14,7 +14,7 @@ const container = document.createElement("div");
 const jsonUser = localStorage.getItem("user") as string;
 const jsonInitSignup = localStorage.getItem("signup") as string;
 let userReports: Array<any> = [];
-let userDetails = {}
+let userDetails: any = {}
 
 if (!jsonUser) {
   localStorage.clear();
