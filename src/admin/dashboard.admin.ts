@@ -5,6 +5,7 @@ import { getReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 import Endpoints from '../lib/endpoint';
 import { io } from "socket.io-client";
+import { getUsers } from '../lib/get-users';
 const socket = io("http://localhost:6969");
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
@@ -27,6 +28,13 @@ export const loadAdminDash = () => {
           <h1>Welcome,</h1>
           <div class="panel-info">
             <h2>[ Admin: ${adminDetails.email} ]</h2>
+          </div>
+          <div class="panel-stats">
+            <h3>Registerd Computers: <span id="registered-pcs"></span><h3>
+           <ul>
+              <li>Online:<span id="online-pcs"></span></li>
+              <li>Offline: <span id="offline-pcs"></span></li>
+            </ul> 
           </div>
         </div>
         <div class="action-btns">
@@ -53,12 +61,26 @@ export const loadAdminDash = () => {
             <tbody class="table-body" id="tbody">
             </tbody>
           </table>
+            <div class="placeholder"></div>
         </div>
       </div>
     `
   )
 }
 
+dasboardPage.innerHTML += loadHeader("Admin Dashboard");
+dasboardPage.innerHTML += loadSidebar()
+dasboardPage.innerHTML += loadAdminDash();
+dasboardPage.innerHTML += loadSpinner();
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const regBtn = document.getElementById("btn-reg");
+const searchBtn = document.getElementById("search-btn");
+const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
+
+const registeredPcs = document.getElementById("registered-pcs") as HTMLSpanElement
+const onlinePcs = document.getElementById("online-pcs") as HTMLSpanElement
+const offlinePcs = document.getElementById("offline-pcs") as HTMLSpanElement
 
 const loadReports = async () => {
   tableBody?.replaceChildren("")
@@ -77,10 +99,10 @@ const loadReports = async () => {
   }
 
   if (userReports.length < 1) {
-    spinnerActionsRemove()
-    return;
-
+    placeholder.innerHTML = `<p>No reports at the moment</p>`
   } else {
+    placeholder.innerHTML = " ";
+    placeholder.innerHTML = " ";
     userReports.map((report) => {
       tableBody.innerHTML += `
       <tr class="ticket-row">
@@ -106,8 +128,9 @@ const loadReports = async () => {
 
 const loadSearchedReports = (sr: any) => {
   if (sr.length < 1) {
-    return;
+    placeholder.innerHTML = `<p>No reports at the moment</p>`
   } else {
+    placeholder.innerHTML = " ";
     sr.map((report: any) => {
       tableBody.innerHTML += `
       <tr class="ticket-row">
@@ -162,22 +185,26 @@ const search = async () => {
   spinnerActionsRemove();
 }
 
-dasboardPage.innerHTML += loadHeader("Admin Dashboard");
-dasboardPage.innerHTML += loadSidebar()
-dasboardPage.innerHTML += loadAdminDash();
-dasboardPage.innerHTML += loadSpinner();
+const loadStats = async () => {
+  let registered: any = [];
+  let online: any = []
+  let offline: any = []
 
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const regBtn = document.getElementById("btn-reg");
-const searchBtn = document.getElementById("search-btn");
+  const res = await getUsers(Endpoints.usersUrl);
+  if (!res?.ok) {
+    registered = []
+    online = []
+    online = []
+  } else {
+    registered = res.content.users;
+    online = res.content.users.filter((user: any) => user.logged_in == true)
+    offline = res.content.users.filter((user: any) => user.logged_in == false)
+    registeredPcs.innerHTML = registered.length
+    onlinePcs.innerHTML = online.length;
+    offlinePcs.innerHTML = offline.length
+  }
 
-headerActions();
-sidebarActions();
-loadReports();
-
-socket.on("updateReports", () => {
-  loadReports();
-});
+}
 
 searchBtn?.addEventListener("click", (e) => {
   e.preventDefault();
@@ -190,4 +217,17 @@ if (adminDetails.clearance_level > 0) {
 
 regBtn?.addEventListener("click", () => {
   window.location.href = "../pages/register.admin.html"
+})
+
+headerActions();
+sidebarActions();
+loadReports();
+loadStats();
+
+socket.on("updateReports", () => {
+  loadReports();
+});
+
+socket.on("updateStats", () => {
+  loadStats();
 })
