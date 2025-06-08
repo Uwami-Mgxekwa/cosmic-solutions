@@ -53,6 +53,7 @@ export const loadUserDash = () => {
       <tbody class="table-body" id="tbody">
       </tbody>
     </table>
+      <div class="placeholder"></div>
   </div>
   <div class="action-btn">
     <buttons class="btn-track" id="btn-track">Track Another Report</button>
@@ -62,6 +63,16 @@ export const loadUserDash = () => {
   )
 }
 
+dasboardPage.innerHTML += loadHeader("Support Request Portal");
+dasboardPage.innerHTML += loadSidebar()
+dasboardPage.innerHTML += loadUserDash();
+dasboardPage.innerHTML += loadSpinner()
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const newReportBtn = document.getElementById("btn-new");
+const viewTicketsBtn = document.getElementById("btn-view");
+const trackBtn = document.getElementById("btn-track");
+const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
 
 const loadReports = async () => {
   tableBody?.replaceChildren("")
@@ -78,9 +89,9 @@ const loadReports = async () => {
   }
 
   if (userReports.length < 1) {
-    spinnerActionsRemove()
-    return;
+    placeholder.innerHTML = `<p>No reports at the moment</p>`
   } else {
+    placeholder.innerHTML = "";
     for (let i = 0; i < userReports.length; i++) {
       let details = userReports[i];
       tableBody.innerHTML += `
@@ -109,23 +120,6 @@ const loadReports = async () => {
 
 }
 
-dasboardPage.innerHTML += loadHeader("Support Request Portal");
-dasboardPage.innerHTML += loadSidebar()
-dasboardPage.innerHTML += loadUserDash();
-dasboardPage.innerHTML += loadSpinner()
-
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const newReportBtn = document.getElementById("btn-new");
-const viewTicketsBtn = document.getElementById("btn-view");
-const trackBtn = document.getElementById("btn-track");
-
-headerActions();
-sidebarActions();
-loadReports();
-
-socket.on("updateReports", () => {
-  loadReports()
-})
 
 if (jsonInitSignup) {
   popUp("Note.", `Remember your pc number, For the next time you log in:
@@ -134,8 +128,6 @@ if (jsonInitSignup) {
 
   popupActions()
 }
-
-removeData("signup");
 
 newReportBtn?.addEventListener("click", () => {
   window.location.href = "../pages/report.user.html"
@@ -149,3 +141,11 @@ trackBtn?.addEventListener("click", () => {
   window.location.href = "../pages/status.user.html?id=+q=track"
 });
 
+removeData("signup");
+headerActions();
+sidebarActions();
+loadReports();
+
+socket.on("updateReports", () => {
+  loadReports()
+})
