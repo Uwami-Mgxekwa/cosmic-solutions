@@ -188,7 +188,8 @@
 .panel-stats {
   width: 100%;
   height: 120px;
-  border: 2px solid var(--text);
+  color: var(--background);
+  background: var(--primary);
   padding: 20px;
 }
 

@@ -1,2 +1,2 @@
 export type TEnv = "PROD" | "DEV"
-export const ENV: TEnv = "PROD";
+export const ENV: TEnv = "DEV";

@@ -120,7 +120,11 @@ userSubmitBtn?.addEventListener("click", async (e) => {
     }
     const res = await login(Endpoints.userLoginUrl, data)
     if (!res?.ok) {
-      popUp("Login Error", res?.content.message)
+      let message = res?.content.message
+      if (typeof message == "undefined") {
+        message = "Seems like there is a network error or the server is down"
+      }
+      popUp("Login Error", message)
       popupActions();
       spinnerActionsRemove()
       return
@@ -152,7 +156,11 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
     }
     const res = await login(ep, data)
     if (!res?.ok) {
-      popUp("Login Error", res?.content.message)
+      let message = res?.content.message
+      if (typeof message == "undefined") {
+        message = "Seems like there is a network error or the server is down"
+      }
+      popUp("Login Error", message)
       popupActions();
       spinnerActionsRemove()
       return
