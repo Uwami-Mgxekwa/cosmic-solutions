@@ -141,6 +141,16 @@ userSubmitBtn?.addEventListener("click", async (e) => {
     } catch (error) {
       console.error('Login error:', error);
       popUp("Connection Error", "Unable to connect. Please check your internet connection and try again.");
+
+    }
+    const res = await login(Endpoints.userLoginUrl, data)
+    if (!res?.ok) {
+      let message = res?.content.message
+      if (typeof message == "undefined") {
+        message = "Seems like there is a network error or the server is down"
+      }
+      popUp("Login Error", message)
+
       popupActions();
     } finally {
       spinnerActionsRemove();
@@ -199,6 +209,15 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
     } catch (error) {
       console.error('Login error:', error);
       popUp("Connection Error", "Unable to connect. Please check your internet connection and try again.");
+
+    const res = await login(ep, data)
+    if (!res?.ok) {
+      let message = res?.content.message
+      if (typeof message == "undefined") {
+        message = "Seems like there is a network error or the server is down"
+      }
+      popUp("Login Error", message)
+
       popupActions();
     } finally {
       spinnerActionsRemove();

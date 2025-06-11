@@ -30,7 +30,7 @@ export const loadAdminDash = () => {
             <h2>[ Admin: ${adminDetails.email} ]</h2>
           </div>
           <div class="panel-stats">
-            <h3>Registerd Computers: <span id="registered-pcs"></span><h3>
+            <h3>Registered Computers: <span id="registered-pcs"></span><h3>
            <ul>
               <li>Online:<span id="online-pcs"></span></li>
               <li>Offline: <span id="offline-pcs"></span></li>
