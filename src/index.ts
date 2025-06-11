@@ -4,7 +4,6 @@ import './css/index.style.css'
 import Endpoints from './lib/endpoint';
 import { storeData } from './lib/local-storage';
 import { login } from './lib/login';
-
 const main = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
 const loadIndexPage = () => {
