@@ -76,7 +76,7 @@ const adminpass = document.getElementById("admin-password") as HTMLInputElement;
 const setupPasswordToggle = (eyeElement: HTMLImageElement, passwordInput: HTMLInputElement) => {
   eyeElement.addEventListener("click", () => {
     const isPassword = passwordInput.type === "password";
-    
+
     // Toggle password visibility
     passwordInput.type = isPassword ? "text" : "password";
 
@@ -88,11 +88,11 @@ const setupPasswordToggle = (eyeElement: HTMLImageElement, passwordInput: HTMLIn
     }, 150);
     passwordInput.focus();
   });
-  
+
   eyeElement.addEventListener("mouseenter", () => {
     eyeElement.style.opacity = "1";
   });
-  
+
   eyeElement.addEventListener("mouseleave", () => {
     eyeElement.style.opacity = "0.6";
   });
@@ -104,23 +104,23 @@ setupPasswordToggle(userPasswordEye, userpass);
 userSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   const form = document.getElementById("user-form") as HTMLFormElement;
-  
+
   if (checkFormValidity(form)) {
     userSubmitBtn.classList.add('loading');
     userSubmitBtn.disabled = true;
     const originalText = userSubmitBtn.textContent;
     userSubmitBtn.textContent = 'Logging in...';
-    
+
     spinnerActionsAdd();
-    
+
     const data = {
       pc: pcNumber.value.trim(),
       password: userpass.value
     };
-    
+
     try {
       const res = await login(Endpoints.userLoginUrl, data);
-      
+
       if (!res?.ok) {
         popUp("Login Error", res?.content.message || "Login failed. Please try again.");
         popupActions();
@@ -129,9 +129,9 @@ userSubmitBtn?.addEventListener("click", async (e) => {
           pc: res.content.user.pc,
           room: res.content.user.room
         };
-        
+
         storeData("user", resData);
-        
+
         userSubmitBtn.textContent = 'Success!';
         setTimeout(() => {
           window.location.href = "./src/pages/dashboard.user.html";
@@ -141,16 +141,16 @@ userSubmitBtn?.addEventListener("click", async (e) => {
       console.error('Login error:', error);
       popUp("Connection Error", "Unable to connect. Please check your internet connection and try again.");
 
-    }
-    const res = await login(Endpoints.userLoginUrl, data)
-    if (!res?.ok) {
-      let message = res?.content.message
-      if (typeof message == "undefined") {
-        message = "Seems like there is a network error or the server is down"
-      }
-      popUp("Login Error", message)
+      const res = await login(Endpoints.userLoginUrl, data)
+      if (!res?.ok) {
+        let message = res?.content.message
+        if (typeof message == "undefined") {
+          message = "Seems like there is a network error or the server is down"
+        }
+        popUp("Login Error", message)
 
-      popupActions();
+        popupActions();
+      }
     } finally {
       spinnerActionsRemove();
       userSubmitBtn.classList.remove('loading');
@@ -163,30 +163,29 @@ userSubmitBtn?.addEventListener("click", async (e) => {
 adminSubmitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   const form = document.getElementById("admin-form") as HTMLFormElement;
-  
+
   if (checkFormValidity(form)) {
     adminSubmitBtn.classList.add('loading');
     adminSubmitBtn.disabled = true;
     const originalText = adminSubmitBtn.textContent;
     adminSubmitBtn.textContent = 'Logging in...';
-    
+
     spinnerActionsAdd();
-    
+
     const data = {
       email: adminEmail.value.trim().toLowerCase(),
       password: adminpass.value
     };
-    
+
     let ep = "";
     if (data.email.includes("tech")) {
       ep = Endpoints.technicianLoginUrl;
     } else {
       ep = Endpoints.adminLoginUrl;
     }
-    
+
     try {
       const res = await login(ep, data);
-      
       if (!res?.ok) {
         popUp("Login Error", res?.content.message || "Login failed. Please try again.");
         popupActions();
@@ -196,9 +195,9 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
           role: res.content.user.role,
           clearance_level: res.content.user.clearance_level
         };
-        
+
         storeData("admin", resData);
-        
+
         // Success feedback
         adminSubmitBtn.textContent = 'Success!';
         setTimeout(() => {
@@ -208,16 +207,16 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
     } catch (error) {
       console.error('Login error:', error);
       popUp("Connection Error", "Unable to connect. Please check your internet connection and try again.");
+      const res = await login(ep, data)
+      if (!res?.ok) {
+        let message = res?.content.message
+        if (typeof message == "undefined") {
+          message = "Seems like there is a network error or the server is down"
+        }
+        popUp("Login Error", message)
 
-    const res = await login(ep, data)
-    if (!res?.ok) {
-      let message = res?.content.message
-      if (typeof message == "undefined") {
-        message = "Seems like there is a network error or the server is down"
+        popupActions();
       }
-      popUp("Login Error", message)
-
-      popupActions();
     } finally {
       spinnerActionsRemove();
       adminSubmitBtn.classList.remove('loading');
@@ -230,28 +229,28 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
 const checkFormValidity = (form: HTMLFormElement): boolean => {
   const inputs = form.querySelectorAll('input[required]');
   let isValid = true;
-  
+
   inputs.forEach(input => {
     const inputElement = input as HTMLInputElement;
     if (!inputElement.value.trim()) {
       inputElement.style.borderColor = 'var(--error)';
       inputElement.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
       isValid = false;
-    
+
       inputElement.addEventListener('input', () => {
         inputElement.style.borderColor = '';
         inputElement.style.boxShadow = '';
       }, { once: true });
     }
   });
-  
+
   if (!isValid) {
     form.style.animation = 'shake 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     setTimeout(() => {
       form.style.animation = '';
     }, 500);
   }
-  
+
   return isValid;
 };
 
@@ -267,18 +266,18 @@ document.head.appendChild(style);
 
 const enhanceInputs = () => {
   const inputs = document.querySelectorAll('input');
-  
+
   inputs.forEach(input => {
     input.addEventListener('focus', () => {
       input.parentElement?.classList.add('focused');
     });
-    
+
     input.addEventListener('blur', () => {
       if (!input.value) {
         input.parentElement?.classList.remove('focused');
       }
     });
-    
+
     input.addEventListener('input', () => {
       if (input.validity.valid) {
         input.style.borderColor = 'var(--success)';
