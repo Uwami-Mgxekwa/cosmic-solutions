@@ -1,41 +1,14 @@
 @import url("../color-scheme.css");
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #818cf8;
-  --accent: #8b5cf6;
-  --dark-accent: #1e1b4b;
-  --success: #10b981;
-  --error: #ef4444;
-  --warning: #f59e0b;
-  --text-primary: #1e293b;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
-  --surface: #f8fafc;
-  --surface-hover: #f1f5f9;
-  --border: #e2e8f0;
-  --border-hover: #cbd5e1;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --radius: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   min-height: 100vh;
   display: flex;
@@ -65,19 +38,28 @@ body {
 }
 
 .container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--accent),
+    var(--primary)
+  );
   animation: shimmer 3s infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .form-wrapper {
@@ -101,37 +83,56 @@ body {
 }
 
 .left::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: 0;
   width: 1px;
   height: 60%;
-  background: linear-gradient(to bottom, transparent, var(--border), transparent);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--border),
+    transparent
+  );
   transform: translateY(-50%);
 }
 
 .right {
-  background: linear-gradient(135deg, var(--dark-accent) 0%, #312e81 50%, #1e1b4b 100%);
+  background: linear-gradient(
+    135deg,
+    var(--dark-accent) 0%,
+    #312e81 50%,
+    #1e1b4b 100%
+  );
   color: white;
   position: relative;
   overflow: hidden;
 }
 
 .right::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
   animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(180deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
 }
 
 .card {
@@ -158,7 +159,8 @@ body {
   background-clip: text;
 }
 
-.title-left, .title-right {
+.title-left,
+.title-right {
   color: var(--text-muted);
   margin-bottom: 2rem;
   font-size: 1rem;
@@ -273,13 +275,18 @@ button:active {
 }
 
 button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -314,7 +321,7 @@ button:focus {
 }
 
 .signuptext a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -360,7 +367,7 @@ button:focus {
   .content {
     padding: 2.5rem;
   }
-  
+
   .card h2 {
     font-size: 2rem;
   }
@@ -370,34 +377,35 @@ button:focus {
   body {
     padding: 0.5rem;
   }
-  
+
   .container {
     border-radius: var(--radius-lg);
   }
-  
+
   .form-wrapper {
     grid-template-columns: 1fr;
   }
-  
+
   .left {
     border-right: none;
     border-bottom: 1px solid var(--border);
   }
-  
+
   .left::after {
     display: none;
   }
-  
+
   .content {
     padding: 2rem;
     min-height: auto;
   }
-  
+
   .card h2 {
     font-size: 1.875rem;
   }
-  
-  input, button {
+
+  input,
+  button {
     height: 52px;
   }
 }
@@ -406,28 +414,30 @@ button:focus {
   body {
     padding: 0.25rem;
   }
-  
+
   .content {
     padding: 1.5rem;
   }
-  
+
   .card h2 {
     font-size: 1.5rem;
   }
-  
-  .title-left, .title-right {
+
+  .title-left,
+  .title-right {
     font-size: 0.9rem;
   }
-  
-  input, button {
+
+  input,
+  button {
     height: 48px;
     font-size: 0.95rem;
   }
-  
+
   .container {
     border-radius: var(--radius);
   }
-  
+
   .signuptext {
     font-size: 0.9rem;
   }
@@ -437,12 +447,13 @@ button:focus {
   .content {
     padding: 1rem;
   }
-  
+
   .card h2 {
     font-size: 1.25rem;
   }
-  
-  input, button {
+
+  input,
+  button {
     height: 44px;
     font-size: 0.9rem;
   }
@@ -498,7 +509,7 @@ button:focus {
 }
 
 .loading::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -512,8 +523,12 @@ button:focus {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Focus management for accessibility */
@@ -522,6 +537,8 @@ button:focus {
   outline-offset: 2px;
 }
 
-input:focus, button:focus {
+input:focus,
+button:focus {
   outline: none;
 }
+

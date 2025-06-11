@@ -6,6 +6,7 @@ import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../compone
 import { getUsers } from '../lib/get-users';
 import Endpoints from '../lib/endpoint';
 import { io } from "socket.io-client";
+import { popUp, popupActions } from '../components/popup';
 const socket = io(Endpoints.socketUrl);
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
@@ -93,6 +94,10 @@ const loadReports = async () => {
   }
   const res = await getReports(reportsEndpoint);
   if (!res?.ok) {
+    if (res.abort) {
+      popUp("Time Out", res.content.message)
+      popupActions()
+    }
     userReports = [];
   } else {
     userReports = res?.content
@@ -170,6 +175,10 @@ const search = async () => {
   const res = await getReports(reportsEndpoint);
   let userReports = []
   if (!res?.ok) {
+    if (res.abort) {
+      popUp("Time Out", res.content.message)
+      popupActions()
+    }
     userReports = [];
   } else {
     userReports = res?.content

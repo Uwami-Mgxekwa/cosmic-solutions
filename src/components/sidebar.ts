@@ -1,6 +1,7 @@
 import '../css/sidebar.style.css'
 import Endpoints from '../lib/endpoint';
 import { logout } from '../lib/logout';
+import { popUp, popupActions } from './popup';
 
 const container = document.createElement("div");
 
@@ -80,7 +81,15 @@ export const sidebarActions = () => {
         res = await logout(Endpoints.userLogoutUrl, userData)
 
         if (!res?.ok) {
-          return
+          if (res.abort) {
+            popUp("Time out", res.content.message)
+            popupActions();
+          } else {
+            popUp("Log out error", res.content.message)
+            popupActions();
+
+          }
+          window.location.reload()
         } else {
           localStorage.removeItem("user");
           localStorage.removeItem("admin");
@@ -102,13 +111,20 @@ export const sidebarActions = () => {
         res = await logout(ep, adminData)
 
         if (!res?.ok) {
-          return
+          if (res.abort) {
+            popUp("Time out", res.content.message)
+            popupActions();
+          } else {
+            popUp("Log out error", res.content.message)
+            popupActions();
+
+          }
+          window.location.reload()
         } else {
           console.log(res)
           localStorage.removeItem("user");
           localStorage.removeItem("admin");
           window.location.href = "/"
-
         }
         break;
     }

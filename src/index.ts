@@ -82,10 +82,10 @@ const setupPasswordToggle = (eyeElement: HTMLImageElement, passwordInput: HTMLIn
 
     eyeElement.src = isPassword ? "/eye-password-hide.svg" : "/eye-password-show.svg";
 
-    eyeElement.style.transform = "scale(0.9)";
-    setTimeout(() => {
-      eyeElement.style.transform = "scale(1)";
-    }, 150);
+    // eyeElement.style.transform = "scale(0.9)";
+    // setTimeout(() => {
+    //   eyeElement.style.transform = "scale(1)";
+    // }, 150);
     passwordInput.focus();
   });
 
