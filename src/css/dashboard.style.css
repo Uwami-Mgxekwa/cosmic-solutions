@@ -1,28 +1,29 @@
 @import url("../color-scheme.css");
 
-body {
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-  background: var(--background);
-  width: 100vw;
-  height: 100vh;
-  padding: 0 140px;
-  color: var(--text);
-  overflow-x: hidden;
+.container {
+  display: flex;
 }
 
 .wrapper {
-  width: 100%;
+  width: 70%;
   height: fit-content;
   background: var(--background);
   margin-top: 24px;
 }
 
+.side-wrapper {
+  margin-left: 24px;
+  padding: 12px;
+  background: var(--secondary);
+  width: 30%;
+  min-height: 100vh;
+}
+
+.side-wrapper h1 {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+}
 /* .panel { */
 /*   border-bottom: 2px solid var(--text); */
 /* } */
@@ -204,8 +205,7 @@ body {
 .panel-stats {
   width: 100%;
   height: 120px;
-  color: var(--background);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  color: var(--text);
   padding: 20px;
 }
 
@@ -215,8 +215,13 @@ body {
 }
 
 .panel-stats ul {
-  display: flex;
-  font-size: 16px;
-  justify-content: space-between;
+  padding-top: 24px;
   list-style: none;
+}
+
+.panel-stats ul li {
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
 }

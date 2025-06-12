@@ -24,18 +24,12 @@ adminDetails = JSON.parse(jsonAdmin);
 export const loadAdminDash = () => {
   return (
     container.innerHTML = `
+      <div class="container">
       <div class="wrapper">
         <div class="panel">
           <h1>Welcome,</h1>
           <div class="panel-info">
             <h2>[ Admin: ${adminDetails.email} ]</h2>
-          </div>
-          <div class="panel-stats">
-            <h3>Registered Computers: <span id="registered-pcs"></span><h3>
-           <ul>
-              <li>Online:<span id="online-pcs"></span></li>
-              <li>Offline: <span id="offline-pcs"></span></li>
-            </ul> 
           </div>
         </div>
         <div class="action-btns">
@@ -65,6 +59,21 @@ export const loadAdminDash = () => {
             <div class="placeholder"></div>
         </div>
       </div>
+      <div class="side-wrapper">
+          <div class="panel-stats">
+            <h1>Registered Computers: <span id="registered-pcs"></span><h1>
+           <ul>
+              <li><span>Online:</span><span id="online-pcs"></span></li>
+              <li><span>Offline:</span><span id="offline-pcs"></span></li>
+           </ul> 
+           <ul>
+              <li><span>Open Tickets:</span><span>0</span></li>
+              <li><span>In Progress Tickets:</span><span>0</span></li>
+              <li><span>Closed Tickets:</span><span>0</span></li>
+            </ul> 
+          </div>
+      </div>
+      <div>
     `
   )
 }

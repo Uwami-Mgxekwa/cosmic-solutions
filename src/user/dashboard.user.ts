@@ -25,6 +25,7 @@ userDetails = JSON.parse(jsonUser);
 export const loadUserDash = () => {
   return (
     container.innerHTML = `
+<div class="container">
 <div class="wrapper">
   <div class="panel">
     <h1>Welcome,</h1>
@@ -58,6 +59,11 @@ export const loadUserDash = () => {
   <div class="action-btn">
     <buttons class="btn-track" id="btn-track">Track Another Report</button>
   </div>
+</div>
+
+      <div class="side-wrapper">
+      <h1>Report History</h1>
+      </div>
 </div>
 `
   )
