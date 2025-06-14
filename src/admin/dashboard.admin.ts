@@ -7,6 +7,7 @@ import { getUsers } from '../lib/get-users';
 import Endpoints from '../lib/endpoint';
 import { io } from "socket.io-client";
 import { popUp, popupActions } from '../components/popup';
+import { getTechnicians } from '../lib/get-technicians';
 const socket = io(Endpoints.socketUrl);
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
@@ -60,20 +61,50 @@ export const loadAdminDash = () => {
         </div>
       </div>
       <div class="side-wrapper">
-          <div class="panel-stats">
-            <h1>Registered Computers: <span id="registered-pcs"></span><h1>
-           <ul>
-              <li><span>Online:</span><span id="online-pcs"></span></li>
-              <li><span>Offline:</span><span id="offline-pcs"></span></li>
-           </ul> 
-           <ul>
-              <li><span>Open Tickets:</span><span>0</span></li>
-              <li><span>In Progress Tickets:</span><span>0</span></li>
-              <li><span>Closed Tickets:</span><span>0</span></li>
-            </ul> 
+        <div class="stats-container">
+            <h1>Computer Overview</h1>
+            <div class="total-pc">
+              <p>Number of computers</p>
+              <h3 id="registered-pcs">100</h3>
+            </div>
+            <div class="pc-wrapper">
+              <div class="pc-stat">
+                <p>Online</p>
+                <h3 id="online-pcs">100</h3>
+              </div>
+              <div class="pc-stat">
+                <p>Offline</p>
+                <h3 id="offline-pcs">100</h3>
+              </div>
+            </div>
+         </div>
+          <div class="chart-wrapper">
+            <h1>Report Overview</h1>
+            <div class="chart-info">
+              <p>Open</p>
+              <div class="bar">
+                <span id="bar-open"></span>
+              </div>
+            </div>
+            <div class="chart-info">
+              <p>In progress</p>
+              <div class="bar">
+                <span id="bar-inprogress"></span>
+              </div>
+            </div>
+            <div class="chart-info">
+              <p>Resolved</p>
+              <div class="bar">
+                <span id="bar-resolved"></span>
+              </div>
+            </div>
+          </div>
+          <div class="techs-header">
+            <h1>Registered Techs</h1>
+          </div>
+          <div class="tech-wrapper">
           </div>
       </div>
-      <div>
     `
   )
 }
@@ -88,9 +119,13 @@ const regBtn = document.getElementById("btn-reg");
 const searchBtn = document.getElementById("search-btn");
 const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
 
-const registeredPcs = document.getElementById("registered-pcs") as HTMLSpanElement
-const onlinePcs = document.getElementById("online-pcs") as HTMLSpanElement
-const offlinePcs = document.getElementById("offline-pcs") as HTMLSpanElement
+const registeredPcs = document.getElementById("registered-pcs") as HTMLElement
+const onlinePcs = document.getElementById("online-pcs") as HTMLElement
+const offlinePcs = document.getElementById("offline-pcs") as HTMLElement
+const barOpen = document.getElementById("bar-open") as HTMLElement
+const barInprogress = document.getElementById("bar-inprogress") as HTMLElement
+const barResolved = document.getElementById("bar-resolved") as HTMLElement
+const techsWrapper = document.querySelector(".tech-wrapper") as HTMLElement;
 
 const loadReports = async () => {
   tableBody?.replaceChildren("")
@@ -203,7 +238,7 @@ const search = async () => {
   spinnerActionsRemove();
 }
 
-const loadStats = async () => {
+const loadComputers = async () => {
   let registered: any = [];
   let online: any = []
   let offline: any = []
@@ -221,6 +256,61 @@ const loadStats = async () => {
     onlinePcs.innerHTML = online.length;
     offlinePcs.innerHTML = offline.length
   }
+
+}
+
+const loadChart = async () => {
+  let totalReports = 0;
+  let openReports = 0;
+  let inprogressReports = 0;
+  let resolvedReports = 0;
+
+  const res = await getReports(Endpoints.reportsUrl);
+  if (!res?.ok) {
+    return;
+  } else {
+    let reports = res.content;
+    totalReports = reports.length;
+    openReports = reports.filter((report: any) => report.status == "open").length
+    inprogressReports = reports.filter((report: any) => report.status == "inprogress").length
+    resolvedReports = reports.filter((report: any) => report.status == "resolved").length
+    let w = openReports / totalReports * 100;
+    barOpen.style.width = `${w}%`
+    w = inprogressReports / totalReports * 100;
+    barInprogress.style.width = `${w}%`
+    w = resolvedReports / totalReports * 100;
+    barResolved.style.width = `${w}%`
+  }
+}
+
+const loadTechs = async () => {
+  const res = await getTechnicians(Endpoints.techniciansUrl);
+  if (!res?.ok) {
+  } else {
+    let techs = res.content;
+    techs.map((tech: any) => {
+      techsWrapper.innerHTML += `
+        <div class="tech">
+          <div class="tech-img">
+            <img src="/technician.svg"/>
+          </div>
+          <div class"tech-info">
+            <p> ${tech.email}</p>
+            <div class="info2">
+              <p>Status: ${tech.logged_in ? "Online" : "Offline"}</p>
+              <p>Clearance: ${tech.clearance_level}</p>
+            </div>
+          </div>
+        </div>
+      `
+    })
+  }
+
+}
+const loadStats = async () => {
+  loadComputers();
+  loadChart()
+  loadTechs()
 
 }
 

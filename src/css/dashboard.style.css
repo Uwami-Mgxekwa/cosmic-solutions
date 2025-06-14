@@ -14,7 +14,7 @@
 .side-wrapper {
   margin-left: 24px;
   padding: 12px;
-  background: var(--secondary);
+  background: var(--dark-accent);
   width: 30%;
   min-height: 100vh;
 }
@@ -202,26 +202,142 @@
   text-align: center;
 }
 
-.panel-stats {
-  width: 100%;
-  height: 120px;
-  color: var(--text);
-  padding: 20px;
-}
-
-.panel-stats h3 {
-  font-size: 24px;
-  margin-bottom: 14px;
-}
-
-.panel-stats ul {
-  padding-top: 24px;
-  list-style: none;
-}
-
-.panel-stats ul li {
-  width: 100%;
+.stats-container {
   font-size: 20px;
+  color: var(--background);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 2px solid var(--background);
+  padding-bottom: 20px;
+}
+
+.stats-container h1 {
+  margin-bottom: 20px;
+}
+
+.total-pc {
+  width: 100%;
+  text-align: center;
+}
+
+.total-pc h3 {
+  font-size: 26px;
+}
+
+.pc-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.pc-stat {
+  text-align: center;
+}
+
+.chart-wrapper {
+  margin-top: 20px;
+  color: var(--background);
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--background);
+}
+
+.chart-wrapper h1 {
+  margin-bottom: 20px;
+}
+
+.chart-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.chart-info p {
+  width: 20%;
+}
+
+.bar {
+  width: 80%;
+  height: 30px;
+}
+
+.bar span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  transition: width 2s;
+}
+
+.bar #bar-open {
+  background: #f00;
+}
+
+.bar #bar-inprogress {
+  background: #00f;
+}
+
+.bar #bar-resolved {
+  background: #0f0;
+}
+
+.techs-header h1 {
+  color: var(--background);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.tech-wrapper {
+  color: var(--background);
+  padding: 10px;
+  width: 100%;
+  height: 350px;
+  overflow-y: scroll;
+  cursor: pointer;
+  box-shadow: inset 0 -20px 10px -10px #00000022;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tech-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.tech {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  font-size: 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--secondary);
+}
+
+.tech-img {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background: var(--primary);
+}
+
+.tech-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.tech:last-child {
+  border: none;
+}
+
+.info2 {
+  display: flex;
+  gap: 5px;
+  font-size: 16px;
+}
+
+.info2 p:last-child {
+  border-left: 1px solid var(--background);
+  padding-left: 5px;
 }

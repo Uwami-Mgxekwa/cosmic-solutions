@@ -20,7 +20,7 @@ body {
   background: var(--background);
   width: 100vw;
   height: 100vh;
-  padding: 0 140px;
+  padding: 0 100px;
   color: var(--text);
   overflow-x: hidden;
 }
