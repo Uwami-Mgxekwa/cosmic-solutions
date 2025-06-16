@@ -1,18 +1,46 @@
 @import url("../color-scheme.css");
 
-.wrapper {
-  width: 100%;
-  height: fit-content;
-  background: var(--background);
-  margin-top: 24px;
+.container {
+  display: flex;
 }
 
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--background);
+  margin-top: 24px;
+  padding: 12px;
+}
+
+.side-wrapper {
+  margin-left: 24px;
+  margin-top: 24px;
+  padding: 12px;
+  background: var(--background);
+  width: 30%;
+  min-height: 100vh;
+}
 /* .panel { */
 /*   border-bottom: 2px solid var(--text); */
 /* } */
 
 .panel h1 {
   font-size: 36px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header button {
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: 1px solid var(--text);
+  background: var(--background);
+  cursor: pointer;
 }
 
 .panel-info {
@@ -30,6 +58,29 @@
 .details-container h2 {
   margin-top: 24px;
   font-size: 24px;
+}
+
+.ticket-info {
+  margin-top: 24px;
+}
+
+.info-header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--text);
+}
+
+.info-val {
+  display: flex;
+  gap: 12px;
+}
+
+.info-body {
+  width: 100%;
+  padding-top: 24px;
+  min-height: 300px;
 }
 
 .search-form {
@@ -72,33 +123,6 @@
   margin-top: 24px;
 }
 
-.ticket-info div:nth-child(odd) {
-  background-color: var(--secondary);
-  color: var(--text);
-}
-
-.info-row {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
-  width: 100%;
-  min-height: 60px;
-  padding: 0 24px;
-  text-transform: uppercase;
-}
-
-.info-row span {
-  display: inline-block;
-  width: 50%;
-  height: fit-content;
-  overflow-wrap: break-word;
-  line-height: 40px;
-}
-
-.info-value {
-  padding-left: 10px;
-}
-
 .action-btn {
   margin-top: 48px;
   height: 100px;
@@ -115,6 +139,50 @@
   background: #f00;
   color: #fff;
   cursor: pointer;
+}
+
+.about-header .content-header {
+  margin-top: 12px;
+}
+
+.about-wrapper {
+  width: 100%;
+}
+
+.about-h1 {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 26px;
+}
+.about-content {
+  margin-top: 12px;
+  border-top: 1px solid var(--text);
+  padding: 12px 0;
+}
+
+.action-btns {
+  width: calc(100% / 2);
+  min-height: 40px;
+  padding: 12px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: var(--secondary);
+  color: var(--text);
+}
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--secondary);
+  padding-left: 12px;
+}
+
+.content-body {
+  padding-top: 12px;
+  padding-left: 12px;
 }
 
 .placeholder {

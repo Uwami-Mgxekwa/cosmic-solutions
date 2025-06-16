@@ -25,87 +25,87 @@ adminDetails = JSON.parse(jsonAdmin);
 export const loadAdminDash = () => {
   return (
     container.innerHTML = `
-      <div class="container">
-      <div class="wrapper">
-        <div class="panel">
-          <h1>Welcome,</h1>
-          <div class="panel-info">
-            <h2>[ Admin: ${adminDetails.email} ]</h2>
-          </div>
+<div class="container">
+  <div class="wrapper">
+    <div class="panel">
+      <h1>Welcome,</h1>
+      <div class="panel-info">
+        <h2>[ Admin: ${adminDetails.email} ]</h2>
+      </div>
+    </div>
+    <div class="action-btns">
+      <button class="btn-track" id="btn-reg">Register A Computer</button>
+    </div>
+    <div class="form-wrapper">
+      <form class="search-form">
+        <input type="text" name="search" id="search" placeholder="Search Token ID"/>
+        <button type="submit" id="reset-btn">Reset </button>
+        <button type="submit" id="search-btn">Search </button>
+      </form>
+    </div>
+    <div class="table-container admin-table">
+      <table class="table">
+        <caption id="caption">Select Ticket To Manage</caption>
+        <thead class="table-head">
+          <tr>
+            <th>Token ID</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Submited On</th>
+          </tr>
+        </thead>
+        <tbody class="table-body" id="tbody">
+        </tbody>
+      </table>
+      <div class="placeholder"></div>
+    </div>
+  </div>
+  <div class="side-wrapper">
+    <div class="stats-container">
+      <h1>Computer Overview</h1>
+      <div class="total-pc">
+        <p>Number of computers</p>
+        <h3 id="registered-pcs">0</h3>
+      </div>
+      <div class="pc-wrapper">
+        <div class="pc-stat">
+          <p>Online</p>
+          <h3 id="online-pcs">0</h3>
         </div>
-        <div class="action-btns">
-          <button class="btn-track" id="btn-reg">Register A Computer</button>
-        </div>
-        <div class="form-wrapper">
-          <form class="search-form">
-            <input type="text" name="search" id="search" placeholder="Search Token ID"/>
-            <button type="submit" id="reset-btn">Reset </button>
-            <button type="submit" id="search-btn">Search </button>
-          </form>
-        </div>
-        <div class="table-container admin-table">
-          <table class="table">
-            <caption id="caption">Select Ticket To Manage</caption>
-            <thead class="table-head">
-              <tr>
-                <th>Token ID</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Submited On</th>
-              </tr>
-            </thead>
-            <tbody class="table-body" id="tbody">
-            </tbody>
-          </table>
-            <div class="placeholder"></div>
+        <div class="pc-stat">
+          <p>Offline</p>
+          <h3 id="offline-pcs">0</h3>
         </div>
       </div>
-      <div class="side-wrapper">
-        <div class="stats-container">
-            <h1>Computer Overview</h1>
-            <div class="total-pc">
-              <p>Number of computers</p>
-              <h3 id="registered-pcs">100</h3>
-            </div>
-            <div class="pc-wrapper">
-              <div class="pc-stat">
-                <p>Online</p>
-                <h3 id="online-pcs">100</h3>
-              </div>
-              <div class="pc-stat">
-                <p>Offline</p>
-                <h3 id="offline-pcs">100</h3>
-              </div>
-            </div>
-         </div>
-          <div class="chart-wrapper">
-            <h1>Report Overview</h1>
-            <div class="chart-info">
-              <p>Open</p>
-              <div class="bar">
-                <span id="bar-open"></span>
-              </div>
-            </div>
-            <div class="chart-info">
-              <p>In progress</p>
-              <div class="bar">
-                <span id="bar-inprogress"></span>
-              </div>
-            </div>
-            <div class="chart-info">
-              <p>Resolved</p>
-              <div class="bar">
-                <span id="bar-resolved"></span>
-              </div>
-            </div>
-          </div>
-          <div class="techs-header">
-            <h1>Registered Techs</h1>
-          </div>
-          <div class="tech-wrapper">
-          </div>
+    </div>
+    <div class="chart-wrapper">
+      <h1>Report Overview</h1>
+      <div class="chart-info">
+        <p>Open</p>
+        <div class="bar">
+          <span id="bar-open"></span>
+        </div>
       </div>
-    `
+      <div class="chart-info">
+        <p>In progress</p>
+        <div class="bar">
+          <span id="bar-inprogress"></span>
+        </div>
+      </div>
+      <div class="chart-info">
+        <p>Resolved</p>
+        <div class="bar">
+          <span id="bar-resolved"></span>
+        </div>
+      </div>
+    </div>
+    <div class="techs-header">
+      <h1>Registered Techs</h1>
+    </div>
+    <div class="tech-wrapper">
+    </div>
+  </div>
+`
   )
 }
 
@@ -154,12 +154,12 @@ const loadReports = async () => {
     placeholder.innerHTML = " ";
     userReports.map((report) => {
       tableBody.innerHTML += `
-      <tr class="ticket-row">
-      <td>${report.tokenID}</td>
-      <td>${report.category}</td>
-      <td id=${report.status}>${report.status}</td>
-      <td>${report.submittedOn}</td>
-      </tr>`
+<tr class="ticket-row">
+<td>${report.tokenID}</td>
+<td>${report.category}</td>
+<td id=${report.status}>${report.status}</td>
+<td>${report.submittedOn}</td>
+</tr>`
 
     });
 
@@ -182,12 +182,12 @@ const loadSearchedReports = (sr: any) => {
     placeholder.innerHTML = " ";
     sr.map((report: any) => {
       tableBody.innerHTML += `
-      <tr class="ticket-row">
-      <td>${report.tokenID}</td>
-      <td>${report.category}</td>
-      <td  id=${report.status}>${report.status}</td>
-      <td>${report.submittedOn}</td>
-      </tr>`
+<tr class="ticket-row">
+<td>${report.tokenID}</td>
+<td>${report.category}</td>
+<td  id=${report.status}>${report.status}</td>
+<td>${report.submittedOn}</td>
+</tr>`
 
     });
 
@@ -290,19 +290,19 @@ const loadTechs = async () => {
     let techs = res.content;
     techs.map((tech: any) => {
       techsWrapper.innerHTML += `
-        <div class="tech">
-          <div class="tech-img">
-            <img src="/technician.svg"/>
-          </div>
-          <div class"tech-info">
-            <p> ${tech.email}</p>
-            <div class="info2">
-              <p>Status: ${tech.logged_in ? "Online" : "Offline"}</p>
-              <p>Clearance: ${tech.clearance_level}</p>
-            </div>
-          </div>
-        </div>
-      `
+<div class="tech">
+<div class="tech-img">
+<img src="/technician.svg"/>
+</div>
+<div class"tech-info">
+<p> ${tech.email}</p>
+<div class="info2">
+<p>Status: ${tech.logged_in ? "Online" : "Offline"}</p>
+<p>Clearance: ${tech.clearance_level}</p>
+</div>
+</div>
+</div>
+`
     })
   }
 

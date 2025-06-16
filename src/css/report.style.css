@@ -1,20 +1,54 @@
 @import url("../color-scheme.css");
 
+.container {
+  display: flex;
+}
 .wrapper {
   width: 100%;
-  height: fit-content;
+  min-height: 100vh;
   background: var(--background);
   margin-top: 24px;
+  padding: 12px;
 }
 
 /* .panel { */
 /*   border-bottom: 2px solid var(--text); */
 /* } */
 
+.side-wrapper {
+  margin-left: 24px;
+  margin-top: 24px;
+  padding: 12px;
+  background: var(--background);
+  width: 30%;
+  min-height: 100vh;
+}
+
+.side-wrapper h1 {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 26px;
+}
 .panel h1 {
   font-size: 36px;
 }
 
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header button {
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: 1px solid var(--text);
+  background: var(--background);
+  cursor: pointer;
+}
 .panel-info {
   display: flex;
   gap: 24px;

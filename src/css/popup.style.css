@@ -60,7 +60,6 @@
 }
 
 .content_wrapper p {
-  background: var(--secondary);
   padding: 4px;
   text-overflow: ellipsis;
   overflow: hidden;

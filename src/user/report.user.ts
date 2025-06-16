@@ -20,9 +20,13 @@ const userDetails = JSON.parse(jsonUser);
 export const loadUserReport = () => {
   return (
     container.innerHTML = `
+  <div class="container">
       <div class="wrapper">
         <div class="panel">
+        <div class="panel-header">
           <h1>Report A New Issue</h1>
+          <button id="btn-close"> &lt; Home</button>
+        </div>
           <div class="panel-info">
             <h2>[ Computer No.:${userDetails.pc} ]</h2>
             <h2>[ Room No.:${userDetails.room} ]</h2>
@@ -58,10 +62,14 @@ export const loadUserReport = () => {
             </div>
           </form>
         </div>
-        <div class="arlet">
-          <p id="message"></p>
-        </div>
       </div>
+  <div class="side-wrapper">
+    <div class="side-wrapper-header">
+      <h1>Recent Reports</h1>
+    </div>
+
+  </div>
+  </div>
     `
   )
 }
@@ -74,11 +82,11 @@ headerActions();
 sidebarActions();
 
 const submitBtn = document.getElementById("btn-submit");
-const cancleBtn = document.getElementById("btn-cancel");
-const cats = document.getElementsByName("category") as any;
+const cancelBtn = document.getElementById("btn-cancel");
+const closeBtn = document.getElementById("btn-close");
+const cats = document.getElementsByName("category") as NodeListOf<HTMLInputElement>;
 const description = document.getElementById("description") as HTMLTextAreaElement;
 let category = "";
-let message = document.getElementById("message") as HTMLParagraphElement;
 
 submitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
@@ -90,11 +98,9 @@ submitBtn?.addEventListener("click", async (e) => {
   }
 
   if (category == "" && description.value == "" || category == "" || description.value == "") {
-    message.innerText = "Make sure to complete your report!"
-    const timout = setTimeout(() => {
-      message.innerText = ""
-      clearTimeout(timout)
-    }, 3000)
+    spinnerActionsRemove();
+    popUp("Submittion Error", "Submittion failed. Fill in all the field and try again.");
+    popupActions();
     return;
   }
 
@@ -128,7 +134,15 @@ submitBtn?.addEventListener("click", async (e) => {
   spinnerActionsRemove()
 });
 
-cancleBtn?.addEventListener("click", (e) => {
+cancelBtn?.addEventListener("click", (e) => {
   e.preventDefault();
-  window.location.href = "../pages/dashboard.user.html"
+  cats.forEach((c) => {
+    c.checked = false;
+  })
+  description.value = ""
+
 })
+
+closeBtn?.addEventListener("click", () => {
+  window.location.href = "../pages/dashboard.user.html"
+});

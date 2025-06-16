@@ -55,6 +55,15 @@ export const loadTicketsPage = () => {
   )
 }
 
+ticketsPage.innerHTML += loadHeader("Support Request Portal");
+ticketsPage.innerHTML += loadSidebar();
+ticketsPage.innerHTML += loadTicketsPage();
+ticketsPage.innerHTML += loadSpinner()
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const placeholder = document.getElementById("ph");
+const closeBtn = document.getElementById("btn-close");
+
 const loadReports = async () => {
   spinnerActionsAdd()
   let userData = {
@@ -92,17 +101,9 @@ const loadReports = async () => {
   }
   spinnerActionsRemove()
 }
-ticketsPage.innerHTML += loadHeader("Support Request Portal");
-ticketsPage.innerHTML += loadSidebar();
-ticketsPage.innerHTML += loadTicketsPage();
-ticketsPage.innerHTML += loadSpinner()
 headerActions();
 sidebarActions();
 loadReports();
-
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-const closeBtn = document.getElementById("btn-close");
 
 closeBtn?.addEventListener("click", () => {
   window.location.href = "../pages/dashboard.user.html"

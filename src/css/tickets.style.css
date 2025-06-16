@@ -2,9 +2,10 @@
 
 .wrapper {
   width: 100%;
-  height: fit-content;
+  min-height: 100vh;
   background: var(--background);
   margin-top: 24px;
+  padding: 12px;
 }
 
 /* .panel { */

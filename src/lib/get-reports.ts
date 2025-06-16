@@ -1,7 +1,9 @@
+const time = 30000;
+
 export const getReports = async (url: string) => {
   const controller = new AbortController();
   const signal = controller.signal;
-  const timeoutId = setTimeout(() => { controller.abort() }, 60000);
+  const timeoutId = setTimeout(() => { controller.abort() }, time);
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -38,7 +40,7 @@ export const getReports = async (url: string) => {
 export const getReportByID = async (url: string) => {
   const controller = new AbortController();
   const signal = controller.signal;
-  const timeoutId = setTimeout(() => { controller.abort() }, 60000);
+  const timeoutId = setTimeout(() => { controller.abort() }, time);
 
   try {
     const response = await fetch(url, {
@@ -76,7 +78,7 @@ export const getReportByID = async (url: string) => {
 export const getUserReports = async (url: string, data: any) => {
   const controller = new AbortController();
   const signal = controller.signal;
-  const timeoutId = setTimeout(() => { controller.abort() }, 60000);
+  const timeoutId = setTimeout(() => { controller.abort() }, time);
 
   try {
     const response = await fetch(url, {
@@ -116,7 +118,7 @@ export const getUserReports = async (url: string, data: any) => {
 export const createReport = async (url: string, data: any) => {
   const controller = new AbortController();
   const signal = controller.signal;
-  const timeoutId = setTimeout(() => { controller.abort() }, 60000);
+  const timeoutId = setTimeout(() => { controller.abort() }, time);
 
   try {
     const response = await fetch(url, {

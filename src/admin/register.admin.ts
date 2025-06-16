@@ -20,36 +20,44 @@ const adminDetails = JSON.parse(jsonAdmin);
 export const loadRegisterPage = () => {
   return (
     container.innerHTML = `
-      <div class="wrapper">
-        <div class="panel">
-          <h1>Register A Computer</h1>
-          <div class="panel-info">
-            <h2>[ Admin: ${adminDetails.email} ]</h2>
-          </div>
-        </div>
-        <div class="form-container">
-          <form>
-            <div class="input-wrapper">
-              <label for="pc-num">Computer Number:</label>
-              <input type="text" id="pc-num" placeholder="eg:001"/>
-              <label for="room-num">Room Number:</label>
-              <input type="text" id="room-num" placeholder="eg:1"/>
-            </div>
-            <div class="action-btns">
-              <button class="btn-submit" id="btn-submit">Submit Report</button>
-              <button class="btn-cancel" id="btn-cancel">Cancel</button>
-            </div>
-          </form>
-        </div>
-        <div class="arlet">
-          <p id="message"></p>
-        </div>
+<div class="container">
+  <div class="wrapper">
+    <div class="panel">
+      <div class="panel-header">
+        <h1>Register A Computer</h1>
+        <button id="btn-close"> &lt; Home</button>
       </div>
-    `
+      <div class="panel-info">
+        <h2>[ Admin: ${adminDetails.email} ]</h2>
+      </div>
+    </div>
+    <div class="form-container">
+      <form>
+        <div class="input-wrapper">
+          <label for="pc-num">Computer Number:</label>
+          <input type="text" id="pc-num" placeholder="eg:001"/>
+          <label for="room-num">Room Number:</label>
+          <input type="text" id="room-num" placeholder="eg:1"/>
+        </div>
+        <div class="action-btns">
+          <button class="btn-submit" id="btn-submit">Submit Report</button>
+          <button class="btn-cancel" id="btn-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="side-wrapper">
+    <div class="side-wrapper-header">
+      <h1>Active Cosmos</h1>
+    </div>
+
+  </div>
+</div>
+`
   )
 }
 
-registerPage.innerHTML += loadHeader("Support Request Portal");
+registerPage.innerHTML += loadHeader("Admin Dashboard");
 registerPage.innerHTML += loadSidebar();
 registerPage.innerHTML += loadRegisterPage();
 registerPage.innerHTML += loadSpinner();
@@ -57,20 +65,18 @@ headerActions();
 sidebarActions();
 
 const submitBtn = document.getElementById("btn-submit");
-const cancleBtn = document.getElementById("btn-cancel");
+const cancelBtn = document.getElementById("btn-cancel");
+const closeBtn = document.getElementById("btn-close");
 const computerNumber = document.getElementById("pc-num") as HTMLInputElement;
 const roomNumber = document.getElementById("room-num") as HTMLInputElement;
-let message = document.getElementById("message") as HTMLParagraphElement;
 
 submitBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   spinnerActionsAdd();
   if (computerNumber.value == "" && roomNumber.value == "" || computerNumber.value == "" || roomNumber.value == "") {
-    message.innerText = "Make sure to complete your registration!"
-    const timout = setTimeout(() => {
-      message.innerText = ""
-      clearTimeout(timout)
-    }, 3000)
+    spinnerActionsRemove();
+    popUp("Registration Error", "Login failed. Fill in all the field and try again.");
+    popupActions();
     return;
   }
 
@@ -89,7 +95,12 @@ submitBtn?.addEventListener("click", async (e) => {
   spinnerActionsRemove()
 });
 
-cancleBtn?.addEventListener("click", (e) => {
+cancelBtn?.addEventListener("click", (e) => {
   e.preventDefault();
-  window.location.href = "../pages/dashboard.admin.html"
+  computerNumber.value = ""
+  roomNumber.value = ""
 })
+
+closeBtn?.addEventListener("click", () => {
+  window.location.href = "../pages/dashboard.admin.html"
+});
