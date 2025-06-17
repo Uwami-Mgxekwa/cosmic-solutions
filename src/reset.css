@@ -17,8 +17,8 @@ body {
     "Segoe UI",
     Roboto,
     sans-serif;
-  /* background: var(--background); */
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: var(--dark-accent);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); */
   width: 100vw;
   min-height: 100vh;
   padding: 0 50px;
@@ -26,12 +26,3 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
 }
-
-/* body { */
-/*   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); */
-/*   display: flex; */
-/*   align-items: center; */
-/*   justify-content: center; */
-/*   color: var(--text-primary); */
-/*   overflow-x: hidden; */
-/* } */

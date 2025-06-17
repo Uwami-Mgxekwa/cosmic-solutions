@@ -35,6 +35,7 @@ export const loadAdminDash = () => {
     </div>
     <div class="action-btns">
       <button class="btn-track" id="btn-reg">Register A Computer</button>
+      <button class="btn-add-ticket" id="btn-add-ticket">New Report</button>
     </div>
     <div class="form-wrapper">
       <form class="search-form">
@@ -80,6 +81,10 @@ export const loadAdminDash = () => {
     </div>
     <div class="chart-wrapper">
       <h1>Report Overview</h1>
+      <div class="total-reports">
+        <p>Number of reports:</p>
+        <h3 id="tot-reports">0</h3>
+      </div>
       <div class="chart-info">
         <p>Open</p>
         <div class="bar">
@@ -116,10 +121,12 @@ dasboardPage.innerHTML += loadSpinner();
 
 const tableBody = document.getElementById("tbody") as HTMLTableElement;
 const regBtn = document.getElementById("btn-reg");
+const addBtn = document.getElementById("btn-add-ticket");
 const searchBtn = document.getElementById("search-btn");
 const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
 
 const registeredPcs = document.getElementById("registered-pcs") as HTMLElement
+const totalReports = document.getElementById("tot-reports") as HTMLElement
 const onlinePcs = document.getElementById("online-pcs") as HTMLElement
 const offlinePcs = document.getElementById("offline-pcs") as HTMLElement
 const barOpen = document.getElementById("bar-open") as HTMLElement
@@ -163,6 +170,8 @@ const loadReports = async () => {
 
     });
 
+    totalReports.innerHTML = userReports.length.toString();
+
     const ticketRows = document.querySelectorAll(".ticket-row");
     ticketRows.forEach((ticketRow, key) => {
       ticketRow.addEventListener("click", () => {
@@ -172,6 +181,7 @@ const loadReports = async () => {
       })
     })
   }
+  loadChart(res);
   spinnerActionsRemove()
 }
 
@@ -259,28 +269,26 @@ const loadComputers = async () => {
 
 }
 
-const loadChart = async () => {
+const loadChart = (res: any) => {
   let totalReports = 0;
   let openReports = 0;
   let inprogressReports = 0;
   let resolvedReports = 0;
 
-  const res = await getReports(Endpoints.reportsUrl);
-  if (!res?.ok) {
-    return;
-  } else {
-    let reports = res.content;
-    totalReports = reports.length;
-    openReports = reports.filter((report: any) => report.status == "open").length
-    inprogressReports = reports.filter((report: any) => report.status == "inprogress").length
-    resolvedReports = reports.filter((report: any) => report.status == "resolved").length
-    let w = openReports / totalReports * 100;
-    barOpen.style.width = `${w}%`
-    w = inprogressReports / totalReports * 100;
-    barInprogress.style.width = `${w}%`
-    w = resolvedReports / totalReports * 100;
-    barResolved.style.width = `${w}%`
-  }
+  let reports = res.content;
+  totalReports = reports.length;
+  openReports = reports.filter((report: any) => report.status == "open").length
+  inprogressReports = reports.filter((report: any) => report.status == "inprogress").length
+  resolvedReports = reports.filter((report: any) => report.status == "resolved").length
+  let w = openReports / totalReports * 100;
+  barOpen.style.width = `${w}%`
+  barOpen.innerHTML = openReports.toString();
+  w = inprogressReports / totalReports * 100;
+  barInprogress.style.width = `${w}%`
+  barInprogress.innerHTML = inprogressReports.toString();
+  w = resolvedReports / totalReports * 100;
+  barResolved.style.width = `${w}%`
+  barResolved.innerHTML = resolvedReports.toString();
 }
 
 const loadTechs = async () => {
@@ -307,9 +315,10 @@ const loadTechs = async () => {
   }
 
 }
+
 const loadStats = async () => {
   loadComputers();
-  loadChart()
+  loadReports();
   loadTechs()
 
 }
@@ -327,9 +336,12 @@ regBtn?.addEventListener("click", () => {
   window.location.href = "../pages/register.admin.html"
 })
 
+addBtn?.addEventListener("click", () => {
+  window.location.href = "../pages/report.admin.html"
+})
+
 headerActions();
 sidebarActions();
-loadReports();
 loadStats();
 
 socket.on("updateReports", () => {
@@ -337,6 +349,6 @@ socket.on("updateReports", () => {
 });
 
 socket.on("updateStats", () => {
-  console.log("logged outj")
+  console.log("logged out")
   loadStats();
 })
