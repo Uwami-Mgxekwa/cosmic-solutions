@@ -144,5 +144,5 @@ cancelBtn?.addEventListener("click", (e) => {
 })
 
 closeBtn?.addEventListener("click", () => {
-  window.location.href = "../pages/dashboard.admin.html"
+  window.location.href = "../pages/dashboard.user.html"
 });

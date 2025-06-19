@@ -7,9 +7,9 @@
 .wrapper {
   width: 70%;
   min-height: 100vh;
+  padding: 12px 32px;
   background: var(--background);
   margin-top: 24px;
-  padding: 12px;
 }
 
 /* .panel { */
@@ -19,7 +19,7 @@
 .side-wrapper {
   margin-left: 24px;
   margin-top: 24px;
-  padding: 12px;
+  padding: 12px 32px;
   background: var(--background);
   width: 30%;
   min-height: 100vh;

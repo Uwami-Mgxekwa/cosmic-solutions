@@ -7,7 +7,7 @@
 .wrapper {
   width: 70%;
   min-height: 100vh;
-  padding: 12px;
+  padding: 12px 32px;
   background: var(--background);
   margin-top: 24px;
 }
@@ -19,29 +19,21 @@
 .side-wrapper {
   margin-left: 24px;
   margin-top: 24px;
-  padding: 12px;
+  padding: 12px 32px;
   background: var(--background);
   width: 30%;
   min-height: 100vh;
 }
 
-.side-wrapper-header h1 {
+.side-wrapper h1 {
   width: 100%;
   font-size: 24px;
   text-align: center;
   color: var(--text);
   margin-bottom: 26px;
 }
-
 .panel h1 {
   font-size: 36px;
-}
-
-.panel-info {
-  display: flex;
-  gap: 24px;
-  font-size: 24px;
-  margin: 24px 0;
 }
 
 .panel-header {
@@ -58,6 +50,16 @@
   background: var(--background);
   cursor: pointer;
 }
+.panel h1 {
+  font-size: 36px;
+}
+
+.panel-info {
+  display: flex;
+  gap: 24px;
+  font-size: 24px;
+  margin: 24px 0;
+}
 
 form {
   width: 70%;
@@ -73,6 +75,8 @@ form {
   width: 100%;
   height: 60px;
   padding: 12px;
+  border: 1px solid var(--text);
+  outline: none;
 }
 
 .input-wrapper label {
@@ -86,12 +90,11 @@ form {
   height: 100px;
   margin-top: 24px;
   display: flex;
-  gap: 24px;
   justify-content: space-between;
 }
 
 .btn-submit {
-  width: calc(100% / 2);
+  width: 330px;
   height: 60px;
   border: none;
   outline: none;
@@ -101,7 +104,7 @@ form {
 }
 
 .btn-cancel {
-  width: calc(100% / 2);
+  width: 330px;
   height: 60px;
   border: none;
   outline: none;
@@ -110,46 +113,20 @@ form {
   cursor: pointer;
 }
 
-.arlet {
-  width: 100%;
-  height: 60px;
-  margin-top: 24px;
-}
-
-.arlet p {
-  width: 100%;
-  text-align: center;
-  font-size: 24px;
-  color: #f00;
-}
-
-button {
+input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
   transition: var(--transition);
-  position: relative;
-  overflow: hidden;
 }
 
-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+input:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-1px);
 }
 
-button:hover::before {
-  left: 100%;
-}
-
-button:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+input:focus::placeholder {
+  opacity: 0.7;
+  transform: translateY(-2px);
 }

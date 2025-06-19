@@ -28,6 +28,8 @@
   height: 100%;
   background: var(--background);
   padding: 24px;
+  transition: all 0.5s ease-out;
+  animation: widen 0.5s;
 }
 
 .x-icon {
@@ -168,4 +170,13 @@ button:hover::before {
 button:focus {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+@keyframes widen {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 30%;
+  }
 }

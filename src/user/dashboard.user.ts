@@ -57,7 +57,7 @@ export const loadUserDash = () => {
       <div class="placeholder"></div>
     </div>
     <div class="action-btn">
-      <buttons class="btn-track" id="btn-track">Track Another Report</button>
+      <button class="btn-track" id="btn-track">Track Another Report</button>
     </div>
   </div>
 

@@ -1,10 +1,22 @@
 @import url("../color-scheme.css");
 
 body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  line-height: 1.6;
   color: var(--text-primary);
+  overflow-x: hidden;
 }
 
 .wrapper {
@@ -366,7 +378,7 @@ button:focus {
   }
 
   /* .container { */
-  /* border-radius: var(--radius-lg); */
+  /*   border-radius: var(--radius-lg); */
   /* } */
 
   .form-wrapper {
@@ -383,7 +395,7 @@ button:focus {
   }
 
   .content {
-    padding: 2rem;
+    /* padding: 2rem; */
     min-height: auto;
   }
 
@@ -424,7 +436,7 @@ button:focus {
   /* .container { */
   /*   border-radius: var(--radius); */
   /* } */
-  /**/
+
   .signuptext {
     font-size: 0.9rem;
   }

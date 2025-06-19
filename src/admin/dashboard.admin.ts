@@ -4,10 +4,10 @@ import { loadSidebar, sidebarActions } from '../components/sidebar';
 import { getReports } from '../lib/get-reports';
 import { loadSpinner, spinnerActionsAdd, spinnerActionsRemove } from '../components/spinner';
 import { getUsers } from '../lib/get-users';
-import Endpoints from '../lib/endpoint';
 import { io } from "socket.io-client";
 import { popUp, popupActions } from '../components/popup';
 import { getTechnicians } from '../lib/get-technicians';
+import Endpoints from '../lib/endpoint';
 const socket = io(Endpoints.socketUrl);
 
 const dasboardPage = document.querySelector<HTMLDivElement>('#app')!
@@ -31,6 +31,74 @@ export const loadAdminDash = () => {
       <h1>Welcome,</h1>
       <div class="panel-info">
         <h2>[ Admin: ${adminDetails.email} ]</h2>
+      </div>
+    </div>
+    <div class="panel-cards">
+      <div class="card">
+        <div class="title">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" >
+              <path d="M384 96l0 224L64 320 64 96l320 0zM64 32C28.7 32 0 60.7 0 96L0 320c0 35.3 28.7 64 64 64l117.3 0-10.7 32L96 416c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-74.7 0-10.7-32L384 384c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L64 32zm464 0c-26.5 0-48 21.5-48 48l0 352c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48l-64 0zm16 64l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm-16 80c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16zm32 160a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+            </svg>
+          </span>
+          <p class="title-text">
+           Computers 
+          </p>
+          <div class="percent">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" fill="currentColor" height="20" width="20">
+              <path d="M1408 1216q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45 19-45l448-448q19-19 45-19t45 19l448 448q19 19 19 45z">
+              </path>
+            </svg> 
+            <p>100%<p>
+          </div>
+        </div>
+        <div class="data">
+          <p id="registered-pcs">
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor">
+              <path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 288c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128z"/>
+            </svg>
+          </span>
+          <p class="title-text">
+           Reports 
+          </p>
+          <div class="percent">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" fill="currentColor" height="20" width="20">
+              <path d="M1408 1216q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45 19-45l448-448q19-19 45-19t45 19l448 448q19 19 19 45z">
+              </path>
+            </svg>
+            <p>100%</p>
+          </div>
+        </div>
+        <div class="data">
+          <p id="tot-reports">
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
+              <path d="M384 96l0 224L64 320 64 96l320 0zM64 32C28.7 32 0 60.7 0 96L0 320c0 35.3 28.7 64 64 64l117.3 0-10.7 32L96 416c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-74.7 0-10.7-32L384 384c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L64 32zm464 0c-26.5 0-48 21.5-48 48l0 352c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48l-64 0zm16 64l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm-16 80c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16zm32 160a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+            </svg>
+          </span>
+          <p class="title-text">
+           Cosmos 
+          </p>
+        </div>
+        <div class="data">
+          <p>
+            0 
+          </p>
+
+        </div>
       </div>
     </div>
     <div class="action-btns">
@@ -64,27 +132,27 @@ export const loadAdminDash = () => {
   <div class="side-wrapper">
     <div class="stats-container">
       <h1>Computer Overview</h1>
-      <div class="total-pc">
-        <p>Number of computers</p>
-        <h3 id="registered-pcs">0</h3>
-      </div>
+      <!-- <div class="total-pc"> -->
+      <!--   <p>Number of computers</p> -->
+      <!--   <h3 id="registered-pcs">0</h3> -->
+      <!-- </div> -->
       <div class="pc-wrapper">
         <div class="pc-stat">
-          <p>Online</p>
+          <p><span class="status-indicator online"></span>Online</p>
           <h3 id="online-pcs">0</h3>
         </div>
         <div class="pc-stat">
-          <p>Offline</p>
+          <p><span class="status-indicator offline"></span>Offline</p>
           <h3 id="offline-pcs">0</h3>
         </div>
       </div>
     </div>
     <div class="chart-wrapper">
       <h1>Report Overview</h1>
-      <div class="total-reports">
-        <p>Number of reports:</p>
-        <h3 id="tot-reports">0</h3>
-      </div>
+      <!-- <div class="total-reports"> -->
+      <!--   <p>Number of reports:</p> -->
+      <!--   <h3 id="tot-reports">0</h3> -->
+      <!-- </div> -->
       <div class="chart-info">
         <p>Open</p>
         <div class="bar">
