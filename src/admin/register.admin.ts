@@ -40,7 +40,7 @@ export const loadRegisterPage = () => {
           <input type="text" id="room-num" placeholder="eg:1"/>
         </div>
         <div class="action-btns">
-          <button class="btn-submit" id="btn-submit">Submit Report</button>
+          <button class="btn-submit" id="btn-submit">Submit</button>
           <button class="btn-cancel" id="btn-cancel">Cancel</button>
         </div>
       </form>

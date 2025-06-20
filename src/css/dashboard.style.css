@@ -180,10 +180,32 @@
 
 .table-container {
   width: 100%;
+  min-height: 500px;
   height: fit-content;
   border-top: 2px solid var(--text);
   margin-top: 24px;
   margin-bottom: 24px;
+}
+
+.filter-container {
+  width: 100%;
+  border-bottom: 2px solid var(--text);
+}
+
+.filter-btn {
+  position: relative;
+  border: 2px solid transparent;
+  width: calc(100% / 6);
+  height: 60px;
+  border: none;
+  outline: none;
+}
+
+.filter-btn.active {
+  background: var(--secondary);
+  border: 2px solid var(--text);
+  border-bottom: none;
+  box-shadow: 0 10px 0 var(--background);
 }
 
 .table {
@@ -192,7 +214,7 @@
   border-collapse: collapse;
 }
 
-.table caption {
+#caption {
   text-align: left;
   font-size: 24px;
   font-weight: 500;
@@ -218,6 +240,11 @@
   width: calc(100% / 4);
   height: 60px;
   cursor: pointer;
+}
+
+td span {
+  font-size: 10px;
+  text-transform: lowercase;
 }
 
 #open {
@@ -326,6 +353,7 @@
   width: 100%;
   font-size: 24px;
   text-align: center;
+  color: var(--text-muted);
 }
 
 .stats-container {

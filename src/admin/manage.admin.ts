@@ -317,64 +317,57 @@ const assignReport = async () => {
     <h1>Assign Report To A Technician</h1>
     <h2>TokenID: ${tokenID}</h2>
   </div>
-  <form>
+  <div class="assign-container">
+    <form>
     <div>
       <h3>Enter Technician Email</h3>
-      <div class="assign">
-        <input type="text" id="tech-email" name="tech-email" placeholder="Email" required>
-        <ul id="autocomplete"></ul>
+        <div class="assign">
+          <input type="text" id="tech-email" name="tech-email" placeholder="Email" required>
+        <!-- <ul id="autocomplete"></ul> -->
       </div>
+     <div class="modal-action-btns">
+       <button class="btn-status" id="btn-status">Update</button>
+       <button class="btn-close" id="btn-cancel">Cancel</button>
+     </div>
+    </form>
     </div>
-    <div class="modal-action-btns">
-      <button class="btn-status" id="btn-status">Update</button>
-      <button class="btn-close" id="btn-cancel">Cancel</button>
-    </div>
-  </form>
+      <div class="techs-container" id="techs-container">
+        <h3 class="select-header">Select an available technician</h3>
+        <ul id="tech-list"></ul>
+      </div>
+  </div>
 </div>
 `
   managePage.appendChild(updateModal);
   const updateBtn = document.getElementById("btn-status");
   const cancelBtn = document.getElementById("btn-cancel");
   const email = document.getElementById("tech-email") as HTMLInputElement;
-  const autocomplete = document.getElementById("autocomplete") as HTMLUListElement
+  // const autocomplete = document.getElementById("autocomplete") as HTMLUListElement;
+  const techsList = document.getElementById("tech-list") as HTMLElement;
 
-  email.addEventListener("keyup", (e) => {
-    e.preventDefault()
-    if (email.value.length < 1) {
-      autocomplete.replaceChildren("")
-      return;
-    }
-    complete(email.value)
-
-  });
-
-  const complete = (val: string) => {
-    let searchList: any = [];
-    techs?.content.forEach((c: any) => {
-
-      if (c.email.toLowerCase().includes(val.toLowerCase())) {
-        searchList.push(c.email)
-      }
-    });
-
-    autocomplete.replaceChildren("")
-    searchList.forEach((l: any) => {
-      autocomplete.innerHTML += `
-<li class="email" data-set-name=${l}>${l}</li>
+  techs?.content.forEach((t: any) => {
+    techsList.innerHTML += `
+     <li class="email" data-set-name=${t.email}>${t.email}</li>
 `
-    })
-    const emails = document.querySelectorAll(".email");
-    emails.forEach((m) => {
-      m.addEventListener("click", () => {
-        email.value = m.getAttribute("data-set-name") || " "
-        autocomplete.replaceChildren("")
-      })
-    })
-  }
+  })
+  const emails = document.querySelectorAll(".email");
 
+  emails.forEach((m) => {
+    m.addEventListener("click", () => {
+      email.value = m.getAttribute("data-set-name") || " "
+    })
+  })
+
+  const list = techs.content.map((t: any) => t.email)
   updateBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     spinnerActionsAdd()
+    if (!list.includes(email.value)) {
+      popUp("Invalid Email", "Select or provide a valid email")
+      popupActions()
+      spinnerActionsAdd()
+      return
+    }
     const updateReportUrl = Endpoints.assignReportUrl(id)
     const res = await updateReport(updateReportUrl, { technician: email.value })
     if (!res?.ok) {

@@ -101,6 +101,7 @@ export const loadAdminDash = () => {
         </div>
       </div>
     </div>
+
     <div class="action-btns">
       <button class="btn-track" id="btn-reg">Register A Computer</button>
       <button class="btn-add-ticket" id="btn-add-ticket">New Report</button>
@@ -113,8 +114,14 @@ export const loadAdminDash = () => {
       </form>
     </div>
     <div class="table-container admin-table">
+        <h1 id="caption">Select Ticket To Manage</h1>
+      <div class="filter-container">
+        <button class="filter-btn active" id="all-btn">All</button>
+        <button class="filter-btn" id="open-btn">Open</button>
+        <button class="filter-btn" id="inprogress-btn"active">In progress</button>
+        <button class="filter-btn" id="resolved-btn">Resolved</button>
+      </div>
       <table class="table">
-        <caption id="caption">Select Ticket To Manage</caption>
         <thead class="table-head">
           <tr>
             <th>Token ID</th>
@@ -191,6 +198,7 @@ const tableBody = document.getElementById("tbody") as HTMLTableElement;
 const regBtn = document.getElementById("btn-reg");
 const addBtn = document.getElementById("btn-add-ticket");
 const searchBtn = document.getElementById("search-btn");
+const filterBtns = document.querySelectorAll(".filter-btn")
 const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
 
 const registeredPcs = document.getElementById("registered-pcs") as HTMLElement
@@ -202,7 +210,7 @@ const barInprogress = document.getElementById("bar-inprogress") as HTMLElement
 const barResolved = document.getElementById("bar-resolved") as HTMLElement
 const techsWrapper = document.querySelector(".tech-wrapper") as HTMLElement;
 
-const loadReports = async () => {
+const loadReports = async (filter: string) => {
   tableBody?.replaceChildren("")
   spinnerActionsAdd();
   let reportsEndpoint = "";
@@ -220,25 +228,33 @@ const loadReports = async () => {
     userReports = [];
   } else {
     userReports = res?.content
+    totalReports.innerHTML = userReports.length.toString();
+  }
+
+  if (filter == "open") {
+    userReports = userReports.filter((rep) => rep.status == "open");
+  }
+  if (filter == "inprogress") {
+    userReports = userReports.filter((rep) => rep.status == "inprogress");
+  }
+  if (filter == "resolved") {
+    userReports = userReports.filter((rep) => rep.status == "resolved");
   }
 
   if (userReports.length < 1) {
-    placeholder.innerHTML = `<p>No reports at the moment</p>`
+    placeholder.innerHTML = `<p class="plc-holder">No reports at the moment</p>`
   } else {
-    placeholder.innerHTML = " ";
     placeholder.innerHTML = " ";
     userReports.map((report) => {
       tableBody.innerHTML += `
 <tr class="ticket-row">
 <td>${report.tokenID}</td>
 <td>${report.category}</td>
-<td id=${report.status}>${report.status}</td>
+<td id=${report.status}>${report.status} <br> <span>${report.status == "" ? "" : report.technician}</span></td>
 <td>${report.submittedOn}</td>
 </tr>`
 
     });
-
-    totalReports.innerHTML = userReports.length.toString();
 
     const ticketRows = document.querySelectorAll(".ticket-row");
     ticketRows.forEach((ticketRow, key) => {
@@ -263,7 +279,7 @@ const loadSearchedReports = (sr: any) => {
 <tr class="ticket-row">
 <td>${report.tokenID}</td>
 <td>${report.category}</td>
-<td  id=${report.status}>${report.status}</td>
+<td  id=${report.status}>${report.status} <br> <span>${report.status == "" ? "" : report.technician}</span></td>
 <td>${report.submittedOn}</td>
 </tr>`
 
@@ -386,7 +402,7 @@ const loadTechs = async () => {
 
 const loadStats = async () => {
   loadComputers();
-  loadReports();
+  loadReports("all");
   loadTechs()
 
 }
@@ -408,12 +424,23 @@ addBtn?.addEventListener("click", () => {
   window.location.href = "../pages/report.admin.html"
 })
 
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    filterBtns.forEach((btn) => {
+      btn.classList.remove("active")
+    })
+    btn.classList.add("active");
+    let filter = btn.id.split("-");
+    loadReports(filter[0])
+  })
+})
+
 headerActions();
 sidebarActions();
 loadStats();
 
 socket.on("updateReports", () => {
-  loadReports();
+  loadReports("all");
 });
 
 socket.on("updateStats", () => {

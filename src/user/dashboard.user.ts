@@ -41,8 +41,14 @@ export const loadUserDash = () => {
       <button class="btn-view" id="btn-view">View My Reports</button>
     </div>
     <div class="table-container">
+        <h1 id="caption">Select Ticket To Manage</h1>
+      <div class="filter-container">
+        <button class="filter-btn active" id="all-btn">All</button>
+        <button class="filter-btn" id="open-btn">Open</button>
+        <button class="filter-btn" id="inprogress-btn"active">In progress</button>
+        <button class="filter-btn" id="resolved-btn">Resolved</button>
+      </div>
       <table class="table">
-        <caption>Select Ticket To Manage</caption>
         <thead class="table-head">
           <tr>
             <th>Token ID</th>
@@ -98,13 +104,15 @@ const tableBody = document.getElementById("tbody") as HTMLTableElement;
 const newReportBtn = document.getElementById("btn-new");
 const viewTicketsBtn = document.getElementById("btn-view");
 const trackBtn = document.getElementById("btn-track");
+const filterBtns = document.querySelectorAll(".filter-btn")
+
 const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
 const totalReports = document.getElementById("total-reports") as HTMLElement;
 const openReports = document.getElementById("reports-open") as HTMLElement;
 const inprogressReports = document.getElementById("reports-inprogress") as HTMLElement;
 const resolvedReports = document.getElementById("reports-resolved") as HTMLElement;
 
-const loadReports = async () => {
+const loadReports = async (filter: string) => {
   tableBody?.replaceChildren("")
   spinnerActionsAdd()
   let userData = {
@@ -116,10 +124,24 @@ const loadReports = async () => {
     userReports = [];
   } else {
     userReports = res?.content
+    totalReports.innerHTML = userReports.length.toString();
+    openReports.innerHTML = userReports.filter((r) => r.status == "open").length.toString();
+    inprogressReports.innerHTML = userReports.filter((r) => r.status == "inprogress").length.toString();
+    resolvedReports.innerHTML = userReports.filter((r) => r.status == "resolved").length.toString();
+  }
+
+  if (filter == "open") {
+    userReports = userReports.filter((rep) => rep.status == "open");
+  }
+  if (filter == "inprogress") {
+    userReports = userReports.filter((rep) => rep.status == "inprogress");
+  }
+  if (filter == "resolved") {
+    userReports = userReports.filter((rep) => rep.status == "resolved");
   }
 
   if (userReports.length < 1) {
-    placeholder.innerHTML = `<p>No reports at the moment</p>`
+    placeholder.innerHTML = `<p class="plc-holder">No reports at the moment</p>`
   } else {
     placeholder.innerHTML = "";
     for (let i = 0; i < userReports.length; i++) {
@@ -137,10 +159,6 @@ const loadReports = async () => {
       }
     }
 
-    totalReports.innerHTML = userReports.length.toString();
-    openReports.innerHTML = userReports.filter((r) => r.status == "open").length.toString();
-    inprogressReports.innerHTML = userReports.filter((r) => r.status == "inprogress").length.toString();
-    resolvedReports.innerHTML = userReports.filter((r) => r.status == "resolved").length.toString();
 
     const ticketRows = document.querySelectorAll(".ticket-row");
     ticketRows.forEach((ticketRow, key) => {
@@ -154,8 +172,6 @@ const loadReports = async () => {
   spinnerActionsRemove()
 
 }
-
-
 
 if (jsonInitSignup) {
   popUp("Note.", `Remember your pc number, For the next time you log in:
@@ -177,11 +193,22 @@ trackBtn?.addEventListener("click", () => {
   window.location.href = "../pages/status.user.html?id=+q=track"
 });
 
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    filterBtns.forEach((btn) => {
+      btn.classList.remove("active")
+    })
+    btn.classList.add("active");
+    let filter = btn.id.split("-");
+    loadReports(filter[0])
+  })
+})
+
 removeData("signup");
 headerActions();
 sidebarActions();
-loadReports();
+loadReports("all");
 
 socket.on("updateReports", () => {
-  loadReports()
+  loadReports("all")
 })
