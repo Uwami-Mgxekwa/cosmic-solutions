@@ -242,9 +242,12 @@
   cursor: pointer;
 }
 
-td span {
-  font-size: 10px;
+.tag {
   text-transform: lowercase;
+  display: inline-block;
+  padding: 3px;
+  font-size: 12px;
+  color: #f00;
 }
 
 #open {

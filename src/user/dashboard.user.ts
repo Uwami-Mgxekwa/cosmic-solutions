@@ -150,7 +150,7 @@ const loadReports = async (filter: string) => {
 <tr class="ticket-row">
 <td>${details.tokenID}</td>
 <td>${details.category}</td>
-<td  id=${details.status}>${details.status}</td>
+<td id=${details.status}>${details.status} <br> ${details.technician == "" ? "" : `<span class="tag">${details.technician}</span>`}</td>
 <td>${details.submittedOn}</td>
 </tr>
 `

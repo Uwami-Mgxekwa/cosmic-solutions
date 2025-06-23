@@ -129,7 +129,9 @@ submitBtn?.addEventListener("click", async (e) => {
     category: category,
     description: description.value,
     status: "open",
+    technician: adminDetails.clearance_level > 0 ? adminDetails.email : "",
     submittedOn: new Date().toLocaleString("en-ZA", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).toLowerCase(),
+    submittedBy: adminDetails.clearance_level > 0 ? "technician" : "admin",
     notes: "",
     pc: pcNumber.value,
     room: roomNumber.value

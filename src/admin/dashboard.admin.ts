@@ -250,12 +250,11 @@ const loadReports = async (filter: string) => {
 <tr class="ticket-row">
 <td>${report.tokenID}</td>
 <td>${report.category}</td>
-<td id=${report.status}>${report.status} <br> <span>${report.status == "" ? "" : report.technician}</span></td>
-<td>${report.submittedOn}</td>
+<td id=${report.status}>${report.status} <br> ${report.technician == "" ? "" : `<span class="tag">${report.technician}</span>`}</td>
+<td>${report.submittedOn} <br> ${report.submittedBy == "admin" ? `<span class="tag">By Admin</span>` : ""} ${report.submittedBy == "technician" ? `<span class="tag">By Technician</span>` : ""} </td>
 </tr>`
 
     });
-
     const ticketRows = document.querySelectorAll(".ticket-row");
     ticketRows.forEach((ticketRow, key) => {
       ticketRow.addEventListener("click", () => {
