@@ -9,7 +9,6 @@
   min-height: 100vh;
   padding: 12px 32px;
   background: var(--background);
-  margin-top: 24px;
 }
 
 /* .panel { */
@@ -17,12 +16,11 @@
 /* } */
 
 .side-wrapper {
-  margin-left: 24px;
-  margin-top: 24px;
   padding: 12px 32px;
   background: var(--background);
   width: 30%;
   min-height: 100vh;
+  border-left: 2px solid var(--text);
 }
 
 .side-wrapper h1 {

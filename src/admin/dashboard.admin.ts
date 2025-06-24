@@ -54,6 +54,7 @@ export const loadAdminDash = () => {
         </div>
         <div class="data">
           <p id="registered-pcs">
+            0
           </p>
         </div>
       </div>
@@ -78,6 +79,7 @@ export const loadAdminDash = () => {
         </div>
         <div class="data">
           <p id="tot-reports">
+            0
           </p>
         </div>
       </div>
@@ -139,10 +141,6 @@ export const loadAdminDash = () => {
   <div class="side-wrapper">
     <div class="stats-container">
       <h1>Computer Overview</h1>
-      <!-- <div class="total-pc"> -->
-      <!--   <p>Number of computers</p> -->
-      <!--   <h3 id="registered-pcs">0</h3> -->
-      <!-- </div> -->
       <div class="pc-wrapper">
         <div class="pc-stat">
           <p><span class="status-indicator online"></span>Online</p>
@@ -156,31 +154,31 @@ export const loadAdminDash = () => {
     </div>
     <div class="chart-wrapper">
       <h1>Report Overview</h1>
-      <!-- <div class="total-reports"> -->
-      <!--   <p>Number of reports:</p> -->
-      <!--   <h3 id="tot-reports">0</h3> -->
-      <!-- </div> -->
+      <h2 class="chart-subheading"></h2>
+      <div class="chart-container">
       <div class="chart-info">
-        <p>Open</p>
         <div class="bar">
           <span id="bar-open"></span>
         </div>
+        <p>Open</p>
       </div>
       <div class="chart-info">
-        <p>In progress</p>
         <div class="bar">
           <span id="bar-inprogress"></span>
         </div>
+        <p>In progress</p>
       </div>
       <div class="chart-info">
-        <p>Resolved</p>
         <div class="bar">
           <span id="bar-resolved"></span>
         </div>
+        <p>Resolved</p>
+      </div>
+
       </div>
     </div>
     <div class="techs-header">
-      <h1>Registered Techs</h1>
+      ${adminDetails.email.includes("tech") ? "" : `<h1>Registered Techs</h1>`}
     </div>
     <div class="tech-wrapper">
     </div>
@@ -201,14 +199,15 @@ const searchBtn = document.getElementById("search-btn");
 const filterBtns = document.querySelectorAll(".filter-btn")
 const placeholder = document.querySelector(".placeholder") as HTMLDivElement;
 
-const registeredPcs = document.getElementById("registered-pcs") as HTMLElement
-const totalReports = document.getElementById("tot-reports") as HTMLElement
-const onlinePcs = document.getElementById("online-pcs") as HTMLElement
-const offlinePcs = document.getElementById("offline-pcs") as HTMLElement
-const barOpen = document.getElementById("bar-open") as HTMLElement
-const barInprogress = document.getElementById("bar-inprogress") as HTMLElement
-const barResolved = document.getElementById("bar-resolved") as HTMLElement
-const techsWrapper = document.querySelector(".tech-wrapper") as HTMLElement;
+const registeredPcs = document.getElementById("registered-pcs") as HTMLElement;
+const totalReports = document.getElementById("tot-reports") as HTMLElement;
+const onlinePcs = document.getElementById("online-pcs") as HTMLElement;
+const offlinePcs = document.getElementById("offline-pcs") as HTMLElement;
+const barOpen = document.getElementById("bar-open") as HTMLElement;
+const barInprogress = document.getElementById("bar-inprogress") as HTMLElement;
+const barResolved = document.getElementById("bar-resolved") as HTMLElement;
+const chartSubHeading = document.querySelector(".chart-subheading") as HTMLElement;
+const techsWrapper = document.querySelector(".tech-wrapper") as HTMLElement;;
 
 const loadReports = async (filter: string) => {
   tableBody?.replaceChildren("")
@@ -359,40 +358,44 @@ const loadChart = (res: any) => {
   let resolvedReports = 0;
 
   let reports = res.content;
+  if (reports.length < 1) {
+    chartSubHeading.innerHTML = "No Chart Data"
+    return;
+  }
   totalReports = reports.length;
   openReports = reports.filter((report: any) => report.status == "open").length
   inprogressReports = reports.filter((report: any) => report.status == "inprogress").length
   resolvedReports = reports.filter((report: any) => report.status == "resolved").length
-  let w = openReports / totalReports * 100;
-  barOpen.style.width = `${w}%`
+  let h = openReports / totalReports * 100;
+  barOpen.style.height = `${h}%`
   barOpen.innerHTML = openReports.toString();
-  w = inprogressReports / totalReports * 100;
-  barInprogress.style.width = `${w}%`
+  h = inprogressReports / totalReports * 100;
+  barInprogress.style.height = `${h}%`
   barInprogress.innerHTML = inprogressReports.toString();
-  w = resolvedReports / totalReports * 100;
-  barResolved.style.width = `${w}%`
+  h = resolvedReports / totalReports * 100;
+  barResolved.style.height = `${h}%`
   barResolved.innerHTML = resolvedReports.toString();
 }
 
 const loadTechs = async () => {
+  if (adminDetails.email.includes("tech")) {
+    return;
+  }
   const res = await getTechnicians(Endpoints.techniciansUrl);
   if (!res?.ok) {
   } else {
     let techs = res.content;
     techs.map((tech: any) => {
       techsWrapper.innerHTML += `
-<div class="tech">
-<div class="tech-img">
-<img src="/technician.svg"/>
-</div>
-<div class"tech-info">
-<p> ${tech.email}</p>
-<div class="info2">
-<p>Status: ${tech.logged_in ? "Online" : "Offline"}</p>
-<p>Clearance: ${tech.clearance_level}</p>
-</div>
-</div>
-</div>
+  <div class="tech">
+    ${tech.logged_in ? `<span class="badge online"></span>` : `<span class="badge offline"></span>`}
+     <div class="tech-img">
+      <img src="/technician.svg"/>
+      </div>
+      <div>
+        <p> ${tech.email}</p>
+      </div>
+  </div>
 `
     })
   }

@@ -182,7 +182,6 @@ input {
   font-size: 1rem;
   font-weight: 400;
   transition: var(--transition);
-  background: var(--background, #ffffff);
   color: var(--text-primary);
   outline: none;
 }

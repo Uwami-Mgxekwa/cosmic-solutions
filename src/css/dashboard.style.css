@@ -10,16 +10,14 @@
   padding: 12px 32px;
   height: fit-content;
   background: var(--background);
-  margin-top: 24px;
 }
 
 .side-wrapper {
-  margin-left: 24px;
-  margin-top: 24px;
   padding: 12px 32px;
   background: var(--background);
   width: 30%;
   min-height: 100vh;
+  border-left: 2px solid var(--text);
 }
 
 .side-wrapper h1 {
@@ -400,6 +398,7 @@
 
 .status-indicator.online {
   background: #0f0;
+  animation: pulse-animation infinite 2s;
 }
 
 .status-indicator.offline {
@@ -417,6 +416,7 @@
 }
 
 .chart-wrapper {
+  height: 400px;
   margin-top: 20px;
   color: var(--text);
   padding-bottom: 20px;
@@ -427,31 +427,52 @@
   margin-bottom: 20px;
 }
 
-.chart-info {
+.chart-wrapper h2 {
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.chart-container {
   display: flex;
-  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 80%;
+}
+
+.chart-info {
+  max-width: 40px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
 
 .chart-info p {
-  width: 20%;
+  min-height: 70px;
+  text-align: center;
 }
 
 .bar {
-  width: 80%;
-  height: 30px;
+  position: relative;
+  width: 40px;
+  height: 100%;
 }
 
 .bar span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--text);
   color: var(--background);
-  width: 0%;
-  height: 100%;
-  transition: width 2s;
+  width: 100%;
+  height: 0%;
+  transition: height 2s;
 }
 
 .techs-header h1 {
@@ -462,34 +483,53 @@
 
 .tech-wrapper {
   color: var(--text);
-  padding: 10px;
   width: 100%;
-  height: 350px;
-  overflow-y: scroll;
+  max-height: 670px;
   cursor: pointer;
-}
-
-.tech-wrapper::-webkit-scrollbar {
-  display: none;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 12px 0;
 }
 
 .tech {
-  width: 100%;
-  height: 100px;
+  position: relative;
+  width: 100px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 10px 0;
-  font-size: 20px;
+  justify-content: center;
+  font-size: 10px;
   text-align: center;
-  border-bottom: 1px solid var(--secondary);
+  border-radius: 9999px;
 }
 
+.badge {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+
+.badge.online {
+  background-color: #0f0;
+  animation: pulse-animation infinite 2s;
+}
+
+.badge.offline {
+  background-color: #f00;
+}
 .tech-img {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   padding: 10px;
   background: var(--primary);
+  border-radius: 9999px;
 }
 
 .tech-img img {
@@ -549,5 +589,14 @@ button:focus {
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
   }
 }
