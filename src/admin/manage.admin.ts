@@ -40,6 +40,7 @@ export const loadManagePage = () => {
     <div class="details-container">
       <div class="ticket-info">
       </div>
+      <div class="ticket-solved"></div>
     </div>
   </div>
   <div class="side-wrapper">
@@ -154,6 +155,12 @@ const loadDetails = async (detailsID: string) => {
       <p>${report?.description}</p>
     </div>
 `
+  if (report?.status == "resolved" && !checkDelClearance(adminDetails.clearance_level)) {
+    ticketSolvedContainer.innerHTML = `
+      <p>This Report has been marked as SOLVED and can not be updated further.</p>
+    `
+  }
+
   reportPcNo.innerHTML = report?.pc;
   reportRoomNo.innerHTML = report?.room;
   reportCategory.innerHTML = report?.category;
@@ -171,6 +178,7 @@ sidebarActions()
 loadDetails(id);
 
 const ticketInfoContainer = document.querySelector(".ticket-info") as HTMLDivElement;
+const ticketSolvedContainer = document.querySelector(".ticket-solved") as HTMLElement;
 const closeBtn = document.getElementById("btn-close");
 const updateBtn = document.getElementById("btn-update");
 const addBtn = document.getElementById("btn-add");
@@ -240,7 +248,7 @@ const updateStatus = () => {
     e.preventDefault();
     spinnerActionsAdd()
     const updateReportUrl = Endpoints.updateReportStatusUrl(id)
-    const res = await updateReport(updateReportUrl, { status: statusValue })
+    const res = await updateReport(updateReportUrl, { adminId: adminDetails._id, adminEmail: adminDetails.email, status: statusValue })
     if (!res?.ok) {
       console.log(res?.content)
     } else {
@@ -290,7 +298,7 @@ const addNotes = () => {
     e.preventDefault();
     spinnerActionsAdd()
     const updateReportUrl = Endpoints.updateReportNotesUrl(id)
-    const res = await updateReport(updateReportUrl, { notes: notes.value })
+    const res = await updateReport(updateReportUrl, { adminId: adminDetails._id, adminEmail: adminDetails.email, notes: notes.value })
     if (!res?.ok) {
       console.log(res?.content)
     } else {
@@ -369,7 +377,7 @@ const assignReport = async () => {
       return
     }
     const updateReportUrl = Endpoints.assignReportUrl(id)
-    const res = await updateReport(updateReportUrl, { technician: email.value })
+    const res = await updateReport(updateReportUrl, { adminId: adminDetails._id, adminEmail: adminDetails.email, technician: email.value })
     if (!res?.ok) {
       console.log(res?.content)
     } else {
@@ -437,27 +445,51 @@ closeBtn?.addEventListener("click", () => {
   window.location.href = "../pages/dashboard.admin.html"
 });
 
+const reportIdUrl = Endpoints.reportIdUrl(id)
+const res = await getReportByID(reportIdUrl);
+let closed = res?.content.report.status == "resolved";
+
+if (closed && !checkDelClearance(adminDetails.clearance_level)) {
+  updateBtn?.setAttribute("disabled", "")
+  addBtn?.setAttribute("disabled", "")
+}
+
+console.log(closed, checkDelClearance(adminDetails.clearance_level))
+if (!checkDelClearance(adminDetails.clearance_level)) {
+  assignBtn?.setAttribute("disabled", "")
+  deleteBtn?.setAttribute("disabled", "")
+}
+
+
 updateBtn?.addEventListener("click", (e) => {
   e.preventDefault()
-  updateStatus();
+  if (closed && !checkDelClearance(adminDetails.clearance_level)) {
+    popUp("Forbidden Operation", "This can only be done by admin")
+    popupActions();
+  } else {
+    updateStatus();
+  }
 })
 
 addBtn?.addEventListener("click", (e) => {
   e.preventDefault()
-  addNotes();
+  if (closed && !checkDelClearance(adminDetails.clearance_level)) {
+    popUp("Forbidden Operation", "This can only be done by admin")
+    popupActions();
+  } else {
+    addNotes();
+  }
 })
 
-if (adminDetails.clearance_level > 0) {
-  assignBtn?.setAttribute("disabled", "")
-}
 assignBtn?.addEventListener("click", (e) => {
   e.preventDefault()
-  assignReport()
+  if (checkDelClearance(adminDetails.clearance_level)) {
+    assignReport()
+  } else {
+    popUp("Forbidden Operation", "This action can only be done by admin")
+    popupActions();
+  }
 })
-
-if (adminDetails.clearance_level > 0) {
-  deleteBtn?.setAttribute("disabled", "")
-}
 
 deleteBtn?.addEventListener("click", (e) => {
   e.preventDefault()
