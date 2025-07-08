@@ -77,41 +77,76 @@ if (environment == "DEV") {
 
 } else {
   Endpoints = {
-    socketUrl: "https://api.devnil.site",
-    userSignupUrl: "https://api.devnil.site/api/user/signup",
-    userLoginUrl: "https://api.devnil.site/api/user/login",
-    userLogoutUrl: "https://api.devnil.site/api/user/logout",
-    usersUrl: "https://api.devnil.site/api/user/all",
-    adminLoginUrl: "https://api.devnil.site/api/admin/login",
-    adminLogoutUrl: "https://api.devnil.site/api/admin/logout",
-    technicianLoginUrl: "https://api.devnil.site/api/technician/login",
-    technicianLogoutUrl: "https://api.devnil.site/api/technician/logout",
-    techniciansUrl: "https://api.devnil.site/api/technician/all",
-    userReportsUrl: "https://api.devnil.site/api/report/all/user",
-    reportsUrl: "https://api.devnil.site/api/report/all",
-    createReportUrl: "https://api.devnil.site/api/report/new",
-    registerUrl: "https://api.devnil.site/api/user/register",
+    socketUrl: "https://cosmic-server.onrender.com",
+    userSignupUrl: "https://cosmic-server.onrender.com/api/user/signup",
+    userLoginUrl: "https://cosmic-server.onrender.com/api/user/login",
+    userLogoutUrl: "https://cosmic-server.onrender.com/api/user/logout",
+    usersUrl: "https://cosmic-server.onrender.com/api/user/all",
+    adminLoginUrl: "https://cosmic-server.onrender.com/api/admin/login",
+    adminLogoutUrl: "https://cosmic-server.onrender.com/api/admin/logout",
+    technicianLoginUrl: "https://cosmic-server.onrender.com/api/technician/login",
+    technicianLogoutUrl: "https://cosmic-server.onrender.com/api/technician/logout",
+    techniciansUrl: "https://cosmic-server.onrender.com/api/technician/all",
+    userReportsUrl: "https://cosmic-server.onrender.com/api/report/all/user",
+    reportsUrl: "https://cosmic-server.onrender.com/api/report/all",
+    createReportUrl: "https://cosmic-server.onrender.com/api/report/new",
+    registerUrl: "https://cosmic-server.onrender.com/api/user/register",
 
     reportIdUrl: (id: any) => {
-      return `https://api.devnil.site/api/report/id/${id}`
+      return `https://cosmic-server.onrender.com/api/report/id/${id}`
 
     },
     updateReportStatusUrl: (id: any) => {
-      return `https://api.devnil.site/api/report/status/${id}`
+      return `https://cosmic-server.onrender.com/api/report/status/${id}`
     },
     updateReportNotesUrl: (id: any) => {
-      return `https://api.devnil.site/api/report/notes/${id}`
+      return `https://cosmic-server.onrender.com/api/report/notes/${id}`
     },
     assignReportUrl: (id: any) => {
-      return `https://api.devnil.site/api/report/assign/${id}`
+      return `https://cosmic-server.onrender.com/api/report/assign/${id}`
     },
     assignedTechniciansReportsUrl: (email: any) => {
-      return `https://api.devnil.site/api/report/email/${email}`
+      return `https://cosmic-server.onrender.com/api/report/email/${email}`
 
     },
     updateReportDeleteUrl: (id: any) => {
-      return `https://api.devnil.site/api/report/delete/${id}`
+      return `https://cosmic-server.onrender.com/api/report/delete/${id}`
     }
+    // socketUrl: "https://api.devnil.site",
+    // userSignupUrl: "https://api.devnil.site/api/user/signup",
+    // userLoginUrl: "https://api.devnil.site/api/user/login",
+    // userLogoutUrl: "https://api.devnil.site/api/user/logout",
+    // usersUrl: "https://api.devnil.site/api/user/all",
+    // adminLoginUrl: "https://api.devnil.site/api/admin/login",
+    // adminLogoutUrl: "https://api.devnil.site/api/admin/logout",
+    // technicianLoginUrl: "https://api.devnil.site/api/technician/login",
+    // technicianLogoutUrl: "https://api.devnil.site/api/technician/logout",
+    // techniciansUrl: "https://api.devnil.site/api/technician/all",
+    // userReportsUrl: "https://api.devnil.site/api/report/all/user",
+    // reportsUrl: "https://api.devnil.site/api/report/all",
+    // createReportUrl: "https://api.devnil.site/api/report/new",
+    // registerUrl: "https://api.devnil.site/api/user/register",
+    //
+    // reportIdUrl: (id: any) => {
+    //   return `https://api.devnil.site/api/report/id/${id}`
+    //
+    // },
+    // updateReportStatusUrl: (id: any) => {
+    //   return `https://api.devnil.site/api/report/status/${id}`
+    // },
+    // updateReportNotesUrl: (id: any) => {
+    //   return `https://api.devnil.site/api/report/notes/${id}`
+    // },
+    // assignReportUrl: (id: any) => {
+    //   return `https://api.devnil.site/api/report/assign/${id}`
+    // },
+    // assignedTechniciansReportsUrl: (email: any) => {
+    //   return `https://api.devnil.site/api/report/email/${email}`
+    //
+    // },
+    // updateReportDeleteUrl: (id: any) => {
+    //   return `https://api.devnil.site/api/report/delete/${id}`
+    // }
   }
 
 }
