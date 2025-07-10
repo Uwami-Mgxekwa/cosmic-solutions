@@ -1,18 +1,52 @@
 @import url("../color-scheme.css");
 
-.wrapper {
-  width: 100%;
-  height: fit-content;
-  background: var(--background);
-  margin-top: 24px;
+.container {
+  display: flex;
 }
 
+.wrapper {
+  width: 70%;
+  min-height: 100vh;
+  padding: 12px 32px;
+  background: var(--background);
+}
+
+.side-wrapper {
+  padding: 12px 32px;
+  background: var(--background);
+  width: 30%;
+  min-height: 100vh;
+  border-left: 2px solid var(--text);
+}
+
+.about-h1 {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 26px;
+}
 /* .panel { */
 /*   border-bottom: 2px solid var(--text); */
 /* } */
 
 .panel h1 {
   font-size: 36px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header button {
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: 1px solid var(--text);
+  background: var(--background);
+  cursor: pointer;
 }
 
 .panel-info {
@@ -23,41 +57,14 @@
 }
 
 .action-btns {
-  margin-top: 24px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.action-btns button {
-  width: calc(100% / 5);
-  height: 60px;
+  width: calc(100% / 2);
+  min-height: 40px;
+  padding: 12px;
   border: none;
   outline: none;
   cursor: pointer;
-}
-
-.btn-update {
-  background: var(--primary);
-  color: var(--background);
-  cursor: pointer;
-}
-
-.btn-add {
   background: var(--secondary);
   color: var(--text);
-  cursor: pointer;
-}
-
-.btn-assign {
-  background: var(--accent);
-  color: var(--background);
-  cursor: pointer;
-}
-
-.btn-delete {
-  background: #f00;
-  color: var(--background);
-  cursor: pointer;
 }
 
 .details-container {
@@ -75,43 +82,70 @@
   margin-top: 24px;
 }
 
-.ticket-info div:nth-child(odd) {
-  background-color: var(--secondary);
-  color: var(--text);
-}
-
-.info-row {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
+.ticket-solved {
   width: 100%;
-  min-height: 60px;
-  padding: 0 24px;
-  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  color: #f00;
+  font-size: 24px;
 }
 
-.info-row span {
-  display: inline-block;
-  width: 50%;
-  height: fit-content;
-  overflow-wrap: break-word;
-  line-height: 40px;
+.info-header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--text);
 }
 
-.info-value {
-  padding-left: 10px;
+.info-val {
+  display: flex;
+  gap: 12px;
 }
 
-.action-btn {
-  margin-top: 48px;
-  height: 100px;
+.info-body {
+  width: 100%;
+  padding-top: 24px;
+  min-height: 300px;
+}
+
+.about-header .content-header {
+  margin-top: 12px;
+}
+
+.about-wrapper {
+  width: 100%;
+}
+
+.about-content {
+  margin-top: 12px;
+  border-top: 1px solid var(--text);
+  padding: 12px 0;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--secondary);
+  padding-left: 12px;
+}
+
+.content-body {
+  padding-top: 12px;
+  padding-left: 12px;
+}
+
+.btn-delete {
+  color: var(--background);
+  background: #f00;
 }
 
 .btn-close {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 330px;
+  width: calc(100% / 2);
   height: 60px;
   border: none;
   outline: none;
@@ -124,6 +158,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 200;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -134,10 +169,8 @@
 
 .update_modal > div {
   position: relative;
-  top: 0;
-  left: 0;
   width: 80%;
-  height: 80%;
+  min-height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -160,9 +193,7 @@
 }
 
 .update_modal form {
-  width: 50%;
-  height: 50%;
-  margin-top: 24px;
+  width: 70%;
 }
 
 .inputGroup {
@@ -207,19 +238,6 @@
   cursor: pointer;
 }
 
-.btn-cancel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: calc(100% / 2);
-  height: 60px;
-  border: none;
-  outline: none;
-  background: var(--primary);
-  color: #fff;
-  cursor: pointer;
-}
-
 .notes textarea {
   margin-top: 24px;
   width: 100%;
@@ -230,8 +248,17 @@
   background: var(--background);
 }
 
+.assign-container {
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .assign {
   width: 100%;
+  height: 100%;
   position: relative;
 }
 
@@ -252,25 +279,35 @@
   border-color: var(--accent);
 }
 
-.assign ul {
-  position: absolute;
-  background: var(--background);
-  width: 100%;
-  height: fit-content;
-  max-height: 200px;
-  left: 0;
-  top: 100%;
+.techs-container {
+  position: relative;
+  width: 30%;
+  height: 312px;
+  border-left: 2px solid var(--text);
   overflow-y: scroll;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+}
+
+.select-header {
+  padding-left: 24px;
+  background: var(--background);
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+#tech-list {
+  height: 100%;
   list-style: none;
 }
 
-.assign ul li {
-  padding: 2px;
+#tech-list li {
+  margin-left: 12px;
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--text-muted);
 }
 
-.assign ul li:hover {
+#tech-list li:hover {
   background: var(--secondary);
 }
 
@@ -284,4 +321,43 @@
 
 .warning p:last-child {
   color: #f00;
+}
+
+.modal-action-btns {
+  width: 100%;
+  display: flex;
+  margin-top: 24px;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+button {
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }

@@ -20,9 +20,13 @@ let userReports: Array<any> = [];
 export const loadTicketsPage = () => {
   return (
     container.innerHTML = `
+<div class="container">
 <div class="wrapper">
   <div class="panel">
-    <h1>All Reports</h1>
+      <div class="panel-header">
+        <h1>All Reports</h1>
+        <button id="btn-close"> &lt; Home</button>
+      </div>
     <div class="panel-info">
       <h2>[ Computer No.:${userDetails.pc} ]</h2>
       <h2>[ Room No.:${userDetails.room} ]</h2>
@@ -47,13 +51,22 @@ export const loadTicketsPage = () => {
   <div class="placeholder ph-hidden" id="ph">
     <p>You Have No Reports at the moment</p>
   </div>
-  <div class="action-btn">
-    <buttons class="btn-close" id="btn-close">Close</button>
+</div>
+  <div class="side-wrapper">
   </div>
 </div>
 `
   )
 }
+
+ticketsPage.innerHTML += loadHeader("Support Request Portal");
+ticketsPage.innerHTML += loadSidebar();
+ticketsPage.innerHTML += loadTicketsPage();
+ticketsPage.innerHTML += loadSpinner()
+
+const tableBody = document.getElementById("tbody") as HTMLTableElement;
+const placeholder = document.getElementById("ph");
+const closeBtn = document.getElementById("btn-close");
 
 const loadReports = async () => {
   spinnerActionsAdd()
@@ -92,17 +105,9 @@ const loadReports = async () => {
   }
   spinnerActionsRemove()
 }
-ticketsPage.innerHTML += loadHeader("Support Request Portal");
-ticketsPage.innerHTML += loadSidebar();
-ticketsPage.innerHTML += loadTicketsPage();
-ticketsPage.innerHTML += loadSpinner()
 headerActions();
 sidebarActions();
 loadReports();
-
-const tableBody = document.getElementById("tbody") as HTMLTableElement;
-const placeholder = document.getElementById("ph");
-const closeBtn = document.getElementById("btn-close");
 
 closeBtn?.addEventListener("click", () => {
   window.location.href = "../pages/dashboard.user.html"

@@ -125,10 +125,7 @@ userSubmitBtn?.addEventListener("click", async (e) => {
         popUp("Login Error", res?.content.message || "Login failed. Please try again.");
         popupActions();
       } else {
-        const resData = {
-          pc: res.content.user.pc,
-          room: res.content.user.room
-        };
+        const resData = { ...res.content.user };
 
         storeData("user", resData);
 
@@ -190,11 +187,7 @@ adminSubmitBtn?.addEventListener("click", async (e) => {
         popUp("Login Error", res?.content.message || "Login failed. Please try again.");
         popupActions();
       } else {
-        const resData = {
-          email: res.content.user.email,
-          role: res.content.user.role,
-          clearance_level: res.content.user.clearance_level
-        };
+        const resData = { ...res.content.user };
 
         storeData("admin", resData);
 

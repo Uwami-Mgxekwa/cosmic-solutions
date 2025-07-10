@@ -1,5 +1,4 @@
 @import url("../color-scheme.css");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 body {
   font-family:
@@ -30,7 +29,7 @@ body {
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-radius: var(--radius-xl);
+  /* border-radius: var(--radius-xl); */
   box-shadow: var(--shadow-xl);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -191,11 +190,10 @@ input {
   height: 56px;
   padding: 1rem 1.25rem;
   border: 2px solid var(--border);
-  border-radius: var(--radius);
+  /* border-radius: var(--radius); */
   font-size: 1rem;
   font-weight: 400;
   transition: var(--transition);
-  background: var(--background, #ffffff);
   color: var(--text-primary);
   outline: none;
 }
@@ -255,7 +253,7 @@ button {
   background: linear-gradient(135deg, var(--primary), var(--accent));
   color: white;
   border: none;
-  border-radius: var(--radius);
+  /* border-radius: var(--radius); */
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -350,7 +348,7 @@ button:focus {
 .alert {
   margin-top: 1.5rem;
   padding: 1rem;
-  border-radius: var(--radius);
+  /* border-radius: var(--radius); */
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
   animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -378,9 +376,9 @@ button:focus {
     padding: 0.5rem;
   }
 
-  .container {
-    border-radius: var(--radius-lg);
-  }
+  /* .container { */
+  /*   border-radius: var(--radius-lg); */
+  /* } */
 
   .form-wrapper {
     grid-template-columns: 1fr;
@@ -396,7 +394,7 @@ button:focus {
   }
 
   .content {
-    padding: 2rem;
+    /* padding: 2rem; */
     min-height: auto;
   }
 
@@ -434,9 +432,9 @@ button:focus {
     font-size: 0.95rem;
   }
 
-  .container {
-    border-radius: var(--radius);
-  }
+  /* .container { */
+  /*   border-radius: var(--radius); */
+  /* } */
 
   .signuptext {
     font-size: 0.9rem;
@@ -541,4 +539,3 @@ input:focus,
 button:focus {
   outline: none;
 }
-

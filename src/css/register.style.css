@@ -1,16 +1,53 @@
 @import url("../color-scheme.css");
 
+.container {
+  display: flex;
+}
+
 .wrapper {
-  width: 100%;
-  height: fit-content;
+  width: 70%;
+  min-height: 100vh;
+  padding: 12px 32px;
   background: var(--background);
-  margin-top: 24px;
 }
 
 /* .panel { */
 /*   border-bottom: 2px solid var(--text); */
 /* } */
 
+.side-wrapper {
+  padding: 12px 32px;
+  background: var(--background);
+  width: 30%;
+  min-height: 100vh;
+  border-left: 2px solid var(--text);
+}
+
+.side-wrapper h1 {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 26px;
+}
+.panel h1 {
+  font-size: 36px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header button {
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: 1px solid var(--text);
+  background: var(--background);
+  cursor: pointer;
+}
 .panel h1 {
   font-size: 36px;
 }
@@ -20,10 +57,6 @@
   gap: 24px;
   font-size: 24px;
   margin: 24px 0;
-}
-
-.form-container {
-  border-top: 2px solid var(--text);
 }
 
 form {
@@ -40,16 +73,10 @@ form {
   width: 100%;
   height: 60px;
   padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  transition: border-color 0.3s ease-in-out;
+  border: 1px solid var(--text);
   outline: none;
-  color: var(--text);
 }
 
-.input-wrapper input:focus {
-  border-color: var(--accent);
-}
 .input-wrapper label {
   width: 100%;
   font-size: 24px;
@@ -84,15 +111,20 @@ form {
   cursor: pointer;
 }
 
-.arlet {
-  width: 100%;
-  height: 60px;
-  margin-top: 24px;
+input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+  transition: var(--transition);
 }
 
-.arlet p {
-  width: 100%;
-  text-align: center;
-  font-size: 24px;
-  color: #f00;
+input:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-1px);
+}
+
+input:focus::placeholder {
+  opacity: 0.7;
+  transform: translateY(-2px);
 }

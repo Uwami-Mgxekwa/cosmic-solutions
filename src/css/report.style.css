@@ -1,20 +1,53 @@
 @import url("../color-scheme.css");
 
+.container {
+  display: flex;
+}
+
 .wrapper {
-  width: 100%;
-  height: fit-content;
+  width: 70%;
+  min-height: 100vh;
+  padding: 12px 32px;
   background: var(--background);
-  margin-top: 24px;
 }
 
 /* .panel { */
 /*   border-bottom: 2px solid var(--text); */
 /* } */
 
+.side-wrapper {
+  padding: 12px 32px;
+  background: var(--background);
+  width: 30%;
+  min-height: 100vh;
+  border-left: 2px solid var(--text);
+}
+
+.side-wrapper h1 {
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 26px;
+}
 .panel h1 {
   font-size: 36px;
 }
 
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header button {
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: 1px solid var(--text);
+  background: var(--background);
+  cursor: pointer;
+}
 .panel-info {
   display: flex;
   gap: 24px;
@@ -66,9 +99,9 @@
   width: 100%;
   height: 230px;
   font-size: 16px;
-  padding: 24px;
+  padding: 12px;
   resize: none;
-  background: var(--background);
+  border: 1px solid var(--text);
 }
 
 .action-btns {
@@ -109,4 +142,75 @@
   text-align: center;
   font-size: 24px;
   color: #f00;
+}
+
+button {
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.number-wrapper {
+  padding-top: 12px;
+  margin-bottom: 12px;
+}
+
+.number-wrapper label {
+  display: block;
+  margin-top: 12px;
+}
+
+.number-wrapper input {
+  width: 100%;
+  height: 56px;
+  padding: 12px;
+  border: 1px solid var(--text);
+  font-size: 1rem;
+  font-weight: 400;
+  transition: var(--transition);
+  color: var(--text);
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+  transition: var(--transition);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-1px);
+}
+
+input:focus::placeholder {
+  opacity: 0.7;
+  transform: translateY(-2px);
 }

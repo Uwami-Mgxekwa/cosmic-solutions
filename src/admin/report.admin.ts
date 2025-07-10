@@ -8,14 +8,15 @@ import Endpoints from '../lib/endpoint';
 
 const reportPage = document.querySelector<HTMLDivElement>('#app')!
 const container = document.createElement("div");
-const jsonUser = localStorage.getItem("user") as string;
 
-if (!jsonUser) {
+const jsonAdmin = localStorage.getItem("admin") as string;
+
+if (!jsonAdmin) {
   localStorage.clear();
   window.location.href = "/"
 }
 
-const userDetails = JSON.parse(jsonUser);
+const adminDetails = JSON.parse(jsonAdmin);
 
 export const loadUserReport = () => {
   return (
@@ -27,14 +28,23 @@ export const loadUserReport = () => {
           <h1>Report A New Issue</h1>
           <button id="btn-close"> &lt; Home</button>
         </div>
-          <div class="panel-info">
-            <h2>[ Computer No.:${userDetails.pc} ]</h2>
-            <h2>[ Room No.:${userDetails.room} ]</h2>
-            <h2>[ Cosmos.:none ]</h2>
-          </div>
+      <div class="panel-info">
+        <h2>[ Admin: ${adminDetails.email} ]</h2>
+      </div>
         </div>
         <div class="form-container">
           <form>
+            <div class="number-wrapper">
+                <h2 class="label">Computer info</h2>
+                 <label for="pc-number">
+                    Pc number
+                    <input type="text" id="pc-number" name="pc-number" required/>
+                </label>
+                <label for="room-number">
+                    Room number
+                   <input type="text" id="room-number" name="room-number" required/>
+                </label>
+            </div>
             <div>
                 <h2 class="label">Choose Issue Category</h2>
                 <div class="radio-group">
@@ -84,6 +94,8 @@ sidebarActions();
 const submitBtn = document.getElementById("btn-submit");
 const cancelBtn = document.getElementById("btn-cancel");
 const closeBtn = document.getElementById("btn-close");
+const pcNumber = document.getElementById("pc-number") as HTMLInputElement;
+const roomNumber = document.getElementById("room-number") as HTMLInputElement;
 const cats = document.getElementsByName("category") as NodeListOf<HTMLInputElement>;
 const description = document.getElementById("description") as HTMLTextAreaElement;
 let category = "";
@@ -117,12 +129,12 @@ submitBtn?.addEventListener("click", async (e) => {
     category: category,
     description: description.value,
     status: "open",
-    technician: "",
+    technician: adminDetails.clearance_level > 0 ? adminDetails.email : "",
     submittedOn: new Date().toLocaleString("en-ZA", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).toLowerCase(),
-    submittedBy: "user",
+    submittedBy: adminDetails.clearance_level > 0 ? "technician" : "admin",
     notes: "",
-    pc: userDetails.pc,
-    room: userDetails.room
+    pc: pcNumber.value,
+    room: roomNumber.value
   }
 
   const res = await createReport(Endpoints.createReportUrl, data);
@@ -141,10 +153,12 @@ cancelBtn?.addEventListener("click", (e) => {
   cats.forEach((c) => {
     c.checked = false;
   })
+  pcNumber.value = ""
+  roomNumber.value = ""
   description.value = ""
 
 })
 
 closeBtn?.addEventListener("click", () => {
-  window.location.href = "../pages/dashboard.user.html"
+  window.location.href = "../pages/dashboard.admin.html"
 });
